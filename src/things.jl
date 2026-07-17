@@ -30,7 +30,7 @@ map(eval,
             end
             name = Symbol(m.match)
             push!(exprs,
-                  (:(mutable struct $name <: Ore
+                  (:(struct $name <: Ore
                          count::Int
                      end)))
             push!(exprs,
@@ -53,7 +53,7 @@ map(eval,
             end
             name = Symbol(replace(m["name"], " " => ""))
             push!(exprs,
-                  (:(mutable struct $name <: Alloy
+                  (:(struct $name <: Alloy
                          count::Int
                      end)))
             push!(exprs,
@@ -76,7 +76,7 @@ map(eval,
             end
             name = Symbol(replace(m.match, " " => ""))
             push!(exprs,
-                  (:(mutable struct $name <: Crafted
+                  (:(struct $name <: Crafted
                          count::Int
                      end)))
             push!(exprs,
