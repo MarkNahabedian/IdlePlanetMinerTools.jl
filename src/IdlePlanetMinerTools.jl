@@ -1,5 +1,5 @@
 module IdlePlanetMinerTools
 
-# Write your package code here.
+include("things.jl")
 
 end
