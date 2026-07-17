@@ -1,7 +1,7 @@
 using InteractiveUtils
 
 export Thing, Ore, Alloy, Crafted
-export ordinal
+export ordinal, @t_str
 
 abstract type Thing end
 abstract type Ore <: Thing end
@@ -94,4 +94,8 @@ map(eval,
 @assert 1:87 == sort(map(ordinal, union([ subtypes(x) for x in subtypes(Thing) ]...)))
 # jump from 27 to 41
 =#
+
+macro t_str(name)
+    return :($(Symbol(name))(1))
+end
 

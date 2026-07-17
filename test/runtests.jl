@@ -1,6 +1,6 @@
 using IdlePlanetMinerTools
 using Test
 
-@testset "IdlePlanetMinerTools.jl" begin
-    # Write your tests here.
+@testset "arithmetic" begin
+    @test t"Iron" + 2 * t"Iron" == 3 * t"Iron"
 end
