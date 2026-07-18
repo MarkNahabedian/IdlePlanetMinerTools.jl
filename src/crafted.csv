@@ -1,0 +1,45 @@
+Item,Unlock Cost,Sell Price,Material Cost,Time To Craft/s,Used For
+Copper Wire,Free,10K,5 Copper Bar,60,"Battery (2), Circuit (10), Rover (10)"
+Iron Nails,20K,20K,5 Iron Bar,120,"Hammer (2), Telescope 3 (10), Colonization Scouting (15), Preferred Vendor (200)"
+Battery,50K,70K,"2 Copper Wire, 10 Copper Bar",240,"Advanced Battery (30), Resource Details (3), Ore Targeting (50), Rover Advanced Logistics (20), Advanced Mining (5)"
+Hammer,100K,135K,"2 Iron Nails, 5 Lead Bar",480,"Motor (200), Telescope 4 (5), Market Insight (10), Ore Targeting (100), Colonization Efficiency (10), Colony Renegotiation (400), Advanced Cargo Handling (5), Preferred Vendor (75)"
+Glass,200K,220K,10 Silicon Bar,720,"Lens (1), Solar Panel (10), Thermal Scanner (5), Advanced Thrusters (2), Advanced Furnace (3)"
+Circuit,400K,620K,"5 Silicon Bar, 5 Aluminum Bar, 10 Copper Wire",1200,"Basic Computer (5), Solar Panel (5), Asteroid Harvester (5), Cargo Logistics (3), Telescope 5 (3), Contract Manager (20), Advanced Alloy Value (3), Preferred Vendor (40)"
+Lens,1M,1.1M,"1 Glass, 5 Silver Bar",2400,"Laser (1), Laser Torch (5), Telescope (20), Inside Trader (10), Alchemy (6), Rover Advanced Logistics (10), Advanced Crafter (5), Advanced Item Value (1)"
+Laser,2M,3.2M,"5 Gold Bar, 1 Lens, 10 Iron Bar",3600,"Laser Torch (2), Thermal Scanner (2), Telescope 6 (3), Colonization Advanced Efficiency (10), Superior Alloy Value (30)"
+Basic Computer,5M,7.60M,"5 Circuit, 5 Silver Bar",4800,"Advanced Computer (5), Market Manipulation (10), Advanced Ore Targeting (100), Advanced Alchemy (6), Rover Scanning Module (1), Advanced Rover Resupply (1), Contract Manager (20), Smelting Specialist (5)"
+Solar Panel,10M,12.5M,"5 Circuit, 10 Glass",6000,"Space Probe (20), Asteroid Auto Miner (100), Rover Resupply (1), Telescope 7 (3), Crafting Efficiency (40)"
+Laser Torch,20M,31M,"5 Bronze Bar, 2 Laser, 5 Lens",7200,"Navigation Module (2), Plasma Torch (5), Rover Resupply (1), Manager Training (1), Telescope 8 (3), Colonization Superior Efficiency (15), Superior Mining (10), Superior Crafting (20), Superior Item Value (25)"
+Advanced Battery,30M,35M,"20 Steel Bar, 30 Battery",9000,"Accumulator (3), Telescope 9 (3), Advanced Manager Training (10), Superior Thrusters (4), Superior Crafting (10), Crafting Specialist (2), Smelting Specialist (2)"
+Thermal Scanner,50M,71.5M,"5 Platinum Bar, 2 Laser, 5 Glass",10800,"Navigation Module (1), Asteroid Scanner (30), Advanced Ore Targeting (15), Telescope 10 (3), Advanced Contract Manager (10), Terraforming (10), Superior Crafting (2), Advanced Furnace Overdrive (10)"
+Advanced Computer,120M,180M,"5 Titanium Bar, 5 Basic Computer",12600,"Telescope (1), Gravity Chamber (60), Asteroid Auto Miner (20), Advanced Market Manipulation (10), Superior Alchemy (5), Advanced Manager Training (2), Advanced Contract Manager (10), Telescope 11 (3), Crafting Specialist (2)"
+Navigation Module,250M,1B,"1 Thermal Scanner, 2 Laser Torch",13500,"Teleporter (250), Asteroid Scanner (5), Leader (5), Telescope 12 (3)"
+Plasma Torch,550M,1.15B,"15 Iridium Bar, 5 Laser Torch",15000,"Nuclear Capsule (1), Advanced Asteroid Harvester (50), Furnace Overdrive (1)"
+Radio Tower,1.50B,1.45B,"75 Platinum Bar, 150 Aluminum Bar, 50 Titanium Bar",15600,Telescope 13 (3)
+Telescope,5B,2.7B,"20 Lens, 1 Advanced Computer",16800,"Space Probe (1), Advanced Asteroid Scanner (150), Advanced Market Manipulation (5), Advanced Leader (10)"
+Satellite Dish,17.50B,3.4B,"150 Steel Bar, 30 Palladium Bar",18000,"Space Probe (1), Telescope 14 (3), Advanced Terraforming (10)"
+Motor,60B,7B,"500 Bronze Bar, 200 Hammer",19200,"Wind Turbine (1), Market Accelerator (1), Advanced Leader (10), Telescope 15 (5), Furnace Overdrive Efficiency (1)"
+Accumulator,100B,12B,"20 Osmium Bar, 3 Advanced Battery",20400,"Robot (90), Telescope 16 (3)"
+Nuclear Capsule,200B,26B,"5 Rhodium bar, 1 Plasma Torch",21000,"Nuclear Reactor (1), Fusion Capsule (100), Telescope 17 (3)"
+Wind Turbine,500B,140B,"300 Aluminum Bar, 1 Motor",21600,Telescope 18 (3)
+Space Probe,1T,180B,"1 Satellite Dish, 1 Telescope, 25 Solar Panel",22200,"Subspace Relay (28), Advanced Asteroid Harvester (1)"
+Nuclear Reactor,2T,1T,"1 Nuclear Capsule, 300 Iridium Bar",22800,"Gravity Chamber (1), Fusion Reactor (50), Superior Asteroid Harvester (10), Telescope 19 (4)"
+Collider,3T,2T,"500 Inerton Alloy, 100 Quadium Alloy",23100,"Fusion Reactor (40), Debris Scanner (1), Telescope 20 (5)"
+Gravity Chamber,6T,15T,"60 Advanced Computer, 1 Nuclear Reactor",24300,"Teleporter (1), Debris Scanner (8), Advanced Market Accelerator (1), Telescope 21 (5)"
+Robot,15T,50T,"300 Scrith Alloy, 90 Accumulator",26000,"Telescope 22 (6), Advanced Robot (100)"
+Fusion Capsule,75T,240T,"200 Uru Alloy, 100 Vibranium Alloy, 100 Nuclear Capsule",27000,Fusion Reactor (1)
+Teleporter,500T,1.8q,"250 Navigation Module,  1 Gravity Chamber",29000,"Subspace Relay (1), Advanced Teleporter (100)"
+Fusion Reactor,2.5q,40q,"1 Fusion Capsule, 40 Collider, 50 Nuclear Reactor",31000,Advanced Robot (4)
+Subspace Relay,15q,1Q,"70 Space Probe, 100 Satellite Dish, 1 Teleporter",32300,Advanced Teleporter (4)
+Advanced Robot,142.00q,29.5Q,"100 Robot, 5 Fusion Reactor",62300,Quantum CPU (5)
+Advanced Teleporter,1.49Q,650Q,"5 Subspace Relay, 100 Teleporters, 1000 Xynium Alloy","115,200",Deflector Shield (5)
+Quantum CPU,20.00Q,14s,"4 Advanced Robots, 500 Quolium Alloy","120,000",
+Deflector Shield,270.00Q,320s,"4 Advanced Teleporters, 400 Luterium Alloy","125,000",
+Warp Core,3.65s,6.80 S,"160 Wind Turbine, 40 Fusion Reactor, 4 Quantum CPU","180,000s (50h)",
+Deep Space Scanner,49.30s,145 S,"250 Advanced Battery, 1000 Aqualite Alloy, 4 Deflector Shield","188,000",
+Antimatter Cell,665.00s,3.2 O,"50 Nuclear Reactor, 10k Palladium Bar, 4 Warp Core","194,000",
+Atmospheric Processor,500 S,68 O,"10k Iridium Bar, 4 Deep Space Scanner, 15 Quantum CPU",,
+Orbital Dock,100 O,2.8 N,"6k Wraith Alloy, 4 Antimatter Cell, 10 Warp Core",,
+Solar Collector,100 O,2.8 N,"1000 Solar Panel, 20 Deflector Shield, 132 Deep Space Scanner",,
+Phase Gate,50 N,452 N,"100 Deep Space Scanner, 1000 Advanced Teleporter, 1 Orbital Dock",,
+Neural Matrix,50 N,452 N,"4 AntiMatter Cell, 1 Solar Collector, 16k Osmium Bar",,
