@@ -6,6 +6,8 @@ using Gumbo
 using CSV
 using DataFrames
 
+include_dependency(joinpath(@__DIR__, "crafted.csv"))
+
 export extract_crafted, make_crafted_recipies
 
 RECIPIE_SOURCE = "https://idle-planet-miner.fandom.com/wiki/Items"
@@ -51,12 +53,27 @@ function make_crafted_recipies()
     # Item,Unlock Cost,Sell Price,Material Cost,Time To Craft/s,Used For
     for row in eachrow(df)
         name1 = row["Item"]
+        # Fix "Rhodium bar" in materials for "Nuclear Capsule":
+        
         materials = row["Material Cost"]
         duration = row["Time To Craft/s"]
-        name = eval(Symbol(replace(name1, " " => "")))
-        duration = parse(Int, duration)
+        if isa(duration, AbstractString)
+            # "180000s (50h)"
+            m = match(r"([0-9,]+)", duration)
+            if m == nothing
+                @warn("Invalid duration $duration")
+                continue
+            end
+            duration = m.match
+            duration = parse(Int, replace(duration, "," => "")) 
+        end
+        name = eval(Symbol(best_thing_match(name1)))
         materials = parse_materials_string(name1, materials)
-        push!(recipies, Recipie(name, materials, duration))
+        try
+            push!(recipies, Recipie(name, materials, duration))
+        catch e
+            @warn("Recipie failed", name, materials, duration, row)
+        end
     end
     recipies
 end
@@ -64,11 +81,16 @@ end
 
 function parse_materials_string(name, materials_string::AbstractString)
     # "Laser (1), Laser Torch (5), Telescope (20), Inside Trader (10), Alchemy (6), Rover Advanced Logistics (10), Advanced Crafter (5), Advanced Item Value (1)"
+    # "4 Advanced Teleporters, 400 Luterium Alloy"
     # 5 Copper Bar
+    # 10k Palladium Bar
     regexps = [
-        r"(?<name>[a-zA-Z ]+) [(](?<count>[0-9]+)[)]",
-        r"(?<count>[0-9]+) (?<name>[a-zA-Z ]+)"
+        r"(?<name>[a-zA-Z ]+) [(](?<count>[0-9]+)(?<suffix>[k]?)[)]",
+        r"(?<count>[0-9]+)(?<suffix>[k]?) (?<name>[a-zA-Z ]+)"
     ]
+    multipliers = Dict([
+        "" => 1,
+        "k" => 1000])
     map(split(materials_string, ", ")) do material
         local m
         for re in regexps
@@ -80,8 +102,11 @@ function parse_materials_string(name, materials_string::AbstractString)
         if m == nothing
             error("No match: $name: $material")
         end
-        type = eval(Symbol(replace(m["name"], " " => "")))
-        count = parse(Int, m["count"])
+        multiplier = multipliers[m["suffix"]]
+        cname = canonicalize_name(m["name"])
+        cname = best_thing_match(cname)
+        type = eval(Symbol(cname))
+        count = multiplier * parse(Int, m["count"])
         type(count)
     end
 end

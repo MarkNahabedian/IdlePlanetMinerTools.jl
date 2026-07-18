@@ -1,7 +1,12 @@
 using InteractiveUtils
+using StringDistances
 
 export Thing, Ore, Alloy, Crafted
-export ordinal, @t_str
+export ordinal, all_things, best_thing_match, @t_str
+
+include_dependency(joinpath(@__DIR__, "Ores"))
+include_dependency(joinpath(@__DIR__, "Alloys"))
+include_dependency(joinpath(@__DIR__, "Crafted"))
 
 abstract type Thing end
 abstract type Ore <: Thing end
@@ -18,6 +23,35 @@ subtype of `Thing` or an instance of a subtype of `Thing`.
 ordinal(t::Thing) = ordinal(typeof(t))
 
 
+function canonicalize_name(name)
+    s = split(name, " ")
+    s = map(uppercasefirst, s)
+    join(s)
+end
+
+
+function all_things()
+    things = Type{<:Thing}[]
+    function walk(t)
+        if isconcretetype(t)
+            push!(things, t)
+        else
+            walk.(subtypes(t))
+        end
+    end
+    walk(Thing)
+    sort(things; by = ordinal)
+end
+
+function best_thing_match(name::AbstractString)
+    candidates = map(string, map(nameof, all_things()))
+    distances = [ evaluate(Levenshtein(), name, candidate)
+                  for candidate in candidates ]
+    _, index = findmin(distances)
+    candidates[index]
+end
+
+
 map(eval,
     let
         exprs = []
@@ -28,7 +62,7 @@ map(eval,
             if m == nothing
                 continue
             end
-            name = Symbol(m.match)
+            name = Symbol(canonicalize_name(m.match))
             push!(exprs,
                   (:(struct $name <: Ore
                          count::Int
@@ -51,7 +85,7 @@ map(eval,
             if m == nothing
                 continue
             end
-            name = Symbol(replace(m["name"], " " => ""))
+            name = Symbol(canonicalize_name(m["name"]))
             push!(exprs,
                   (:(struct $name <: Alloy
                          count::Int
@@ -68,13 +102,13 @@ map(eval,
     let
         exprs = []
         ord = maximum(ordinal, subtypes(Alloy))
-        for alloy in eachline(joinpath(@__DIR__, "Crafted"))
+        for crafted in eachline(joinpath(@__DIR__, "Crafted"))
             ord += 1
-            m = match(r"[A-Za-z ]+", alloy)
+            m = match(r"[A-Za-z ]+", crafted)
             if m == nothing
                 continue
             end
-            name = Symbol(replace(m.match, " " => ""))
+            name = Symbol(canonicalize_name(m.match))
             push!(exprs,
                   (:(struct $name <: Crafted
                          count::Int
@@ -90,7 +124,7 @@ map(eval,
 @assert 1 == minimum(ordinal, subtypes(Ore))
 @assert maximum(ordinal, subtypes(Ore)) + 1 == minimum(ordinal, subtypes(Alloy))
 @assert maximum(ordinal, subtypes(Alloy)) + 1 == minimum(ordinal, subtypes(Crafted))
-@assert 1:87 == sort(map(ordinal, union([ subtypes(x) for x in subtypes(Thing) ]...)))
+@assert 1:99 == sort(map(ordinal, union([ subtypes(x) for x in subtypes(Thing) ]...)))
 
 
 macro t_str(name)
