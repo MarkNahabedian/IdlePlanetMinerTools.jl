@@ -47,7 +47,7 @@ map(eval,
         ord = maximum(ordinal, subtypes(Ore))
         for alloy in eachline(joinpath(@__DIR__, "Alloys"))
             ord += 1
-            m = match(r"^(?<name>[A-Za-z]+ Alloy|Bar)", alloy)
+            m = match(r"^(?<name>[A-Za-z]+ (Bar|Alloy))", alloy)
             if m == nothing
                 continue
             end
@@ -87,13 +87,11 @@ map(eval,
         exprs
     end)
 
-#=
 @assert 1 == minimum(ordinal, subtypes(Ore))
 @assert maximum(ordinal, subtypes(Ore)) + 1 == minimum(ordinal, subtypes(Alloy))
 @assert maximum(ordinal, subtypes(Alloy)) + 1 == minimum(ordinal, subtypes(Crafted))
 @assert 1:87 == sort(map(ordinal, union([ subtypes(x) for x in subtypes(Thing) ]...)))
-# jump from 27 to 41
-=#
+
 
 macro t_str(name)
     return :($(Symbol(name))(1))
