@@ -4,10 +4,20 @@ version = "1.0.0-DEV"
 authors = ["MarkNahabedian <naha@mit.edu> and contributors"]
 
 [deps]
+CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+Cascadia = "54eefc05-d75b-58de-a785-1a3403f0919f"
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+Gumbo = "708ec375-b3d6-5a57-a7ce-8257bf98657a"
 InteractiveUtils = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
+WebScrapingTools = "8afffa6a-3076-4974-917d-2ce0a0fc8257"
 
 [compat]
+CSV = "0.10.16"
+Cascadia = "1.0.2"
+DataFrames = "1.8.2"
+Gumbo = "0.8.3"
 InteractiveUtils = "1.11.0"
+WebScrapingTools = "1.0.0"
 julia = "1.10.10"
 
 [extras]
