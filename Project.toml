@@ -12,6 +12,9 @@ InteractiveUtils = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
 StringDistances = "88034a9c-02f8-509d-84a9-84ec65e18404"
 WebScrapingTools = "8afffa6a-3076-4974-917d-2ce0a0fc8257"
 
+[sources]
+XML = {url = "https://github.com/MarkNahabedian/WebScrapingTools.jl"}
+
 [compat]
 CSV = "0.10.16"
 Cascadia = "1.0.2"
