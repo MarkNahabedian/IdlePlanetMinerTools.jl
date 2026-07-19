@@ -53,8 +53,7 @@ function make_crafted_recipies()
     # Item,Unlock Cost,Sell Price,Material Cost,Time To Craft/s,Used For
     for row in eachrow(df)
         name1 = row["Item"]
-        # Fix "Rhodium bar" in materials for "Nuclear Capsule":
-        
+        type = best_thing_match(name1)
         materials = row["Material Cost"]
         duration = row["Time To Craft/s"]
         if isa(duration, AbstractString)
@@ -67,12 +66,13 @@ function make_crafted_recipies()
             duration = m.match
             duration = parse(Int, replace(duration, "," => "")) 
         end
-        name = eval(Symbol(best_thing_match(name1)))
-        materials = parse_materials_string(name1, materials)
+        # To make a recipie we add its materials to our supply.  The
+        # recipies inputs are diminished and is product is augmented:
+        materials = Inventory(type(1)) - parse_materials_string(name1, materials)
         try
-            push!(recipies, Recipie(name, materials, duration))
+            push!(recipies, Recipie(type, materials, duration))
         catch e
-            @warn("Recipie failed", name, materials, duration, row)
+            @warn("Recipie failed", name1, materials, duration, e)
         end
     end
     recipies
@@ -91,7 +91,7 @@ function parse_materials_string(name, materials_string::AbstractString)
     multipliers = Dict([
         "" => 1,
         "k" => 1000])
-    map(split(materials_string, ", ")) do material
+    function parse_material(material)
         local m
         for re in regexps
             m = match(re, material)
@@ -103,11 +103,11 @@ function parse_materials_string(name, materials_string::AbstractString)
             error("No match: $name: $material")
         end
         multiplier = multipliers[m["suffix"]]
-        cname = canonicalize_name(m["name"])
-        cname = best_thing_match(cname)
-        type = eval(Symbol(cname))
+        type = best_thing_match(m["name"])
         count = multiplier * parse(Int, m["count"])
         type(count)
     end
+    Inventory(Thing[ parse_material(material)
+                     for material in split(materials_string, ", ") ])
 end
 
