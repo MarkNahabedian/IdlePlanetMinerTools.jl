@@ -43,12 +43,17 @@ function all_things()
     sort(things; by = ordinal)
 end
 
-function best_thing_match(name::AbstractString)
-    candidates = map(string, map(nameof, all_things()))
-    distances = [ evaluate(Levenshtein(), name, candidate)
-                  for candidate in candidates ]
+
+namestring(s::AbstractString) = s
+namestring(n::Type) = namestring(nameof(n))
+namestring(s::Symbol) = string(s)
+
+
+function best_thing_match(name::AbstractString, collection=all_things())
+    distances = [ evaluate(Levenshtein(), name, namestring(candidate))
+                  for candidate in collection ]
     _, index = findmin(distances)
-    candidates[index]
+    collection[index]
 end
 
 
@@ -128,6 +133,6 @@ map(eval,
 
 
 macro t_str(name)
-    return :($(Symbol(name))(1))
+    return :(best_thing_match($name)(1))
 end
 
