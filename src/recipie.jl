@@ -1,13 +1,21 @@
-export Recipie, ALL_RECIPIES
+export Recipie, ALL_RECIPIES, lookup_recipie, @rx_str
 
 struct Recipie
     make::Type{<:Thing}
-    ingredients::Vector{Thing}
-    duration_seconds::Int
+    delta::Inventory
+    duration_seconds::Union{Missing, Int}
 
-    Recipie(name, ingredients, duration_seconds) =
-        new(name, sort(ingredients; by = ordinal), duration_seconds)
+    Recipie(name, ingredients::Inventory, duration_seconds) =
+        new(name, ingredients, duration_seconds)
 end
 
+namestring(r::Recipie) = namestring(r.make)
+
 ALL_RECIPIES = Recipie[]
+
+lookup_recipie(want::AbstractString) = best_thing_match(want, ALL_RECIPIES)   
+
+macro rx_str(name)
+    return :(lookup_recipie($name))
+end
 

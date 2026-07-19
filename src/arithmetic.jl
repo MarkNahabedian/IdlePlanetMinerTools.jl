@@ -2,37 +2,29 @@
 
 Base.:(==)(a::T, b::T) where T <: Thing = a.count == b.count
 
+Base.:(==)(a::Inventory, b::Inventory) = a.items == b.items
+
+Base.:*(i::Int, t::Thing) = typeof(t)(i * t.count)
+Base.:*(t::Thing, i::Int) = typeof(t)(i * t.count)
+Base.:*(i::Int, inv::Inventory) =
+    Inventory([ i * item for item in inv.items ])
+Base.:*(inv::Inventory, i::Int) =
+    Inventory([ i * item for item in inv.items ])
+
 function Base.:+(a::T, b::T) where T <: Thing
     typeof(a)(a.count + b.count)
 end
 
+Base.:+(a::Thing, b::Thing) = Inventory(a) + Inventory(b)
+Base.:+(a::Thing, b::Inventory) = Inventory(a) + b
+Base.:+(a::Inventory, b::Thing) = a + Inventory(b)
+Base.:+(inv1::Inventory, inv2::Inventory) =
+    Inventory(Thing[inv1.items..., inv2.items...])
+
 Base.:-(a::Thing) = typeof(a)(- a.count)
-Base.:-(a::Vector{Thing}) = Thing[-x for x in a]
+Base.:-(a::Thing, b::Thing) = a + -b
+Base.:-(inv::Inventory) = -1 * inv
+Base.:-(inv1::Inventory, inv2::Inventory) = inv1 + (-1 * inv2)
+Base.:-(inv::Inventory, thing::Thing) = inv - Inventory(thing)
+Base.:-(thing::Thing, inv::Inventory) = Inventory(thing) - inv
 
-function Base.:-(a::T, b::T) where T <: Thing
-    typeof(a)(a.count - b.count)
-end
-
-Base.:*(f::Int, t::Thing) = typeof(t)(f * t.count)
-
-Base.:+(a::Thing, b::Vector{Thing}) = Thing[a] + b
-Base.:+(a::Vector{Thing}, b::Thing) = a - Thing[b]
-Base.:+(a::Thing, b::Thing) = Thing[a] + Thing[b]
-
-Base.:-(a::Thing, b::Vector{Thing}) = Thing[a] + - b
-Base.:-(a::Vector{Thing}, b::Thing) = a + - Thing[b]
-Base.:-(a::Thing, b::Thing) = Thing[a] + - Thing[b]
-
-function Base.:+(a::Vector{Thing}, b::Vector{Thing})
-    ab = sort([a..., b...]; by = ordinal)
-    s = Thing[first(ab)]
-    for i in ab[2:end]
-        if typeof(i) === typeof(last(s))
-            s[lastindex(s)] = typeof(i)(i.count + s[lastindex(s)].count)
-        else
-            push!(s, i)
-        end
-    end
-    s
-end
-    

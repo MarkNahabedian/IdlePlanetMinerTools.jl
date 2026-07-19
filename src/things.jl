@@ -57,6 +57,11 @@ function best_thing_match(name::AbstractString, collection=all_things())
 end
 
 
+macro t_str(name)
+    return :(best_thing_match($name)(1))
+end
+
+
 map(eval,
     let
         exprs = []
@@ -130,9 +135,4 @@ map(eval,
 @assert maximum(ordinal, subtypes(Ore)) + 1 == minimum(ordinal, subtypes(Alloy))
 @assert maximum(ordinal, subtypes(Alloy)) + 1 == minimum(ordinal, subtypes(Crafted))
 @assert 1:99 == sort(map(ordinal, union([ subtypes(x) for x in subtypes(Thing) ]...)))
-
-
-macro t_str(name)
-    return :(best_thing_match($name)(1))
-end
 
