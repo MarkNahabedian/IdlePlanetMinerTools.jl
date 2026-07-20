@@ -1,0 +1,129 @@
+Project,Cost,Text,Notes,Prerequisite
+,,,,
+Management,"400 Copper, 50 Iron",Hire and assign managers to planets,"Prerequisite for Telescope 1, Colonization",
+"200 Copper, 25 Iron",,,,
+Asteroid Miner,"400 Copper, 100 Iron",Ability to mine asteroids for ore,"Prerequisite for Rover, Smelter",
+"200 Copper, 50 Iron",,,,
+Telescope 1,"1.5K Iron, 5 Copper Bar",Extends vision to 3 more planets,Prerequisite for Beacon,Management
+Telescope 2,"10 Lead Bar, 500 Silicon",Extends vision to 3 more planets,Prerequisite for Resource Details,Telescope 1
+Telescope 3,"10 Iron Nail, 15 Silicon Bar",Extends vision to 3 more planets,Prerequisite for Asteroid Refined Drilling,Telescope 2
+Telescope 4,"5 Hammer, 20 Aluminum Bar",Extends vision to 3 more planets,"Prerequisite for Cargo Logistics, Alchemy",Telescope 3
+Telescope 5,"3 Circuit, 10 Gold Bar",Extends vision to 3 more planets,Prerequisite for Rover Advanced Logistics,Telescope 4
+Telescope 6,"3 Laser, 25 Bronze Bar",Extends vision to 3 more planets,Prerequisite for Manager Training,Telescope 5
+Telescope 7,"3 Solar Panel, 20 Platinum Bar",Extends vision to 3 more planets,,Telescope 6
+Telescope 8,"3 Laser Torch, 10 Titanium Bar",Extends vision to 3 more planets,,Telescope 7
+Telescope 9,"3 Advanced Battery, 10 Iridium Bar",Extends vision to 3 more planets,,Telescope 8
+Telescope 10,"3 Thermal Scanner, 10 Palladium Bar",Extends vision to 3 more planets,,Telescope 9
+Telescope 11,"3 Advanced Computer, 10 Osmium Bar",Extends vision to 3 more planets,,Telescope 10
+Telescope 12,"3 Navigation Module, 10 Rhodium Bar",Extends vision to 3 more planets,,Telescope 11
+Telescope 13,"3 Radio Tower, 10 Inerton Bar",Extends vision to 3 more planets,,Telescope 12
+Telescope 14,"3 Satellite Dish, 10 Quadium Bar",Extends vision to 3 more planets,,Telescope 13
+Telescope 15,"5 Motor, 10 Scrith Alloy",Extends vision to 3 more planets,,Telescope 14
+Telescope 16,"3 Accumulator, 10 Uru Alloy",Extends vision to 3 more planets,,Telescope 15
+Telescope 17,"3 Nuclear Capsule, 10 Vibranium Alloy",Extends vision to 3 more planets,,Telescope 16
+Telescope 18,"4 Wind Turbine, 10 Aether Alloy",Extends vision to 3 more planets,,Telescope 17
+Telescope 19,"4 Nuclear Reactor, 12 Viterium Alloy",Extends vision to 3 more planets,,Telescope 18
+Telescope 20,"5 Collider, 15 Xynium Alloy",Extends vision to 3 more planets,,Telescope 19
+Telescope 21,"5 Gravity Chamber, 20 Quolium Alloy",Extends vision to 3 more planets,,Telescope 20
+Telescope 22,"6 Robot, 24 Luterium Alloy",Extends vision to 3 more planets,,Telescope 21
+Telescope 23,"6 Fusion Capsules, 30 Wraith Alloy",Extends vision to 3 more planets,,Telescope 22
+Beacon,15 Iron Bar,Constructs a beacon that provides bonuses to clusters of planets,,Telescope 1
+Resource Details,3 Battery,Adds a detail panel with resource stats. Accessed from resource panel,,Telescope 2
+Bottleneck Optimizations,"5 Titanium Bar, 25 Platinum Bar, 50 Steel Bar",Adds red/green lights to planet panel; red on shipping/cargo means planet counts as backlogging,,Resource Details
+Cargo Logistics,"10 Aluminum Bar, 3 Circuit","Ability to prioritize which ore to pick up first, even if it isn't the most valuable",,Telescope 4
+Ore Targeting,"100 Hammer, 50 Battery",Prioritized ore on each planet receives +15% yield bonus,,Cargo Logistics
+Advanced Ore Targeting,"100 Basic Computer, 15 Thermal Scanner",Prioritized ore on each planet receives +30% yield bonus,Does not stack with Ore Targeting - net planet output is 130% instead of 115%,Ore Targeting
+Alchemy,"50 Gold Bar, 6 Lens",Convert an ore on a planet to an ore worth 1 level higher,"Upon researching, you immediately pick a planet to upgrade.",Telescope 4
+Advanced Alchemy,"50k Silver Ore, 25k Titanium Ore, 6 Basic Computer",Convert an ore on a planet to an ore worth 2 levels higher,Cannot upgrade a previously-upgraded planet.,Alchemy
+Superior Alchemy,"400 Palladium Bar, 200 Osmium Bar, 5 Advanced Computer",Convert an ore on a planet to an ore worth 3 levels higher,,Advanced Alchemy
+Asteroid Refined Drilling,"40 Silicon Bar, 80 Lead Bar",10% chance of an asteroid containing 20x normal value worth of alloy,"Pink asteroids give smelted alloys, not raw ore.",Telescope 3
+Asteroid Harvester,"400 Iron Bar, 5 Circuit",All asteroids value x1.3,,Asteroid Refined Drilling
+Advanced Asteroid Harvester,"1 Space Probe, 50 Plasma Torch",All asteroids value x1.3 (multiplicative with Asteroid Harvester),,Asteroid Harvester
+Superior Asteroid Harvester,"10 Nuclear Reactor, 300 Scrith Alloy, 600 Inerton Alloy",All asteroids value x1.3 (multiplicative with Advanced Asteroid Harvester),,Advanced Asteroid Harvester
+Debris Scanner,"1 Collider, 8 Gravity Chamber",Allows discovery of debris fields that provide valuable items,"Debris gives crafted items, not raw ore/alloys.",Superior Asteroid Harvester
+Debris Harvester,"250 Uru Alloy, 1200 Quadium Alloy",All debris value x1.3,,Debris Scanner
+Advanced Debris Harvester,"250 Vibranium Alloy, 1200 Scrith Alloy",All debris value x1.3 (multiplicative with Debris Harvester),,Debris Harvester
+Superior Debris Harvester,"300 Viterium Alloy, 1400 Aether Alloy",All debris value x1.3 (multiplicative with previous upgrades),,Advanced Debris Harvester
+Asteroid Auto Miner,"20 Advanced Computer, 100 Solar Panel","Automatically mine asteroids, even while idle",Also will auto-mine while you are active,Asteroid Harvester
+Asteroid Scanner,"30 Thermal Scanner, 5 Navigation Module",Frequency of asteroids increased by 30%,,Asteroid Harvester
+Advanced Asteroid Scanner,150 Telescope,Frequency of asteroids increased by 30% (60% total timer reduction  to spawn),,Asteroid Scanner
+Market Insight,"20 Silver Bar, 10 Hammer",Ability for forecast upcoming market changes,,Telescope 4
+Inside Trader,"25 Steel Bar, 10 Lens",+15% chance of positive market fluctuations on future changes,,Market Insight
+Market Manipulation,"30k Diamond, 15k Gold Bar, 10 Basic Computer",Chance of x4 positive market,,Inside Trader
+Advanced Market Manipulation,"100 Quadium Alloy, 10 Advanced Computer, 5 Telescope",Chance of x5 positive market,,Market Manipulation
+Market Accelerator,"400 Iridium Bar, 1 Motor","Ability to replace the current market with the following one, once every 8 hours",,Inside Trader
+Advanced Market Accelerator,"115 Inerton Alloy, 1 Gravity Chamber",Ability to replace the current market with the following one a second time every 8 hours,,Market Accelerator
+Rover Advanced Logistics,"20 Bronze Bar, 20 Battery, 10 Lens",Unlocks an additional mission choice for new scans,,Telescope 5
+Rover Scanning Module,"100 Aluminum Bar, 1 Basic Computer",+5% chance of rovers finding all rewards,,Rover Advanced Logistics
+Rover Resupply,"6 Platinum Bar, 1 Laser Torch, 1 Solar Panel","Planets being scanned by a rover receive x2.5 bonus to mining speed, ship speed, and cargo",,Rover Advanced Logistics
+Advanced Rover Resupply,"10 Advanced Battery, 6 Plasma Torch, 25 Rhodium Bar",Planets being scanned by a rover receive x5 bonus instead of x2.5,,Rover Resupply
+Manager Training,"1 Laser Torch, 50 Steel Bar",All manager benefits x1.10,,Telescope 6
+Contract Manager,"25 Titanium Bar, 20 Circuit, 20 Basic Computer",Increases manager slots by 1,,Manager Training
+Advanced Contract Manager,"10 Advanced Computer, 10 Thermal Scanner",Increases manager slots by 1,,Contract Manager
+Advanced Manager Training,"2 Advanced Computer, 10 Advanced Battery",All manager benefits x1.10,,Manager Training
+Superior Manager Training,200 Rhodium Bar,All manager benefits x1.10,,Advanced Manager Training
+Specialist University,"300 Inerton Alloy, 3 Motor",All manager secondary benefits x1.05,,Advanced Manager Training
+Advanced Specialist University,"2 Accumulator, 100 Scrith Alloy",All manager secondary benefits x1.05,Stacks with previous project,Specialist University
+Superior Specialist University,800 Viterium Alloy,All manager secondary benefits x1.05,Stacks with previous projects,Advanced Specialist University
+Leader,"60 Rhodium Bar, 5 Navigation Module",Ability to elect a leader among the managers. Leader bonuses x2,,Advanced Manager Training
+Advanced Leader,"200 Scrith Alloy, 10 Telescope, 10 Motor",All leader bonuses x3,,Leader
+Senior Leader,10 Robot,Ability to elect a second Leader among 5+ star managers,,Advanced Leader
+Superior Leader,"50 Collider, 20 Gravity Chamber, 200 Quolium Alloy",All leader bonuses x4,,Senior Leader
+Colonization,"20 Copper Bar, 10 Iron Bar",Complete planet requests to colonize them and earn bonuses,"Bonuses are Mining, Speed, and Cargo Multipliers",Management
+Colonization Scouting,15 Iron Nail,Increases max colonization tasks available from 3 to 4,,Colonization
+Colonization Advanced Scouting,60 Silver Bar,Increases max colonization tasks available from 4 to 5,,Colonization Scouting
+Colonization Superior Scouting,50K Diamond,Increases max colonization tasks available from 5 to 6,,Colonization Advanced Scouting
+Colonization Efficiency,"15 Silver Bar, 10 Hammer",Colonization costs 20% less resources,,Colonization
+Colony Renegotiation,"100 Bronze Bar, 400 Hammer",Allows you to renegotiate colonization requests of planets,,Colonization Efficiency
+Colonization Advanced Efficiency,"40 Steel Bar, 10 Laser",Colonization costs 20% less resources,,Colonization Efficiency
+Colonization Superior Efficiency,"50 Palladium Bar, 15 Laser Torch",Colonization costs 20% less resources,,Colonization Advanced Efficiency
+Terraforming,"20K Diamond, 10 Thermal Scanner",Increases one purchased planet's colonization level by 2 instantly,,Colonization Advanced Efficiency
+Advanced Terraforming,10 Satellite,Increases one purchased planet's colonization level by 3 instantly,,Terraforming
+Colony Tax Incentives,60 Aluminum Bar,"Planet upgrades reduced by 5% per colony level (mine, speed, cargo)",,Colonization Scouting OR Colonization Efficiency
+Colony Advanced Tax Incentives,60 Bronze Bar,"Planet upgrades reduced by 5% more per colony level (mine, speed, cargo)",,Colony Tax Incentives
+Colony Superior Tax Incentives,60 Palladium Bar,"Planet upgrades reduced by 5% more per colony level (mine, speed, cargo)",,Colony Advanced Tax Incentives
+Rover,10 Copper Wire,Ability to scan planets for valuable items,"Finds dark matter, boosts, and occasionally resource stars and managers.",Asteroid Miner
+Advanced Mining,"5 Battery, 20 Aluminum Bar",All planet mine rates x 1.25,,Rover
+Advanced Thrusters,"2 Glass, 10 Gold Bar",All ship speeds x 1.25,,Advanced Mining
+Advanced Cargo Handling,"5 Hammer, 25 Silver Bar",All ship cargo x 1.25,,Advanced Mining
+Superior Mining,"10 Laser Torch, 25 Platinum Bar",All planet mine rates x 1.25,"Additive with Advanced, or actually only x1.2",Advanced Thrusters OR Advanced Cargo Handling
+Superior Thrusters,4 Advanced Battery,All ship speeds x 1.25,"Additive with Advanced, or actually only x1.2",Superior Mining
+Superior Cargo Handling,50 Titanium Bar,All ship cargo x 1.25,"Additive with Advanced, or actually only x1.2",Superior Mining
+Smelter,"600 Copper, 250 Iron",Refine ores into more valuable materials,,Asteroid Miner
+Crafter,"5K Lead, 5 Iron Bar",Crafts items from raw materials,,Smelter
+Advanced Crafter,"5 Lens, 50 Gold Bar",All crafters speed x 1.20,,Crafter
+Crafting Efficiency,30 Solar Panel,Decreases ingredients required by 20% for all crafters,,Advanced Crafter
+Superior Crafting,"2 Thermal Scanner, 10 Advanced Battery, 20 Laser Torch",All crafters speed x1.20,,Crafting Efficiency OR Advanced Item Value
+Advanced Item Value,"1 Lens, 5 Silver Bar",x1.20 to all item values,,Advanced Crafter
+Crafting Specialist,"3 Advanced Battery, 2 Advanced Computer",10% chance to craft double of an item,,Advanced Item Value
+Superior Item Value,"200 Palladium Bar, 25 Laser Torch",x1.20 to all item values,,Advanced Item Value
+Advanced Furnace,"3 Glass, 10 Aluminum Bar",All smelters speed x 1.20,,Smelter
+Smelting Efficiency,200 Bronze Bar,Decreases ingredients required by 20% for all smelters,,Advanced Furnace
+Superior Furnace,"5 Iridium Bar, 20 Titanium Bar, 50 Platinum Bar",All smelters speed x1.20,,Smelting Efficiency OR Advanced Alloy Value
+Advanced Alloy Value,"3 Circuit, 10 Silver Bar",x1.2 to all alloy values,,Advanced Furnace
+Smelting Specialist,"5 Basic Computer, 2 Advanced Battery",10% chance to smelt double of an alloy,,Advanced Alloy Value
+Superior Alloy Value,"250K Diamond, 30 Laser",x1.2 to all alloy values,,Advanced Alloy Value
+Preferred Vendor,"200 Iron Nail, 75 Hammer, 40 Circuit",Price of building new smelters and crafters reduced by 50%,,Superior Furnace
+Furnace Overdrive,"20 Osmium Bar, 1 Plasma Torch","Ability to put one furnace into overdrive. Smelt speed x2, but ingredients cost +50%",,Superior furnace
+Advanced Furnace Overdrive,"40 Rhodium Bar, 20 Inerton Alloy, 10 Thermal Scanner",Increases Furnace Overdrive smelt speed to x4,,Furnace Overdrive
+Furnace Overdrive Efficiency,"200 Iridium Bar, 1 Motor",Decreases Furnace Overdrive extra ingredient cost to +20%,,Furnace Overdrive
+Furnace Overdrive 2,"200 Uru Alloy, 20 Plasma Torch, 2 Nuclear Capsule",Ability to put a second furnace into overdrive,,Furnace Overdrive
+Furnace Overdrive 3,"300 Aether Alloy, 100 Plasma Torch, 2 Fusion Capsule",Ability to put a third furnace into overdrive,,Furnace Overdrive 2
+Surge Mapping,"2 Battery, 2 Lead Bar",Detected Surges on planets within Telescopes 0 to 3 are now class 2. Higher classes amplify surge effects.,Costs 80 Cells,Telescope 3 & Surge Branch 1 node
+Advanced Surge Mapping,"4 Hammer, 6 Silicon Bar",Detected Surges on planets within Telescopes 0 to 3 are now class 3. Higher classes amplify surge effects.,,Surge Mapping
+Superior Surge Mapping,"5 Glass, 10 Aluminum Bar",Detected Surges on planets within Telescopes 0 to 3 are now class 4. Higher classes amplify surge effects.,,Advanced Surge Mapping
+Echo Filtering,"5 Circuit, 8 Silver Bar",Detected Surges on planets within Telescopes 4 to 7 are now class 2. Higher classes amplify surge effects.,Costs 160 Cells,Surge Branch 2 node
+Advanced Echo Filtering,"6 Lens, 12 Gold Bar",Detected Surges on planets within Telescopes 4 to 7 are now class 3. Higher classes amplify surge effects.,,Echo Filtering
+Superior Echo Filtering,"8 Laser, 20 Bronze Bar",Detected Surges on planets within Telescopes 4 to 7 are now class 4. Higher classes amplify surge effects.,,Advanced Echo Filtering
+Harmonic Calibration,"8 Basic Computer, 12 Steel Bar",Detected Surges on planets within Telescopes 8 to 11 are now class 2. Higher classes amplify surge effects.,Costs 250 Cells,Surge Branch 3 node
+Advanced Harmonic Calibration,"10 Solar Panel, 20 Platinum Bar",Detected Surges on planets within Telescopes 8 to 11 are now class 3. Higher classes amplify surge effects.,,Harmonic Calibration
+Superior Harmonic Calibration,"20 Laser Torch, 30 Titanium Bar",Detected Surges on planets within Telescopes 8 to 11 are now class 4. Higher classes amplify surge effects.,,Advanced Harmonic Calibration
+Reactive Sweep,"10 Advanced Battery, 18 Iridium Bar",Detected Surges on planets within Telescopes 12 to 15 are now class 2. Higher classes amplify surge effects.,Costs 320 Cells,Surge Branch 4 node
+Advanced Reactive Sweep,"18 Thermal Scanner, 28 Palladium Bar",Detected Surges on planets within Telescopes 12 to 15 are now class 3. Higher classes amplify surge effects.,,Reactive Sweep
+Superior Reactive Sweep,"30 Advanced Computer, 40 Osmium Bar",Detected Surges on planets within Telescopes 12 to 15 are now class 4. Higher classes amplify surge effects.,,Advanced Reactive Sweep
+Anomaly Resolution,"15 Navigation Module, 22 Rhodium Bar",Detected Surges on planets within Telescopes 16 to 19 are now class 2. Higher classes amplify surge effects.,Costs 360 Cells,Surge Branch 5 node
+Advanced Anomaly Resolution,"25 Plasma Torch, 35 Quadium Alloy",Detected Surges on planets within Telescopes 16 to 19 are now class 3. Higher classes amplify surge effects.,,Anomaly Resolution
+Superior Anomaly Resolution,"40 Radio Tower, 50 Scrith Alloy",Detected Surges on planets within Telescopes 16 to 19 are now class 4. Higher classes amplify surge effects.,,Advanced Anomaly Resolution
+Signal Stratification,"20 Telescope, 28 Uru Alloy",Detected Surges on planets within Telescopes 20 to 23 are now class 2. Higher classes amplify surge effects.,Costs 400 Cells,Surge Branch 6 node
+Advanced Signal Stratification,"32 Satellite Dish, 42 Vibranium Alloy",Detected Surges on planets within Telescopes 20 to 23 are now class 3. Higher classes amplify surge effects.,,Signal Stratification
+Superior Signal Stratification,"50 Motor, 60 Aether Alloy",Detected Surges on planets within Telescopes 20 to 23 are now class 4. Higher classes amplify surge effects.,,Advanced Signal Stratification
