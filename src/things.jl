@@ -8,9 +8,28 @@ include_dependency(joinpath(@__DIR__, "Ores"))
 include_dependency(joinpath(@__DIR__, "Alloys"))
 include_dependency(joinpath(@__DIR__, "Crafted"))
 
+
+"""
+`Thing` is the abstract supertype of [`Ore`](@ref), [`Alloy`](@ref) and
+[`Crafted`](@ref).
+"""
 abstract type Thing end
+
+"""
+`Ore` is the abstract supertype for anything that is mined.
+"""
 abstract type Ore <: Thing end
+
+"""
+`Alloy` is the abstract supertype of anything that is smelted from
+[`Ore`](@ref) or other [`Alloy`](@ref)s.
+"""
 abstract type Alloy <: Thing end
+
+"""
+`Crafted` is the abstract suppertype of anything that is crafted from
+other [`Thing`](@ref)s.
+"""
 abstract type Crafted <: Thing end
 
 
@@ -30,6 +49,11 @@ function canonicalize_name(name)
 end
 
 
+"""
+    all_things()
+
+returns a list of all concrete subtypes of [`Thing`](@ref) in canonical order.
+"""
 function all_things()
     things = Type{<:Thing}[]
     function walk(t)
