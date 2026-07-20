@@ -1,8 +1,8 @@
-export Recipie, ALL_RECIPIES, lookup_recipie, @rx_str
+export Recipie, ALL_RECIPIES, delta, lookup_recipie, @rx_str
 
 struct Recipie
     make::Type{<:Thing}
-    delta::Inventory
+    ingredients::Inventory
     duration_seconds::Union{Missing, Int}
 
     Recipie(name, ingredients::Inventory, duration_seconds) =
@@ -10,6 +10,9 @@ struct Recipie
 end
 
 namestring(r::Recipie) = namestring(r.make)
+
+delta(r::Recipie) = r.make(1) + r.ingredients
+
 
 ALL_RECIPIES = Recipie[]
 

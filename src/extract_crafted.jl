@@ -68,7 +68,7 @@ function make_crafted_recipies()
         end
         # To make a recipie we add its materials to our supply.  The
         # recipies inputs are diminished and is product is augmented:
-        materials = Inventory(type(1)) - parse_materials_string(name1, materials)
+        materials = - parse_materials_string(name1, materials)
         try
             push!(recipies, Recipie(type, materials, duration))
         catch e
