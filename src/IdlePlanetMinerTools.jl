@@ -1,5 +1,6 @@
 module IdlePlanetMinerTools
 
+include("modifiers.jl")
 include("things.jl")
 include("inventory.jl")
 include("arithmetic.jl")
