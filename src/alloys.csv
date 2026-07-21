@@ -1,0 +1,29 @@
+Alloys,Cost To Unlock,Material Cost,Time to Smelt,Sell Price,Crafting uses
+Copper Bar,Free,1K Copper,0:20,1.45K,"Copper Wire (5), Battery (10)"
+Iron Bar,3K,1K Iron,0:30,3K,"Iron Nails (5), Laser (10)"
+Lead Bar,9K,1K Lead,0:40,6.1K,Hammer (5)
+Silicon Bar,25K,1K Silicon,1:00,12.5K,"Glass (10), Circuit (5)"
+Aluminum Bar,75K,1K Aluminum,1:20,27.6K,"Circuit (5), Radio Tower (150), Wind Turbine (150)"
+Silver Bar,225K,1K Silver,2:00,60K,"Lens (5), Basic Computer (5)"
+Gold Bar,500K,1K Gold,3:00,120K,Laser (5)
+Bronze Bar,1M,"2 Silver Bar, 10 Copper Bar",4:00,234K,"Laser Torch (5), Motor (500)"
+Steel Bar,2M,"15 Lead Bar, 30 Iron Bar",8:00,340K,"Advanced Battery (20), Satellite Dish (150)"
+Platinum Bar,4M,"2 Gold Bar, 1K Platinum",10:00,780K,"Thermal Scanner (5), Radio Tower (160)"
+Titanium Bar,8M,"2 Bronze Bar, 1K Titanium",12:00,1.63M,"Advanced Computer (5), Radio Tower (40)"
+Iridium Bar,15M,"2 Steel Bar, 1K Iridium",14:00,3.11M,"Plasma Torch (15), Nuclear Reactor (300)"
+Palladium Bar,30M,"2 Platinum Bar, 1K Palladium",16:00,7M,Satellite Dish (20)
+Osmium Bar,60M,"2 Titanium Bar, 1K Osmium",18:00,14.5M,Accumulator (20)
+Rhodium Bar,120M,"2 Iridium bar, 1K Rhodium",20:00,31M,Nuclear Capsule (5)
+Inerton Alloy,250M,"2 Paladium Bar, 1K Inerton",24:00,68M,Collider (500)
+Quadium Alloy,500M,"2 Osmium Bar, 1K Quadium",28:00,152M,Collider (100)
+Scrith Alloy,1B,"2 Rhodium Bar, 1K Scrith",32:00,352M,Robot (300)
+Uru Alloy,2B,"2 Inerton Alloy, 1K Uru",36:00,832M,Fusion Capsule (200)
+Vibranium Alloy,4B,"2 Quadium Alloy, 1K Vibranium",40:00,2.05B,Fusion Capsule (100)
+Aether Alloy,8B,"2 Scrith Alloy, 1K Aether",44:00,5.12B,
+Viterium Alloy,16B,"2 Uru Alloy, 1k Viterium",48:00,15.50B,
+Xynium Alloy,84B,"5 Vibranium Alloy, 1500 Xynium",55:00,48.0B,
+Quolium Alloy,275B,"5 Aether Alloy, 1500 Quolium",1:02:00,160B,
+Luterium Alloy,1T,"5 Viterium Alloy, 1500 Luterium",1:09:00,600B,
+Wraith Alloy,4.2T,"5 Xynium Alloy, 1500 Wraith",1:16:00,2.40T,
+Aqualite Alloy,12T,"5 Quolium Alloy, 1500 Aqualite",1:23:00,17.50T,
+Opalite Alloy,30T,"5 Wraith Alloy, 1500 Opalite",1:32:00,277T,
