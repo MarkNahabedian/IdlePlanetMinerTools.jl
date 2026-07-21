@@ -34,5 +34,3 @@ function extract_alloys()
 end
 
 
-extract_alloys()
-

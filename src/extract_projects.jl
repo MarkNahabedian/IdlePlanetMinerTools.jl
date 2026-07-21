@@ -9,14 +9,14 @@ using OrderedCollections
 
 include_dependency(joinpath(@__DIR__, "projects.csv"))
 
-export Project, extract_projects, make_project_definitions
+export Project, fetch_projects, make_project_definitions
 
 abstract type Project <: Modifier end
 
 PROJECTS_SOURCE = "https://idle-planet-miner.fandom.com/wiki/Projects"
 
 ### WHY does the first row have all missing values?
-function extract_projects()
+function fetch_projects()
     with_webdriver_session(FirefoxGeckodriverSession()) do session
         page = fetch_page(session, PROJECTS_SOURCE)
         # First collect all column names:

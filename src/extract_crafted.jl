@@ -8,7 +8,7 @@ using DataFrames
 
 include_dependency(joinpath(@__DIR__, "crafted.csv"))
 
-export extract_crafted, make_crafted_recipies
+export fetch_crafted, make_crafted_recipies
 
 RECIPIE_SOURCE = "https://idle-planet-miner.fandom.com/wiki/Items"
 
@@ -26,7 +26,7 @@ function write_crafted_list_file()
 end
 
 
-function extract_crafted()
+function fetch_crafted()
     with_webdriver_session(FirefoxGeckodriverSession()) do session
         page = fetch_page(session, RECIPIE_SOURCE)
         table = only(eachmatch(Cascadia.Selector("table.article-table"), page.root))
