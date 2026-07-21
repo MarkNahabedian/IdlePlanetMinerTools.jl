@@ -38,7 +38,7 @@ For convenience, there is a total ordering defined on all concrete
 subtypes of [`Thing`](@ref).
 
 
-@@ Arithmetic
+## Arithmetic
 
 Arithmetic operations are defined for `Thing`s and `Inventory`s:
 
@@ -54,8 +54,13 @@ actions, result = crafting_plan(have - need)
 ```
 
 
+## Index
+
 ```@index
 ```
+
+
+## Definitions
 
 ```@autodocs
 Modules = [IdlePlanetMinerTools]
