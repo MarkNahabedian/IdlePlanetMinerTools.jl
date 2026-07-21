@@ -46,7 +46,7 @@ Arithmetic operations are defined for `Thing`s and `Inventory`s:
 ```@example
 using IdlePlanetMinerTools
 
-need = 7 * rx"gravity chamber".delta
+need = 7 * Delta(rx"gravity chamber")
 
 have = GravityChamber(4) + AdvancedComputer(42) + BasicComputer(64) + Circuit(902)
 
