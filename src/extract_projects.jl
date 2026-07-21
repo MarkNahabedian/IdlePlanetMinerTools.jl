@@ -7,7 +7,7 @@ using CSV
 using DataFrames
 using OrderedCollections
 
-# include_dependency(joinpath(@__DIR__, "crafted.csv"))
+include_dependency(joinpath(@__DIR__, "projects.csv"))
 
 export Project, extract_projects, make_project_definitions
 
