@@ -16,13 +16,15 @@ indicating a quantity of that `Thing`.
 
 One can make a Thing using a concrete constructor
 
-```@example
+```@example things
+using IdlePlanetMinerTools
+
 Battery(3)
 ```
 
 or using the `@t_str` macro, which makes the named thing with a count of 1.
 
-```@example
+```@example things
 t"battery"
 ```
 
