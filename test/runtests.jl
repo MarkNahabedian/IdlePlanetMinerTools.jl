@@ -1,5 +1,6 @@
 using IdlePlanetMinerTools
 using Test
+using InteractiveUtils
 
 @testset "arithmetic" begin
     @test t"Iron" + 2 * t"Iron" == 3 * t"Iron"
@@ -12,3 +13,12 @@ using Test
     @test GravityChamber(4) + AdvancedComputer(29) + BasicComputer(23) + Circuit(1290) ==
         Inventory(GravityChamber(4), AdvancedComputer(29), BasicComputer(23), Circuit(1290))
 end
+
+@testset "object counts" begin
+    @test length(subtypes(Ore)) == 27
+    @test length(subtypes(Alloy)) == 28
+    @test length(subtypes(Crafted)) == 44
+    @test length(subtypes(Project)) == 123
+    @test length(ALL_RECIPIES)==  167
+end
+

@@ -49,7 +49,7 @@ end
 
 function make_crafted_recipies()
     recipies = Recipie[]
-    df = CSV.read("src/crafted.csv", DataFrame)
+    df = CSV.read(joinpath(@__DIR__, "crafted.csv"), DataFrame)
     # Item,Unlock Cost,Sell Price,Material Cost,Time To Craft/s,Used For
     for row in eachrow(df)
         name1 = row["Item"]
@@ -69,11 +69,7 @@ function make_crafted_recipies()
         # To make a recipie we add its materials to our supply.  The
         # recipies inputs are diminished and is product is augmented:
         materials = - parse_materials_string(name1, materials)
-        try
-            push!(recipies, Recipie(type, materials, duration))
-        catch e
-            @warn("Recipie failed", name1, materials, duration, e)
-        end
+        push!(recipies, Recipie(type, materials, duration))
     end
     recipies
 end
@@ -85,12 +81,13 @@ function parse_materials_string(name, materials_string::AbstractString)
     # 5 Copper Bar
     # 10k Palladium Bar
     regexps = [
-        r"(?<name>[a-zA-Z ]+) [(](?<count>[0-9]+)(?<suffix>[k]?)[)]",
-        r"(?<count>[0-9]+)(?<suffix>[k]?) (?<name>[a-zA-Z ]+)"
+        r"(?<name>[a-zA-Z ]+) [(](?<count>[0-9.]+)(?<suffix>[a-zA-Z]?)[)]",
+        r"(?<count>[0-9.]+)(?<suffix>[a-zA-Z]?) (?<name>[a-zA-Z ]+)"
     ]
     multipliers = Dict([
         "" => 1,
-        "k" => 1000])
+        "k" => 1000,
+        "K" => 1000])
     function parse_material(material)
         local m
         for re in regexps
@@ -104,7 +101,7 @@ function parse_materials_string(name, materials_string::AbstractString)
         end
         multiplier = multipliers[m["suffix"]]
         type = best_thing_match(m["name"])
-        count = multiplier * parse(Int, m["count"])
+        count = multiplier * trunc(Int, parse(Float32, m["count"]))
         type(count)
     end
     Inventory(Thing[ parse_material(material)

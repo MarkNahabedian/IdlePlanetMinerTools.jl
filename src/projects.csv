@@ -1,9 +1,4 @@
 Project,Cost,Text,Notes,Prerequisite
-,,,,
-Management,"400 Copper, 50 Iron",Hire and assign managers to planets,"Prerequisite for Telescope 1, Colonization",
-"200 Copper, 25 Iron",,,,
-Asteroid Miner,"400 Copper, 100 Iron",Ability to mine asteroids for ore,"Prerequisite for Rover, Smelter",
-"200 Copper, 50 Iron",,,,
 Telescope 1,"1.5K Iron, 5 Copper Bar",Extends vision to 3 more planets,Prerequisite for Beacon,Management
 Telescope 2,"10 Lead Bar, 500 Silicon",Extends vision to 3 more planets,Prerequisite for Resource Details,Telescope 1
 Telescope 3,"10 Iron Nail, 15 Silicon Bar",Extends vision to 3 more planets,Prerequisite for Asteroid Refined Drilling,Telescope 2

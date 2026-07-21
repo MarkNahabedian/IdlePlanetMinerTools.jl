@@ -1,7 +1,7 @@
 export Recipie, ALL_RECIPIES, delta, lookup_recipie, @rx_str
 
 struct Recipie
-    make::Type{<:Thing}
+    make    # ::Type{<:Union{Thing, Project}}
     ingredients::Inventory
     duration_seconds::Union{Missing, Int}
 
