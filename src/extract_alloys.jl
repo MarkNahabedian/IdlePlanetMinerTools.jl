@@ -8,12 +8,12 @@ using DataFrames
 
 include_dependency(joinpath(@__DIR__, "alloys.csv"))
 
-export extract_alloys
+export fetch_alloys, make_alloy_recipies
 
 PROJECTS_SOURCE = "https://idle-planet-miner.fandom.com/wiki/Alloys"
 
 
-function extract_alloys()
+function fetch_alloys()
     with_webdriver_session(FirefoxGeckodriverSession()) do session
         page = fetch_page(session, PROJECTS_SOURCE)
         table = only(eachmatch(Cascadia.Selector("table.article-table"), page.root))
@@ -33,4 +33,28 @@ function extract_alloys()
     end
 end
 
+
+function make_alloy_recipies()
+    recipies = Recipie[]
+    df = CSV.read(joinpath(@__DIR__, "alloys.csv"), DataFrame)
+    # Alloys,Cost To Unlock,Material Cost,Time to Smelt,Sell Price,Crafting uses
+    for row in eachrow(df)
+        name1 = row["Alloys"]
+        type = best_thing_match(name1)
+        materials = row["Material Cost"]
+        duration = row["Time to Smelt"]
+        if isa(duration, AbstractString)
+            m = match(r"([0-9,]+)", duration)
+            if m == nothing
+                @warn("Unrecognized duration $duration")
+                continue
+            end
+            duration = m.match
+            duration = parse(Int, replace(duration, "," => "")) 
+        end
+        materials = - parse_materials_string(name1, materials)
+        push!(recipies, Recipie(type, materials, duration))
+    end
+    recipies
+end
 

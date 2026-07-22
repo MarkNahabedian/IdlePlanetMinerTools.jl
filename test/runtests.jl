@@ -19,6 +19,6 @@ end
     @test length(subtypes(Alloy)) == 28
     @test length(subtypes(Crafted)) == 44
     @test length(subtypes(Project)) == 123
-    @test length(ALL_RECIPIES)==  167
+    @test length(ALL_RECIPIES) ==  195
 end
 

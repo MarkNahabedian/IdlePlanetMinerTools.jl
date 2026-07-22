@@ -17,12 +17,14 @@ prerequisites(::Project)::Vector[<:Project]  = []
 
 include("recipie.jl")
 include("extract_crafted.jl")
+include("extract_alloys.jl")
 include("crafting.jl")
 
-ALL_RECIPIES = make_crafted_recipies()
-
+ALL_RECIPIES = [
+    make_alloy_recipies()...,
+    make_crafted_recipies()...,
+]
 
 include("extract_projects.jl")
-
 
 end
