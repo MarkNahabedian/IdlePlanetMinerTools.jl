@@ -11,6 +11,13 @@ end
 
 namestring(r::Recipie) = namestring(r.make)
 
+"""
+    delta(r::Recipie, modifiers = DEFAULT_MODIFIERS)
+
+Returns an [`Inventory`](@ref) that would be the effect of applying
+the [`Recipie`](@ref).  `modifiers` is a vector of the player's
+current [`Modifier`](@ref)s.
+"""
 function delta(r::Recipie, modifiers = DEFAULT_MODIFIERS)
     multiplier = reduce(*, map(smelt_ingredient_scalar, modifiers);
                         init = 1.0)
