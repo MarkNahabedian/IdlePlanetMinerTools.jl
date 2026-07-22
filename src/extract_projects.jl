@@ -67,12 +67,12 @@ ProjectTextToAction = [
     (re = r"Decreases ingredients required by (?<factor>[0-9]+)% for all smelters",
      f = function(m::RegexMatch, project_type)
          factor = 1 - parse(Float32, m["factor"]) / 100
-         :(smelt_ingredient_scalar(::$project_type) = factor)
+         :(smelt_ingredient_scalar(::$project_type) = $factor)
      end),
     (re = r"Decreases ingredients required by (?<factor>[0-9]+)% for all crafters",
      f = function(m::RegexMatch, project_type)
          factor = 1 - parse(Float32, m["factor"]) / 100
-         :(craft_ingredient_scalar(::$project_type) = factor)
+         :(craft_ingredient_scalar(::$project_type) = $factor)
      end)
 ]
 

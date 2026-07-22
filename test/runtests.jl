@@ -22,3 +22,20 @@ end
     @test length(ALL_RECIPIES) ==  195
 end
 
+@testset "recipie ingredient modifiers" begin
+    meths = cat(map(methods, [
+        smelt_ingredient_scalar,
+        craft_ingredient_scalar
+    ])..., dims=1)
+    specs = filter(t -> isconcretetype(t),
+                   Set(map(meths) do m
+                           Base.unwrap_unionall(m.sig).parameters[2]
+                       end))
+    modifiers = map(s -> s(), collect(specs))
+    r = rx"PlatinumBar"
+    @test delta(r, []) ==
+        Platinum(-1000.0) + GoldBar(-2.0) + PlatinumBar(1)
+    @test delta(r, modifiers) ==
+        Platinum(-800.000) + GoldBar(-1.600) + PlatinumBar(1)
+end
+

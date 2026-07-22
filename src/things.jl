@@ -99,7 +99,8 @@ map(eval,
             name = Symbol(canonicalize_name(m.match))
             push!(exprs,
                   (:(struct $name <: Ore
-                         count::Int
+                         count::Real
+                         $name(count) = new(round(count, digits=3))
                      end)))
             push!(exprs,
                   (:(export $name)))
@@ -122,7 +123,8 @@ map(eval,
             name = Symbol(canonicalize_name(m["name"]))
             push!(exprs,
                   (:(struct $name <: Alloy
-                         count::Int
+                         count::Real
+                         $name(count) = new(round(count, digits=3))
                      end)))
             push!(exprs,
                   (:(export $name)))
@@ -145,7 +147,8 @@ map(eval,
             name = Symbol(canonicalize_name(m.match))
             push!(exprs,
                   (:(struct $name <: Crafted
-                         count::Int
+                         count::Real
+                         $name(count) = new(round(count, digits=3))
                      end)))
             push!(exprs,
                   (:(export $name)))

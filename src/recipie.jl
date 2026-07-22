@@ -11,7 +11,11 @@ end
 
 namestring(r::Recipie) = namestring(r.make)
 
-delta(r::Recipie) = r.make(1) + r.ingredients
+function delta(r::Recipie, modifiers = DEFAULT_MODIFIERS)
+    multiplier = reduce(*, map(smelt_ingredient_scalar, modifiers);
+                        init = 1.0)
+    r.make(1) + multiplier * r.ingredients
+end
 
 
 ALL_RECIPIES = Recipie[]
