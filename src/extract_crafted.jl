@@ -8,7 +8,7 @@ using DataFrames
 
 include_dependency(joinpath(@__DIR__, "crafted.csv"))
 
-export fetch_crafted, make_crafted_recipies
+export fetch_crafted, make_crafted_recipies, parse_material
 
 RECIPIE_SOURCE = "https://idle-planet-miner.fandom.com/wiki/Items"
 
@@ -74,36 +74,39 @@ function make_crafted_recipies()
     recipies
 end
 
+PARSE_MATERIALS_REGEXPS = [
+    r"(?<name>[a-zA-Z ]+) [(](?<count>[0-9.]+)(?<suffix>[a-zA-Z]?)[)]",
+    r"(?<count>[0-9.]+)(?<suffix>[a-zA-Z]?) (?<name>[a-zA-Z ]+)"
+]
+
+PARSE_MATERIALS_MULTIPLIER_SUFFIXES = Dict([
+    "" => 1,
+    "k" => 1000,
+    "K" => 1000])
+    
+function parse_material(material)
+    local m
+    for re in PARSE_MATERIALS_REGEXPS
+        m = match(re, String(material))    ### match doesn't take SubStrings!
+        if m != nothing
+            break
+        end
+    end
+    if m == nothing
+        error("No match: $name: $material")
+    end
+    multiplier = PARSE_MATERIALS_MULTIPLIER_SUFFIXES[m["suffix"]]
+    type = best_thing_match(m["name"])
+    count = multiplier * trunc(Int, parse(Float32, m["count"]))
+    type(count)
+end
+
 
 function parse_materials_string(name, materials_string::AbstractString)
     # "Laser (1), Laser Torch (5), Telescope (20), Inside Trader (10), Alchemy (6), Rover Advanced Logistics (10), Advanced Crafter (5), Advanced Item Value (1)"
     # "4 Advanced Teleporters, 400 Luterium Alloy"
     # 5 Copper Bar
     # 10k Palladium Bar
-    regexps = [
-        r"(?<name>[a-zA-Z ]+) [(](?<count>[0-9.]+)(?<suffix>[a-zA-Z]?)[)]",
-        r"(?<count>[0-9.]+)(?<suffix>[a-zA-Z]?) (?<name>[a-zA-Z ]+)"
-    ]
-    multipliers = Dict([
-        "" => 1,
-        "k" => 1000,
-        "K" => 1000])
-    function parse_material(material)
-        local m
-        for re in regexps
-            m = match(re, material)
-            if m != nothing
-                break
-            end
-        end
-        if m == nothing
-            error("No match: $name: $material")
-        end
-        multiplier = multipliers[m["suffix"]]
-        type = best_thing_match(m["name"])
-        count = multiplier * trunc(Int, parse(Float32, m["count"]))
-        type(count)
-    end
     Inventory(Thing[ parse_material(material)
                      for material in split(materials_string, ", ") ])
 end
