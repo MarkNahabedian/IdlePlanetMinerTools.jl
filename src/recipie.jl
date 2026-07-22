@@ -1,5 +1,10 @@
 export Recipie, ALL_RECIPIES, delta, lookup_recipie, @rx_str
 
+
+"""
+Recipie describes how to make Alloys, crafted items, projects, etc,
+anything that required some number of [`Thing`](@ref)s.
+"""
 struct Recipie
     make    # ::Type{<:Union{Thing, Project}}
     ingredients::Inventory

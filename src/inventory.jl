@@ -1,6 +1,9 @@
 
 export Inventory
 
+"""
+An `Inventory` represents a collection of [`Thing`](@ref)s.
+"""
 struct Inventory
     items::Vector{Thing}
 

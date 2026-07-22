@@ -5,7 +5,12 @@ include("things.jl")
 include("inventory.jl")
 include("arithmetic.jl")
 
+
+"""
+Project represents an Idle Planet Miner project.
+"""
 abstract type Project end
+
 
 """
     prerequisites(::Project)
