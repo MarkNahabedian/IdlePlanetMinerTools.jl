@@ -79,8 +79,8 @@ function fetch_rooma()
 end
 
 ROOM_BOOST_TO_GENERIC_FUNCTION = Dict([
-    "Increase smelt speed" => :smelt_duration_scalar,
-    "Increase craft speed" => :craft_duration_scalar,
+    "Increase smelt speed" => :smelt_speed_scalar,
+    "Increase craft speed" => :craft_speed_scalar,
     "Decrease smelter ingredients" => :smelt_ingredient_scalar,
     "Decrease crafter ingredients" => :craft_ingredient_scalar
 ])

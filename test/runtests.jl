@@ -52,9 +52,9 @@ end
     @test isapprox(smelt_ingredient_scalar(Underforge(3)), 0.82)
     @test isapprox(craft_ingredient_scalar(Engineering(2)), 1)
     @test isapprox(craft_ingredient_scalar(Dorm(4)), 0.78)
-    @test isapprox(smelt_duration_scalar(Engineering(2)), 1)
-#     @test isapprox(smelt_duration_scalar(Forge(3)), 1 / 1.4)
-    @test isapprox(craft_duration_scalar(Astronomy(2)), 1)
-#    @test isapprox(craft_duration_scalar(Workshop(4)), 1 / 1.5)
+    @test isapprox(smelt_speed_scalar(Engineering(2)), 1)
+    @test isapprox(smelt_speed_scalar(Forge(3)), 1.4)
+    @test isapprox(craft_speed_scalar(Astronomy(2)), 1)
+    @test isapprox(craft_speed_scalar(Workshop(4)), 1.5)
 end
 
