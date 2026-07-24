@@ -31,7 +31,7 @@ function fetch_crafted()
         page = fetch_page(session, RECIPIE_SOURCE)
         table = only(eachmatch(Cascadia.Selector("table.article-table"), page.root))
         rows = eachmatch(Cascadia.Selector("table.article-table tr"), table)
-        # First ro is headings.
+        # First row is headings.
         column_headings = map(text, eachmatch(Cascadia.Selector("th"), rows[1]))[2:end]
         df = DataFrame([ h => String[] for h in column_headings ])
         for row in rows[2:end]

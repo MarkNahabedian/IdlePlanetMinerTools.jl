@@ -31,5 +31,6 @@ ALL_RECIPIES = [
 ]
 
 include("extract_projects.jl")
+include("extract_rooms.jl")
 
 end

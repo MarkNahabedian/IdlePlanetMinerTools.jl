@@ -1,0 +1,23 @@
+Room,Boost,Min Cost,CombinedMin Cost,BaseEffect,Per Level,Max Level,Max Bonus
+Engineering,Increase mine speed,3,3,x1.25,+.15,60,x10.1
+Forge,Increase smelt speed,3,3,x1.20,+.10,60,x7.10
+Aeronautical,Increase ship speed,6,9,x1.50,+.25,60,x16.25
+Astronomy,Reduce planet upgrade prices,12,21,x90%,- 4%,11,x50%
+Packaging,Increase cargo,21,42,x1.50,+.25,60,x16.25
+Workshop,Increase craft speed,35,77,x1.20,+.10,60,x7.1
+Laboratory,Decrease project cost,56,133,x90%,- 4%,11,x50%
+Robotics,Decrease rover time,87,220,x90%,- 4%,11,x50%
+Lounge,Increase credits earned,133,353,x1.15,+.05,60,x4.1
+Backup Generator,Increase max idle time,200,553,+0:30,+0:30,44,24hours
+Terrarium,Decrease colonization cost,298,851,x90%,- 4%,11,x50%
+Underforge,Decrease smelter ingredients,439,1290,x90%,- 4%,11,x50%
+Dorm,Decrease crafter ingredients,642,1932,x90%,- 4%,11,x50%
+Probability Drive,Enables Surges (50% roll),934,2866,T0,+1,23,T23
+Sales,Increase alloy and item value,1351,4217,x1.15,+.05,60,x4.1
+Classroom,All manager bonuses,1946,6163,x1.15,+.05,60,x4.1
+Marketing,Increase market bonuses,2932,"9,095",x1.30,+.10,60,x7.2
+Planet Relations,Colonizing Bonuses,4402,"13,497",x1.25,+.10,60,x7.15
+Belt Studies,Asteroid and debris Value,"6,586","20,083",x1.25,+.10,60,x7.15
+Crew Quarters,Additional 20% roll for surges,"9,358","29,441",T0,+1,23,T23
+Eleven Forward,Additional 10% roll for surges,"13,267","42,708",T0,+1,23,T23
+Final unpicked room,-,"18,762","61,470",-,-,-,-
