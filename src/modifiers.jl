@@ -1,6 +1,6 @@
 export Modifier, DEFAULT_MODIFIERS
 
-export spelt_diration_scalar, craft_diration_scalar,
+export smelt_duration_scalar, craft_duration_scalar,
     smelt_ingredient_scalar, craft_ingredient_scalar
 
 """
@@ -17,8 +17,8 @@ like [`delta`](@ref)where none are specified.
 DEFAULT_MODIFIERS = Modifier[]
 
 
-spelt_diration_scalar(::Modifier) = 1
-craft_diration_scalar(::Modifier) = 1
+smelt_duration_scalar(::Modifier) = 1
+craft_duration_scalar(::Modifier) = 1
 smelt_ingredient_scalar(::Modifier) = 1
 craft_ingredient_scalar(::Modifier) = 1
 

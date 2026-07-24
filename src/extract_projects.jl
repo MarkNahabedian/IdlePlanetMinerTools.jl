@@ -63,7 +63,7 @@ ProjectTextToAction = [
     (re = r"All smelters speed x ?(?<factor>[0-9.]+)",
      f = function(m::RegexMatch, project_type)
          factor = 1 / parse(Float32, m["factor"])
-         :(spelt_diration_scalar(::$project_type) = factor)
+         :(smelt_duration_scalar(::$project_type) = factor)
      end),
     # "All planet mine rates x 1.25"
     # "All ship cargo x 1.25"
