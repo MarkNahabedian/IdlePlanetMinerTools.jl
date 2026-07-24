@@ -5,7 +5,8 @@ using CSV
 using DataFrames
 using OrderedCollections
 
-export Room, fetch_rooma, base_effect, per_level_effect, max_level
+export Room, fetch_rooma, base_effect, per_level_effect, max_level,
+    extract_rooms
 
 include_dependency(joinpath(@__DIR__, "rooms.csv"))
 
@@ -56,7 +57,7 @@ This says nothing about what is modified.  It just represents a
 calculation that tis common to all rooms.
 """
 room_effect_factor(r::Room) =
-    base_effect(typeof(r)) + per_level_effect(typeof(room)) * (r.level - 1)
+    base_effect(typeof(r)) + per_level_effect(typeof(r)) * (r.level - 1)
 
 
 function fetch_rooma()
@@ -76,4 +77,94 @@ function fetch_rooma()
         df
     end
 end
+
+ROOM_BOOST_TO_GENERIC_FUNCTION = Dict([
+    "Increase smelt speed" => :smelt_duration_scalar,
+    "Increase craft speed" => :craft_duration_scalar,
+    "Decrease smelter ingredients" => :smelt_ingredient_scalar,
+    "Decrease crafter ingredients" => :craft_ingredient_scalar
+])
+
+
+function parse_base_effect(s::AbstractString)
+    # "x1.25", "x90%", "+0:30", "T0", "-"
+    if s in ["T0", "-"]
+        return nothing
+    end
+    m = match(r"^x(?<factor>[0-9.]+)$", s)
+    if m isa RegexMatch
+        return parse(Float32, m["factor"])
+    end
+    m = match(r"^x(?<pct>[0-9]+)%$", s)
+    if m isa RegexMatch
+        return parse(Float32, m["pct"]) / 100
+    end
+    m = match(r"^[+](?<hour>[0-9]+):(?<minute>[0-9]+)$", s)
+    if m isa RegexMatch
+        return parse(Int, m["hour"]) * 60 + parse(Int, m["minute"])
+    end
+    error("Unrecognized room base effect: \"$s\".")
+end
+
+function parse_per_level(s::AbstractString)
+    # "+.15", "- 4%", "+0:30", "-"
+    if s == "-"
+        return nothing
+    end
+    m = match(r"^[+](?<factor>[0-9.]+)$", s)
+    if m isa RegexMatch
+        return parse(Float32, m["factor"])
+    end
+    m = match(r"^- (?<pct>[0-9]+)%$", s)
+    if m isa RegexMatch
+        return - parse(Float32, m["pct"]) / 100
+    end
+    m = match(r"^[+](?<hour>[0-9]+):(?<minute>[0-9]+)$", s)
+    if m isa RegexMatch
+        return parse(Int, m["hour"]) * 60 + parse(Int, m["minute"])
+    end
+    error("Unrecognized room base effect: \"$s\".")
+end
+
+function parse_room_max_level(s::AbstractString)
+    if s == "-"
+        typemax(Int32)
+    else
+        parse(Int, s)
+    end
+end
+
+
+function extract_rooms()
+    df = CSV.read(joinpath(@__DIR__, "rooms.csv"), DataFrame)
+    # Room,Boost,Min Cost,CombinedMin Cost,BaseEffect,Per Level,Max Level,Max Bonus
+    for row in eachrow(df)
+        name = Symbol(canonicalize_name(row["Room"]))
+        boost = get(ROOM_BOOST_TO_GENERIC_FUNCTION, row["Boost"], nothing)
+        base = parse_base_effect(row["BaseEffect"])
+        per_level = parse_per_level(row["Per Level"])
+        max_level = parse_room_max_level(row["Max Level"])
+        eval(:(begin
+                   export $name
+                   struct $name <: Room
+                       level::Int
+                       function $name(level::Int)
+                           if level < 1 || level > $max_level
+                               error("Max level for $name is $max_level")
+                           end
+                           new(level)
+                       end
+                   end
+                   base_effect(::Type{$name}) = $base
+                   per_level_effect(::Type{$name}) = $per_level
+                   max_level(::Type{$name}) = $max_level
+               end
+               ))
+        if boost != nothing
+            eval(:($boost(room::$name) = room_effect_factor(room)))
+        end
+    end
+end
+
+extract_rooms()
 

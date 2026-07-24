@@ -20,6 +20,7 @@ end
     @test length(subtypes(Crafted)) == 44
     @test length(subtypes(Project)) == 125
     @test length(ALL_RECIPIES) ==  197
+    @test length(subtypes(Room)) == 22
 end
 
 @testset "recipie ingredient modifiers" begin
@@ -27,11 +28,11 @@ end
         smelt_ingredient_scalar,
         craft_ingredient_scalar
     ])..., dims=1)
-    specs = filter(t -> isconcretetype(t),
+    specs = filter(t -> isconcretetype(t) && t <: Project,
                    Set(map(meths) do m
                            Base.unwrap_unionall(m.sig).parameters[2]
                        end))
-    modifiers = map(s -> s(), collect(specs))
+    modifiers = map(s ->  s(), collect(specs))
     r = rx"PlatinumBar"
     @test delta(r, []) ==
         Platinum(-1000.0) + GoldBar(-2.0) + PlatinumBar(1)
@@ -44,5 +45,16 @@ end
     @test prerequisites(rx"Rover".make) == [AsteroidMiner]
     @test Set(prerequisites(rx"superior mining".make)) ==
         Set([AdvancedThrusters, AdvancedCargoHandling])
+end
+
+@testset "room modifiers" begin
+    @test isapprox(smelt_ingredient_scalar(Robotics(3)), 1)
+    @test isapprox(smelt_ingredient_scalar(Underforge(3)), 0.82)
+    @test isapprox(craft_ingredient_scalar(Engineering(2)), 1)
+    @test isapprox(craft_ingredient_scalar(Dorm(4)), 0.78)
+    @test isapprox(smelt_duration_scalar(Engineering(2)), 1)
+#     @test isapprox(smelt_duration_scalar(Forge(3)), 1 / 1.4)
+    @test isapprox(craft_duration_scalar(Astronomy(2)), 1)
+#    @test isapprox(craft_duration_scalar(Workshop(4)), 1 / 1.5)
 end
 

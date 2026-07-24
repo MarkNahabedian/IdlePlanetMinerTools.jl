@@ -132,10 +132,9 @@ function make_project_definitions()
         if desc isa AbstractString
             for (re, f) in ProjectTextToAction
                 m = match(re, desc)
-                if m isa Nothing
-                    continue
+                if m isa RegexMatch
+                    push!(methods, f(m, name))
                 end
-                push!(methods, f(m, name))
             end
         end
     end

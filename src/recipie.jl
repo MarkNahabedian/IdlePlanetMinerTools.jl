@@ -16,6 +16,9 @@ end
 
 namestring(r::Recipie) = namestring(r.make)
 
+ingredient_scalar_function(::Type{<:Alloy}) = smelt_ingredient_scalar
+ingredient_scalar_function(::Type{<:Crafted}) = craft_ingredient_scalar
+
 """
     delta(r::Recipie, modifiers = DEFAULT_MODIFIERS)
 
@@ -24,7 +27,7 @@ the [`Recipie`](@ref).  `modifiers` is a vector of the player's
 current [`Modifier`](@ref)s.
 """
 function delta(r::Recipie, modifiers = DEFAULT_MODIFIERS)
-    multiplier = reduce(*, map(smelt_ingredient_scalar, modifiers);
+    multiplier = reduce(*, map(ingredient_scalar_function(r.make), modifiers);
                         init = 1.0)
     r.make(1) + multiplier * r.ingredients
 end
