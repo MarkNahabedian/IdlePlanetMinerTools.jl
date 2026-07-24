@@ -9,9 +9,19 @@ using OrderedCollections
 
 include_dependency(joinpath(@__DIR__, "projects.csv"))
 
-export Project, fetch_projects, make_project_definitions
+export Project, fetch_projects, make_project_definitions, prerequisites
 
 abstract type Project <: Modifier end
+
+
+"""
+    prerequisites(::Type{<:Project})
+
+Returns a vector of the immediate prerequisites that are required
+before researching the specified `Project`.
+"""
+prerequisites(::Type{<:Project}) = []
+
 
 PROJECTS_SOURCE = "https://idle-planet-miner.fandom.com/wiki/Projects"
 
@@ -26,18 +36,16 @@ function fetch_projects()
             push!(headings, map(text, eachmatch(Cascadia.Selector("th"), row1))...)
         end
         headings = collect((Symbol(h) for h in headings))
-        println("*** Headings: ", headings)
         df = DataFrame([ h => String[] for h in headings])
-        println(df)
         defaults = NamedTuple{Tuple(headings)}(Tuple(map(h -> "", headings)))
-        println("*** Defaults ", defaults)
         for table in eachmatch(Cascadia.Selector("table.article-table"), page.root)
             rows = eachmatch(Cascadia.Selector("table.article-table tr"), table)
             column_headings = map(Symbol, map(text, eachmatch(Cascadia.Selector("th"),
                                                               rows[1])))
             for row in rows[2:end]
                 tds = eachmatch(Cascadia.Selector("td"), row)
-                if length(tds) != length(headings)
+                if length(tds) != length(column_headings)
+                    println("skipping tr for $(length(headings)) $(length(tds)) )$tds.")
                     continue
                 end
                 data = map(text, tds)
@@ -80,6 +88,7 @@ function make_project_definitions()
     df = CSV.read(joinpath(@__DIR__, "projects.csv"), DataFrame)
     types = []
     recipies = []
+    prqs = []
     methods = []
     for row in eachrow(df)
         name = Symbol(canonicalize_name(row["Project"]))
@@ -94,11 +103,29 @@ function make_project_definitions()
                             0)))
         end
         # Prerequisites:
-        # "Advanced Thrusters OR Advanced Cargo Handling"
         prereqs = row["Prerequisite"]
         if prereqs isa AbstractString
-            prereqs = map(Symbol, map(canonicalize_name, split(prereqs, " OR ")))
-            push!(methods, :(prerequisites(::$name) = $prereqs))
+            if occursin(" OR ", prereqs)
+                # "Advanced Thrusters OR Advanced Cargo Handling"
+                prereqs = map(Symbol, map(canonicalize_name,
+                                          split(prereqs, " OR ")))
+                push!(prqs, name => prereqs)
+            elseif occursin(" & ", prereqs)
+                # Telescope 3 & Surge Branch 1 node
+                # Maybe we need conjunction for this.  I don't
+                # understand surges yet.  We'll burn that bridge when
+                # we come to it.
+                s = split(prereqs, " & ")
+                prereqs = [Symbol(canonicalize_name(s[1]))]
+                println("Ignoring $(s[2]) in $prereqs")
+                push!(prqs, name => prereqs)
+            elseif nothing != match(r"Surge Branch (?<num>[0-9]*) node",
+                                    prereqs)
+                println("Ignoring $prereqs")
+                # ignore for now
+            else
+                push!(prqs, name => [Symbol(canonicalize_name(prereqs))])
+            end
         end
         # effeects:
         desc = row["Text"]
@@ -120,6 +147,12 @@ function make_project_definitions()
     for t in types
         eval(:(struct $t <: Project end))
         eval(:(export $t))
+    end
+    for pair in prqs
+        typ(sym::Symbol) = eval(sym)  # getfield(IdlePlanetMinerTools, sym)
+        t1 = typ(first(pair))
+        prereqs = map(typ, last(pair))
+        eval(:(prerequisites(::Type{$t1}) = $prereqs))
     end
     map(eval, methods)
     push!(ALL_RECIPIES,

@@ -18,8 +18,8 @@ end
     @test length(subtypes(Ore)) == 27
     @test length(subtypes(Alloy)) == 28
     @test length(subtypes(Crafted)) == 44
-    @test length(subtypes(Project)) == 123
-    @test length(ALL_RECIPIES) ==  195
+    @test length(subtypes(Project)) == 125
+    @test length(ALL_RECIPIES) ==  197
 end
 
 @testset "recipie ingredient modifiers" begin
@@ -37,5 +37,12 @@ end
         Platinum(-1000.0) + GoldBar(-2.0) + PlatinumBar(1)
     @test delta(r, modifiers) ==
         Platinum(-800.000) + GoldBar(-1.600) + PlatinumBar(1)
+end
+
+@testset "project prerequisites" begin
+    @test prerequisites(rx"Asteroid Miner".make) == []
+    @test prerequisites(rx"Rover".make) == [AsteroidMiner]
+    @test Set(prerequisites(rx"superior mining".make)) ==
+        Set([AdvancedThrusters, AdvancedCargoHandling])
 end
 
