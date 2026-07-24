@@ -9,18 +9,7 @@ using OrderedCollections
 
 include_dependency(joinpath(@__DIR__, "projects.csv"))
 
-export Project, fetch_projects, make_project_definitions, prerequisites
-
-abstract type Project <: Modifier end
-
-
-"""
-    prerequisites(::Type{<:Project})
-
-Returns a vector of the immediate prerequisites that are required
-before researching the specified `Project`.
-"""
-prerequisites(::Type{<:Project}) = []
+export fetch_projects, make_project_definitions
 
 
 PROJECTS_SOURCE = "https://idle-planet-miner.fandom.com/wiki/Projects"

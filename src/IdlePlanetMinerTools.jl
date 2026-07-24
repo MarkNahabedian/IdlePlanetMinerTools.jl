@@ -30,6 +30,7 @@ ALL_RECIPIES = [
     make_crafted_recipies()...,
 ]
 
+include("projects.jl")
 include("extract_projects.jl")
 include("extract_rooms.jl")
 
