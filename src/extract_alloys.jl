@@ -54,6 +54,7 @@ function make_alloy_recipies()
         end
         materials = - parse_materials_string(name1, materials)
         push!(recipies, Recipie(type, materials, duration))
+        define_base_selling_price_method(type, row["Sell Price"])
     end
     recipies
 end

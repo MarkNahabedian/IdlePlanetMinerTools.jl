@@ -70,6 +70,7 @@ function make_crafted_recipies()
         # recipies inputs are diminished and is product is augmented:
         materials = - parse_materials_string(name1, materials)
         push!(recipies, Recipie(type, materials, duration))
+        define_base_selling_price_method(type, row["Sell Price"])
     end
     recipies
 end
@@ -79,10 +80,6 @@ PARSE_MATERIALS_REGEXPS = [
     r"(?<count>[0-9.]+)(?<suffix>[a-zA-Z]?) (?<name>[a-zA-Z ]+)"
 ]
 
-PARSE_MATERIALS_MULTIPLIER_SUFFIXES = Dict([
-    "" => 1,
-    "k" => 1000,
-    "K" => 1000])
     
 function parse_material(material)
     local m
