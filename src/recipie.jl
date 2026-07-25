@@ -6,7 +6,7 @@ Recipie describes how to make Alloys, crafted items, projects, etc,
 anything that required some number of [`Thing`](@ref)s.
 """
 struct Recipie
-    make    # ::Type{<:Union{Thing, Project}}
+    make::Union{Type{<:Thing}, Type{<:Project}}
     ingredients::Inventory
     duration_seconds::Union{Missing, Int}
 
@@ -29,13 +29,20 @@ current [`Modifier`](@ref)s.
 function delta(r::Recipie, modifiers = DEFAULT_MODIFIERS)
     multiplier = reduce(*, map(ingredient_scalar_function(r.make), modifiers);
                         init = 1.0)
-    r.make(1) + multiplier * r.ingredients
+    if r.make <: Thing
+        r.make(1) + multiplier * r.ingredients
+    else
+        multiplier * r.ingredients
+    end
 end
 
 
 ALL_RECIPIES = Recipie[]
 
-lookup_recipie(want::AbstractString) = best_thing_match(want, ALL_RECIPIES)   
+lookup_recipie(want::AbstractString) = best_thing_match(want, ALL_RECIPIES)
+
+lookup_recipie(want::Type) = only(filter(r -> r.make == want,
+                                         ALL_RECIPIES))
 
 macro rx_str(name)
     return :(lookup_recipie($name))

@@ -1,7 +1,15 @@
 
 export Project, prerequisites, next_projects
 
+"""
+Project represents an Idle Planet Miner project.
+"""
 abstract type Project <: Modifier end
+
+
+project_ingredient_scalar(::Modifier) = 1
+
+ingredient_scalar_function(::Type{<:Project}) = project_ingredient_scalar
 
 
 """
