@@ -112,7 +112,7 @@ PARSE_MATERIALS_MULTIPLIER_SUFFIXES = Dict([
     "T" => 10 ^ (3 * 4),
     "q" => 10 ^ (3 * 5),
     "Q" => 10 ^ (3 * 6),
-    "s" => 10 ^ (3 * 7),
+    "s" => 10.0 ^ (3 * 7),
 ])
 
 function parse_selling_price(s::AbstractString)
