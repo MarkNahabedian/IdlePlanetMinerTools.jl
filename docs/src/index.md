@@ -57,7 +57,7 @@ using IdlePlanetMinerTools
 rx"LaserTorch"
 
 rx"Advanced Crafter"
-````
+```
 
 
 ## Arithmetic
