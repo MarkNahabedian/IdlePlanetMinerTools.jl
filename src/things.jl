@@ -112,7 +112,7 @@ PARSE_MATERIALS_MULTIPLIER_SUFFIXES = Dict([
     "T" => 10 ^ (3 * 4),
     "q" => 10 ^ (3 * 5),
     "Q" => 10 ^ (3 * 6),
-    "s" => 10.0 ^ (3 * 7),
+    "s" => 10.0 ^ (3 * 7)
 ])
 
 function parse_selling_price(s::AbstractString)
@@ -131,81 +131,4 @@ function define_base_selling_price_method(type, s::AbstractString)
     eval(:(base_selling_price(::Type{$type}) = $price))
 end
 
-
-map(eval,
-    let
-        exprs = []
-        ord = 0
-        for ore in eachline(joinpath(@__DIR__, "Ores"))
-            ord += 1
-            m = match(r"^[A-Za-z]+", ore)
-            if m == nothing
-                continue
-            end
-            name = Symbol(canonicalize_name(m.match))
-            push!(exprs,
-                  (:(struct $name <: Ore
-                         count::Real
-                         $name(count) = new(round(count, digits=3))
-                     end)))
-            push!(exprs,
-                  (:(export $name)))
-            push!(exprs,
-                  :(ordinal(::Type{$name}) = $ord))
-        end
-        exprs
-    end)
-
-map(eval,
-    let
-        exprs = []
-        ord = maximum(ordinal, subtypes(Ore))
-        for alloy in eachline(joinpath(@__DIR__, "Alloys"))
-            ord += 1
-            m = match(r"^(?<name>[A-Za-z]+ (Bar|Alloy))", alloy)
-            if m == nothing
-                continue
-            end
-            name = Symbol(canonicalize_name(m["name"]))
-            push!(exprs,
-                  (:(struct $name <: Alloy
-                         count::Real
-                         $name(count) = new(round(count, digits=3))
-                     end)))
-            push!(exprs,
-                  (:(export $name)))
-            push!(exprs,
-                  :(ordinal(::Type{$name}) = $ord))
-        end
-        exprs
-    end)
-
-map(eval,
-    let
-        exprs = []
-        ord = maximum(ordinal, subtypes(Alloy))
-        for crafted in eachline(joinpath(@__DIR__, "Crafted"))
-            ord += 1
-            m = match(r"[A-Za-z ]+", crafted)
-            if m == nothing
-                continue
-            end
-            name = Symbol(canonicalize_name(m.match))
-            push!(exprs,
-                  (:(struct $name <: Crafted
-                         count::Real
-                         $name(count) = new(round(count, digits=3))
-                     end)))
-            push!(exprs,
-                  (:(export $name)))
-            push!(exprs,
-                  :(ordinal(::Type{$name}) = $ord))
-        end
-        exprs
-    end)
-
-@assert 1 == minimum(ordinal, subtypes(Ore))
-@assert maximum(ordinal, subtypes(Ore)) + 1 == minimum(ordinal, subtypes(Alloy))
-@assert maximum(ordinal, subtypes(Alloy)) + 1 == minimum(ordinal, subtypes(Crafted))
-@assert 1:99 == sort(map(ordinal, union([ subtypes(x) for x in subtypes(Thing) ]...)))
 

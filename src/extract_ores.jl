@@ -8,7 +8,7 @@ using DataFrames
 
 include_dependency(joinpath(@__DIR__, "ores.csv"))
 
-export fetch_ores
+export fetch_ores, make_ore_definitions
 
 ORE_SOURCE = "https://idle-planet-miner.fandom.com/wiki/Ores"
 
@@ -31,4 +31,26 @@ function fetch_ores()
         df
     end
 end
+
+function make_ore_definitions()
+    df = CSV.read(joinpath(@__DIR__, "ores.csv"), DataFrame)
+    ord = 0
+    # Ores,Sell Price,Straight smelt uses.,Requires multiple smelts
+    for row in eachrow(df)
+        ord += 1
+        name1 = row["Ores"]
+        type = Symbol(canonicalize_name(name1))
+        eval(:(begin
+                   export $type
+                   struct $type <: Ore
+                       count::Real
+                       $type(count) = new(round(count, digits=3))
+                   end
+                   ordinal(::Type{$type}) = $ord
+               end))
+        define_base_selling_price_method(type, row["Sell Price"])
+    end
+end
+
+make_ore_definitions()
 

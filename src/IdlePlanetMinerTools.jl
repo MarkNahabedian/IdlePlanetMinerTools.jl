@@ -2,11 +2,12 @@ module IdlePlanetMinerTools
 
 include("modifiers.jl")
 include("things.jl")
+include("extract_ores.jl")
+include("temporary_things.jl")
 include("inventory.jl")
 include("arithmetic.jl")
 include("projects.jl")
 include("recipie.jl")
-include("extract_ores.jl")
 include("extract_alloys.jl")
 include("extract_crafted.jl")
 include("crafting.jl")
