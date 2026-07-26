@@ -1,0 +1,28 @@
+Ores,Sell Price,Straight smelt uses.,Requires multiple smelts
+Copper,1,Copper Bars,"Bronze Bar, Titanium Bar, Osmium Bar, Quadium Alloy, Vibranium Alloy"
+Iron,2,Iron Bars,"Steel Bar, Iridium Bar, Rhodium Bar, Scrith Alloy, Aether Alloy"
+Lead,4,Lead Bars,"Steel Bar, Iridium Bar, Rhodium Bar, Scrith Alloy, Aether Alloy"
+Silicon,8,Silicon Bars,
+Aluminum,17,Aluminum Bars,
+Silver,36,Silver Bars,"Bronze Bar, Titanium Bar, Osmium Bar, Quadium Alloy, Vibranium Alloy"
+Gold,75,Gold Bars,"Platinum Bar, Palladium Bar, Inerton Alloy, Uru Alloy"
+Diamond,160,No smelt uses.,
+Platinum,340,Platinum Bar,"Palladium Bar, Inerton Alloy, Uru Alloy"
+Titanium,730,Titanium Bar,"Osmium Bar, Quadium Alloy, Vibranium Alloy"
+Iridium,1.6K,Iridium Bar,"Rhodium Bar, Scrith Alloy, Aether Alloy"
+Palladium,3.5K,Palladium Bar,"Inerton Alloy, Uru Alloy"
+Osmium,7.8K,Osmium Bar,"Quadium Alloy, Vibranium Alloy"
+Rhodium,17.5K,Rhodium Bar,"Scrith Alloy, Aether Alloy"
+Inerton,40K,Inerton Alloy,Uru Alloy
+Quadium,92K,Quadium Alloy,Vibranium Alloy
+Scrith,215K,Scrith Alloy,Aether Alloy
+Uru,510K,Uru Alloy,
+Vibranium,1.25M,Vibranium Alloy,
+Aether,3.2M,Aether Alloy,
+Viterium,9M,Viterium Alloy,
+Xynium,28M,Xynium Alloy,
+Quolium,90M,Quolium Alloy,
+Luterium,300M,Luterium Alloy,
+Wraith,1.1B,Wraith Alloy,
+Aqualite,4.3B,Aqualite Alloy,
+Opalite,18B,Opalite Alloy,

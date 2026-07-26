@@ -6,8 +6,9 @@ include("inventory.jl")
 include("arithmetic.jl")
 include("projects.jl")
 include("recipie.jl")
-include("extract_crafted.jl")
+include("extract_ores.jl")
 include("extract_alloys.jl")
+include("extract_crafted.jl")
 include("crafting.jl")
 
 ALL_RECIPIES = [

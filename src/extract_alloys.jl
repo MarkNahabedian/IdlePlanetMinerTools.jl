@@ -10,15 +10,15 @@ include_dependency(joinpath(@__DIR__, "alloys.csv"))
 
 export fetch_alloys, make_alloy_recipies
 
-PROJECTS_SOURCE = "https://idle-planet-miner.fandom.com/wiki/Alloys"
+ALLOYS_SOURCE = "https://idle-planet-miner.fandom.com/wiki/Alloys"
 
 
 function fetch_alloys()
     with_webdriver_session(FirefoxGeckodriverSession()) do session
-        page = fetch_page(session, PROJECTS_SOURCE)
+        page = fetch_page(session, ALLOYS_SOURCE)
         table = only(eachmatch(Cascadia.Selector("table.article-table"), page.root))
         rows = eachmatch(Cascadia.Selector("table.article-table tr"), table)
-        # First ro is headings.
+        # First row is headings.
         column_headings = map(text, eachmatch(Cascadia.Selector("th"), rows[1]))[2:end]
         df = DataFrame([ h => String[] for h in column_headings ])
         for row in rows[2:end]
