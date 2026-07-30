@@ -1,13 +1,5 @@
 # Fetch item information from the IdlePlanetMiner WIKI
 
-using WebScrapingTools
-using Cascadia
-using Gumbo
-using CSV
-using DataFrames
-
-include_dependency(joinpath(@__DIR__, "crafted.csv"))
-
 export fetch_crafted, make_crafted_recipies, parse_material
 
 RECIPIE_SOURCE = "https://idle-planet-miner.fandom.com/wiki/Items"
@@ -46,65 +38,14 @@ function fetch_crafted()
     end
 end
 
-
 function make_crafted_recipies()
-    recipies = Recipie[]
     df = CSV.read(joinpath(@__DIR__, "crafted.csv"), DataFrame)
+    ord = maximum(ordinal, subtypes(Alloy))
     # Item,Unlock Cost,Sell Price,Material Cost,Time To Craft/s,Used For
     for row in eachrow(df)
-        name1 = row["Item"]
-        type = best_thing_match(name1)
-        materials = row["Material Cost"]
-        duration = row["Time To Craft/s"]
-        if isa(duration, AbstractString)
-            # "180000s (50h)"
-            m = match(r"([0-9,]+)", duration)
-            if m == nothing
-                @warn("Invalid duration $duration")
-                continue
-            end
-            duration = m.match
-            duration = parse(Int, replace(duration, "," => "")) 
-        end
-        # To make a recipie we add its materials to our supply.  The
-        # recipies inputs are diminished and is product is augmented:
-        materials = - parse_materials_string(name1, materials)
-        push!(recipies, Recipie(type, materials, duration))
-        define_base_selling_price_method(type, row["Sell Price"])
+        ord += 1
+        make_thing_code(ord, row, Crafted, "Item", "Material Cost",
+                        "Time To Craft/s")
     end
-    recipies
-end
-
-PARSE_MATERIALS_REGEXPS = [
-    r"(?<name>[a-zA-Z ]+) [(](?<count>[0-9.]+)(?<suffix>[a-zA-Z]?)[)]",
-    r"(?<count>[0-9.]+)(?<suffix>[a-zA-Z]?) (?<name>[a-zA-Z ]+)"
-]
-
-    
-function parse_material(material)
-    local m
-    for re in PARSE_MATERIALS_REGEXPS
-        m = match(re, String(material))    ### match doesn't take SubStrings!
-        if m != nothing
-            break
-        end
-    end
-    if m == nothing
-        error("No match: $name: $material")
-    end
-    multiplier = PARSE_MATERIALS_MULTIPLIER_SUFFIXES[m["suffix"]]
-    type = best_thing_match(m["name"])
-    count = multiplier * trunc(Int, parse(Float32, m["count"]))
-    type(count)
-end
-
-
-function parse_materials_string(name, materials_string::AbstractString)
-    # "Laser (1), Laser Torch (5), Telescope (20), Inside Trader (10), Alchemy (6), Rover Advanced Logistics (10), Advanced Crafter (5), Advanced Item Value (1)"
-    # "4 Advanced Teleporters, 400 Luterium Alloy"
-    # 5 Copper Bar
-    # 10k Palladium Bar
-    Inventory(Thing[ parse_material(material)
-                     for material in split(materials_string, ", ") ])
 end
 

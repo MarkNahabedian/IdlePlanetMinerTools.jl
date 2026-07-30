@@ -4,10 +4,6 @@ using StringDistances
 export Thing, Ore, Alloy, Crafted
 export ordinal, all_things, best_thing_match, @t_str
 
-include_dependency(joinpath(@__DIR__, "Ores"))
-include_dependency(joinpath(@__DIR__, "Alloys"))
-include_dependency(joinpath(@__DIR__, "Crafted"))
-
 
 """
 `Thing` is the abstract supertype of [`Ore`](@ref), [`Alloy`](@ref) and

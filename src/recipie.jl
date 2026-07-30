@@ -14,6 +14,9 @@ struct Recipie
         new(name, ingredients, duration_seconds)
 end
 
+ALL_RECIPIES = Recipie[]
+
+
 namestring(r::Recipie) = namestring(r.make)
 
 ingredient_scalar_function(::Type{<:Alloy}) = smelt_ingredient_scalar

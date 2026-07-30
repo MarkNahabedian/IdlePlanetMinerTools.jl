@@ -1,14 +1,6 @@
 # Extract alloy definitions.
 
-using WebScrapingTools
-using Cascadia
-using Gumbo
-using CSV
-using DataFrames
-
-include_dependency(joinpath(@__DIR__, "alloys.csv"))
-
-export fetch_alloys, make_alloy_recipies
+export fetch_alloys, make_alloy_definitions
 
 ALLOYS_SOURCE = "https://idle-planet-miner.fandom.com/wiki/Alloys"
 
@@ -34,28 +26,15 @@ function fetch_alloys()
 end
 
 
-function make_alloy_recipies()
+function make_alloy_definitions()
     recipies = Recipie[]
     df = CSV.read(joinpath(@__DIR__, "alloys.csv"), DataFrame)
+    ord = maximum(ordinal, subtypes(Ore))
     # Alloys,Cost To Unlock,Material Cost,Time to Smelt,Sell Price,Crafting uses
     for row in eachrow(df)
-        name1 = row["Alloys"]
-        type = best_thing_match(name1)
-        materials = row["Material Cost"]
-        duration = row["Time to Smelt"]
-        if isa(duration, AbstractString)
-            m = match(r"([0-9,]+)", duration)
-            if m == nothing
-                @warn("Unrecognized duration $duration")
-                continue
-            end
-            duration = m.match
-            duration = parse(Int, replace(duration, "," => "")) 
-        end
-        materials = - parse_materials_string(name1, materials)
-        push!(recipies, Recipie(type, materials, duration))
-        define_base_selling_price_method(type, row["Sell Price"])
+        ord += 1
+        make_thing_code(ord, row, Alloy, "Alloys", "Material Cost",
+                        "Time to Smelt")
     end
-    recipies
 end
 

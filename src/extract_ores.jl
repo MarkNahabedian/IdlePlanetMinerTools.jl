@@ -1,13 +1,5 @@
 # Extract ore definitions.
 
-using WebScrapingTools
-using Cascadia
-using Gumbo
-using CSV
-using DataFrames
-
-include_dependency(joinpath(@__DIR__, "ores.csv"))
-
 export fetch_ores, make_ore_definitions
 
 ORE_SOURCE = "https://idle-planet-miner.fandom.com/wiki/Ores"
@@ -38,19 +30,7 @@ function make_ore_definitions()
     # Ores,Sell Price,Straight smelt uses.,Requires multiple smelts
     for row in eachrow(df)
         ord += 1
-        name1 = row["Ores"]
-        type = Symbol(canonicalize_name(name1))
-        eval(:(begin
-                   export $type
-                   struct $type <: Ore
-                       count::Real
-                       $type(count) = new(round(count, digits=3))
-                   end
-                   ordinal(::Type{$type}) = $ord
-               end))
-        define_base_selling_price_method(type, row["Sell Price"])
+        make_thing_code(ord, row, Ore, "Ores", nothing, nothing)
     end
 end
-
-make_ore_definitions()
 
