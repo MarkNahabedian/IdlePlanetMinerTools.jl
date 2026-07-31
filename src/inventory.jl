@@ -28,3 +28,5 @@ end
 
 Base.convert(::Type{Inventory}, thing::Thing) = Inventory(thing)
 
+base_selling_price(i::Inventory) = sum(base_selling_price, i.items)
+
