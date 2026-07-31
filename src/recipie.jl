@@ -40,8 +40,6 @@ function delta(r::Recipie, modifiers = DEFAULT_MODIFIERS)
 end
 
 
-ALL_RECIPIES = Recipie[]
-
 lookup_recipie(want::AbstractString) = best_thing_match(want, ALL_RECIPIES)
 
 lookup_recipie(want::Type) = only(filter(r -> r.make == want,
