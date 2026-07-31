@@ -58,3 +58,10 @@ end
     @test isapprox(craft_speed_scalar(Workshop(4)), 1.5)
 end
 
+@testset "add_researched_project" begin
+    have = Modifier[Management(), Telescope1()]
+    l1 = length(have)
+    add_researched_project(Telescope5, have)
+    @test length(have) == l1 + 4
+end
+
