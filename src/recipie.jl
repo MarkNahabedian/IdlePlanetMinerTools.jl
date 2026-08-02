@@ -19,6 +19,11 @@ ALL_RECIPIES = Recipie[]
 
 namestring(r::Recipie) = namestring(r.make)
 
+base_selling_price(r::Recipie) = base_selling_price(r.ingredients)
+
+Base.isless(a::Recipie, b::Recipie) =
+    base_selling_price(a) < base_selling_price(b)
+
 ingredient_scalar_function(::Type{<:Alloy}) = smelt_ingredient_scalar
 ingredient_scalar_function(::Type{<:Crafted}) = craft_ingredient_scalar
 
