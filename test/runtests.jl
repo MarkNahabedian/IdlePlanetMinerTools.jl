@@ -32,7 +32,7 @@ end
                    Set(map(meths) do m
                            Base.unwrap_unionall(m.sig).parameters[2]
                        end))
-    modifiers = map(s ->  s(), collect(specs))
+    modifiers = map(s -> s(), collect(specs))
     r = rx"PlatinumBar"
     @test delta(r, []) ==
         Platinum(-1000.0) + GoldBar(-2.0) + PlatinumBar(1)
@@ -45,6 +45,17 @@ end
     @test prerequisites(rx"Rover".make) == [AsteroidMiner]
     @test Set(prerequisites(rx"superior mining".make)) ==
         Set([AdvancedThrusters, AdvancedCargoHandling])
+end
+
+@testset "project modifiers" begin
+    @test isapprox(smelt_ingredient_scalar(Management()), 1.0)
+    @test isapprox(craft_ingredient_scalar(Management()), 1.0)
+    @test isapprox(smelt_ingredient_scalar(Management()), 1.0)
+    @test isapprox(craft_ingredient_scalar(Management()), 1.0)
+    @test isapprox(smelt_ingredient_scalar(SmeltingEfficiency()), 0.8)
+    @test isapprox(craft_ingredient_scalar(CraftingEfficiency()), 0.8)
+    @test isapprox(smelt_ingredient_scalar(SmeltingEfficiency()), 0.8)
+    @test isapprox(craft_ingredient_scalar(CraftingEfficiency()), 0.8)
 end
 
 @testset "room modifiers" begin
