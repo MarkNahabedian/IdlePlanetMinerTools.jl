@@ -48,7 +48,7 @@ Add `add_this` and the transitive closure of its prerequisites to `to`
 if they are not already present.
 """
 function add_researched_project(add_this::Type{<:Project},
-                                to::Vector{Modifier}=DEFAULT_MODIFIERS)
+                                to::Vector{<:Modifier}=DEFAULT_MODIFIERS)
     to_types = map(typeof, filter(x -> x isa Project, to))
     function add1(add_this)
         if add_this in to_types
