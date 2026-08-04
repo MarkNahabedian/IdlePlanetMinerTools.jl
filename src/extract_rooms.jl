@@ -79,10 +79,10 @@ function fetch_rooma()
 end
 
 ROOM_BOOST_TO_GENERIC_FUNCTION = Dict([
-    "Increase smelt speed" => :smelt_speed_scalar,
-    "Increase craft speed" => :craft_speed_scalar,
-    "Decrease smelter ingredients" => :smelt_ingredient_scalar,
-    "Decrease crafter ingredients" => :craft_ingredient_scalar
+    "Increase smelt speed" => :process_speed_scalar,
+    "Increase craft speed" => :process_speed_scalar,
+    "Decrease smelter ingredients" => :process_ingredient_scalar,
+    "Decrease crafter ingredients" => :process_ingredient_scalar
 ])
 
 
@@ -134,13 +134,21 @@ function parse_room_max_level(s::AbstractString)
     end
 end
 
+ROOM_BOOST_LOOKUP = Dict([
+    "Increase mine speed" => (:Mine, :process_speed_scalar),
+    "Increase smelt speed" => (:Smelt, :process_speed_scalar),
+    "Increase craft speed" => (:Craft, :process_speed_scalar),
+    "Decrease project cost" => (:Research, :process_ingredient_scalar),
+    "Decrease smelter ingredients" => (:Smelt, :process_ingredient_scalar),
+    "Decrease crafter ingredients" => (:Craft, :process_ingredient_scalar)
+])
 
 function extract_rooms()
     df = CSV.read(joinpath(@__DIR__, "rooms.csv"), DataFrame)
     # Room,Boost,Min Cost,CombinedMin Cost,BaseEffect,Per Level,Max Level,Max Bonus
     for row in eachrow(df)
         name = Symbol(canonicalize_name(row["Room"]))
-        boost = get(ROOM_BOOST_TO_GENERIC_FUNCTION, row["Boost"], nothing)
+        pb = get(ROOM_BOOST_LOOKUP, row["Boost"], nothing)
         base = parse_base_effect(row["BaseEffect"])
         per_level = parse_per_level(row["Per Level"])
         max_level = parse_room_max_level(row["Max Level"])
@@ -160,8 +168,9 @@ function extract_rooms()
                    max_level(::Type{$name}) = $max_level
                end
                ))
-        if boost != nothing
-            eval(:($boost(room::$name) = room_effect_factor(room)))
+        if pb != nothing
+            proc, boost = pb
+            eval(:($boost(::$proc, room::$name) = room_effect_factor(room)))
         end
     end
 end
