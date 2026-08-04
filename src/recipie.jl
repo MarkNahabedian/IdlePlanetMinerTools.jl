@@ -24,8 +24,6 @@ base_selling_price(r::Recipie) = base_selling_price(r.ingredients)
 Base.isless(a::Recipie, b::Recipie) =
     base_selling_price(a) < base_selling_price(b)
 
-ingredient_scalar_function(::Type{<:Alloy}) = smelt_ingredient_scalar
-ingredient_scalar_function(::Type{<:Crafted}) = craft_ingredient_scalar
 
 """
     delta(r::Recipie, modifiers = DEFAULT_MODIFIERS)
@@ -33,9 +31,14 @@ ingredient_scalar_function(::Type{<:Crafted}) = craft_ingredient_scalar
 Returns an [`Inventory`](@ref) that would be the effect of applying
 the [`Recipie`](@ref).  `modifiers` is a vector of the player's
 current [`Modifier`](@ref)s.
+
+It appears that the game rounds the result to the nearest integer.
+I've not yet decided if that should happen here.
 """
 function delta(r::Recipie, modifiers = DEFAULT_MODIFIERS)
-    multiplier = reduce(*, map(ingredient_scalar_function(r.make), modifiers);
+    multiplier = reduce(*,
+                        map(m -> process_ingredient_scalar(to_make(r.make), m),
+                            modifiers);
                         init = 1.0)
     if r.make <: Thing
         r.make(1) + multiplier * r.ingredients

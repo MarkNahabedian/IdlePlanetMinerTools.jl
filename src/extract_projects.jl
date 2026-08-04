@@ -52,24 +52,24 @@ ProjectTextToAction = [
     (re = r"All smelters speed x ?(?<factor>[0-9.]+)",
      f = function(m::RegexMatch, project_type)
          factor = parse(Float32, m["factor"])
-         :(smelt_speed_scalar(::$project_type) = factor)
+         :(process_speed_scalar(::Smelt, ::$project_type) = factor)
      end),
     # "All planet mine rates x 1.25"
     # "All ship cargo x 1.25"
     (re = r"All crafters speed x ?(?<factor>[0-9.]+)",
      f = function(m::RegexMatch, project_type)
          factor = parse(Float32, m["factor"])
-         :(craft_speed_scalar(::$project_type) = factor)
+         :(process_speed_scalar(::Craft, ::$project_type) = factor)
      end),
     (re = r"Decreases ingredients required by (?<factor>[0-9]+)% for all smelters",
      f = function(m::RegexMatch, project_type)
          factor = 1 - parse(Float32, m["factor"]) / 100
-         :(smelt_ingredient_scalar(::$project_type) = $factor)
+         :(process_ingredient_scalar(::Smelt, ::$project_type) = $factor)
      end),
     (re = r"Decreases ingredients required by (?<factor>[0-9]+)% for all crafters",
      f = function(m::RegexMatch, project_type)
          factor = 1 - parse(Float32, m["factor"]) / 100
-         :(craft_ingredient_scalar(::$project_type) = $factor)
+         :(process_ingredient_scalar(::Craft, ::$project_type) = $factor)
      end)
 ]
 
