@@ -32,7 +32,7 @@ function crafting_plan(inv::Inventory)
         recipie = first(recipie)
         # Apply the recipie enough times
         multiplier = - need.count
-        pushfirst!(actions, CraftingAction(recipie, multiplier))
+        pushfirst!(actions, CraftingAction(recipie, round(Int, multiplier)))
         inventory += multiplier * delta(recipie)
     end
     actions, inventory
