@@ -1,4 +1,6 @@
-export Modifier, DEFAULT_MODIFIERS
+using Markdown
+
+export Modifier, DEFAULT_MODIFIERS, doctext
 
 
 """
@@ -14,3 +16,10 @@ like [`delta`](@ref)where none are specified.
 """
 DEFAULT_MODIFIERS = Modifier[]
 
+
+"""
+    doctext(::Type{<:Modifier})
+
+Returns a text string defining the Modifier.
+"""
+doctext(m::Type{<:Modifier}) = chomp(Markdown.plain(Docs.doc(m).content[1]))

@@ -142,3 +142,7 @@ end
         PlasmaTorch(41) + SpaceProbe(1)
 end
 
+@testset "Project doc strings" begin
+    @test doctext(Management) == "Hire and assign managers to planets"
+end
+

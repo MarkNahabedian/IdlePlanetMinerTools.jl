@@ -76,11 +76,13 @@ ProjectTextToAction = [
 function make_project_definitions()
     df = CSV.read(joinpath(@__DIR__, "projects.csv"), DataFrame)
     types = []
+    docstrings = Dict()
     recipies = []
     prqs = []
     methods = []
     for row in eachrow(df)
         name = Symbol(canonicalize_name(row["Project"]))
+        docstrings[name] = row["Text"]
         # The Project itself:
         push!(types, name)
         # its Recipie:
@@ -133,7 +135,10 @@ function make_project_definitions()
     map(println, recipies)
     =#
     for t in types
-        eval(:(struct $t <: Project end))
+        eval(quote
+                 struct $t <: Project end
+                 @doc $(docstrings[t]) $t
+             end)
         eval(:(export $t))
     end
     for pair in prqs
