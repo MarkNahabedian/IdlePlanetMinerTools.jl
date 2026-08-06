@@ -1,0 +1,149 @@
+No.,Planet,Base Price,Telescope Number,Resources,Yield (%),CollapseDistance
+1,Balor,100,Default,Copper,100,10
+2,Drasta,200,Default,Copper,80,12
+2,Drasta,200,Default,Iron,20,12
+3,Anadius,500,Default,Copper,50,14
+3,Anadius,500,Default,Iron,50,14
+4,Dholen,1.25K,Default,Iron,80,15
+4,Dholen,1.25K,Default,Lead,20,15
+5,Verr,5K,1,Lead,50,16
+5,Verr,5K,1,Iron,30,16
+5,Verr,5K,1,Copper,20,16
+6,Newton,9K,1,Lead,100,18
+7,Widow,15K,1,Iron,40,20
+7,Widow,15K,1,Copper,40,20
+7,Widow,15K,1,Silica,20,20
+8,Acheron,25K,2,Silica,60,22
+8,Acheron,25K,2,Copper,40,22
+9,Yangtze,40K,2,Silica,80,23
+9,Yangtze,40K,2,Aluminium,20,23
+10,Solveig,75K,2,Aluminium,50,25
+10,Solveig,75K,2,Silica,30,25
+10,Solveig,75K,2,Lead,20,25
+11,Imir,150K,3,Aluminium,100,26
+12,Relic,250K,3,Lead,45,28
+12,Relic,250K,3,Silica,35,28
+12,Relic,250K,3,Silver,20,28
+13,Nith,400K,3,Silver,80,30
+13,Nith,400K,3,Aluminium,20,30
+14,Batalla,800K,4,Copper,40,33
+14,Batalla,800K,4,Iron,40,33
+14,Batalla,800K,4,Gold,20,33
+15,Micah,1.5M,4,Gold,50,35
+15,Micah,1.5M,4,Silver,50,35
+16,Pranas,3.0M,4,Gold,100,37
+17,Castellus,6M,5,Aluminium,40,40
+17,Castellus,6M,5,Silica,35,40
+17,Castellus,6M,5,Diamond,25,40
+18,Gorgon,12M,5,Diamond,80,43
+18,Gorgon,12M,5,Lead,20,43
+19,Parnitha,25M,5,Gold,70,45
+19,Parnitha,25M,5,Platinum,30,45
+20,Orisoni,50M,6,Platinum,70,48
+20,Orisoni,50M,6,Diamond,30,48
+21,Theseus,100M,6,Platinum,100,51
+22,Zelene,200M,6,Silver,70,54
+22,Zelene,200M,6,Titanium,30,54
+23,Han,400M,7,Titanium,70,57
+23,Han,400M,7,Diamond,20,57
+23,Han,400M,7,Gold,10,57
+24,Strennus,800M,7,Titanium,70,58
+24,Strennus,800M,7,Platinum,30,58
+25,Osun,1.6B,7,Aluminium,60,60
+25,Osun,1.6B,7,Iridium,40,60
+26,Ploitari,3.2B,8,Iridium,50,63
+26,Ploitari,3.2B,8,Diamond,50,63
+27,Elysta,6.4B,8,Iridium,100,67
+28,Tikkun,12.5B,8,Iridium,40,70
+28,Tikkun,12.5B,8,Titanium,35,70
+28,Tikkun,12.5B,8,Palladium,25,70
+29,Satent,25B,9,Palladium,60,72
+29,Satent,25B,9,Titanium,40,72
+30,Urla Rast,50B,9,Palladium,90,73
+30,Urla Rast,50B,9,Diamond,10,73
+31,Vular,100B,9,Palladium,70,75
+31,Vular,100B,9,Osmium,30,75
+32,Nibiru,250B,10,Osmium,60,76
+32,Nibiru,250B,10,Iridium,40,76
+33,Xena,600B,10,Osmium,100,78
+34,Rupert,1.5T,10,Palladium,55,78
+34,Rupert,1.5T,10,Osmium,30,78
+34,Rupert,1.5T,10,Rhodium,15,78
+35,Pax,4T,11,Rhodium,50,80
+35,Pax,4T,11,Platinum,50,80
+36,Ivyra,10T,11,Rhodium,100,81
+37,Utritis,25T,11,Rhodium,75,82
+37,Utritis,25T,11,Inerton,25,82
+38,Dosie,62T,12,Inerton,50,84
+38,Dosie,62T,12,Osmium,50,84
+39,Zulu,160T,12,Inerton,100,84
+40,Unicae,400T,12,Inerton,80,85
+40,Unicae,400T,12,Quadium,20,85
+41,Dune,1q,13,Osmium,60,87
+41,Dune,1q,13,Quadium,40,87
+42,Naraka,2.50q,13,Quadium,100,88
+43,Daedalus,6.20q,13,Quadium,60,89
+43,Daedalus,6.20q,13,Inerton,25,89
+43,Daedalus,6.20q,13,Scrith,15,89
+44,Clovis,15q,14,Scrith,50,91
+44,Clovis,15q,14,Quadium,50,91
+45,Zero,40q,14,Scrith,100,92
+46,Sotomi,100q,14,Scrith,75,92
+46,Sotomi,100q,14,Uru,25,92
+47,Remidian,250q,15,Uru,60,93
+47,Remidian,250q,15,Quadium,40,93
+48,Muse,600q,15,Uru,100,95
+49,Arabis,1.50Q,15,Uru,50,97
+49,Arabis,1.50Q,15,Vibranium,50,97
+50,Vesna,3.80Q,16,Vibranium,60,100
+50,Vesna,3.80Q,16,Scrith,40,100
+51,Chandra,10.00Q,16,Vibranium,100,102
+52,Vega,25.00Q,16,Vibranium,70,103
+52,Vega,25.00Q,16,Aether,20,103
+52,Vega,25.00Q,16,Rhodium,10,103
+53,Crius,60.00Q,17,Aether,50,105
+53,Crius,60.00Q,17,Scrith,50,105
+54,Singhana,150.00Q,17,Aether,100,107
+55,Zumbia,360.00Q,17,Aether,70,108
+55,Zumbia,360.00Q,17,Vibranium,20,108
+55,Zumbia,360.00Q,17,Viterium,10,108
+56,Elysium,900.00Q,18,Viterium,60,109
+56,Elysium,900.00Q,18,Uru,40,109
+57,Nyota,2.60s,18,Viterium,100,110
+58,Doral,7.50s,18,Viterium,40,112
+58,Doral,7.50s,18,Aether,40,112
+58,Doral,7.50s,18,Xynium,20,112
+59,Nikara,21.00s,19,Xynium,70,114
+59,Nikara,21.00s,19,Vibranium,30,114
+60,Limbo,59.00s,19,Xynium,100,115
+61,Bob,170.00s,19,Xynium,70,116
+61,Bob,170.00s,19,Quolium,30,116
+62,Midas,460.00s,20,Quolium,55,118
+62,Midas,460.00s,20,Aether,45,118
+63,Antigone,1.30S,20,Quolium,100,120
+64,Hecate,3.90S,20,Quolium,50,122
+64,Hecate,3.90S,20,Xynium,25,122
+64,Hecate,3.90S,20,Luterium,25,122
+65,Sterop,11.00S,21,Luterium,60,124
+65,Sterop,11.00S,21,Quolium,20,124
+65,Sterop,11.00S,21,Viterium,17*,124
+66,Lavinia,33.00S,21,Luterium,100,125
+67,Ren,95.00S,21,Luterium,70,127
+67,Ren,95.00S,21,Quolium,20,127
+67,Ren,95.00S,21,Wraith,10,127
+68,Gorgons,270.00S,22,Wraith,60,129
+68,Gorgons,270.00S,22,Xynium,40,129
+69,Pontus,800.00S,22,Wraith,80,131
+69,Pontus,800.00S,22,Luterium,20,131
+70,Leto,2.40 O,22,Wraith,100,134
+71,Laconia,6.92 O,23,Wraith,40,Unknown
+71,Laconia,6.92 O,23,Luterium,40,Unknown
+71,Laconia,6.92 O,23,Aqualite,20,Unknown
+72,Awohali,20.80 O,23,Aqualite,70,Unknown
+72,Awohali,20.80 O,23,Quolium,30,Unknown
+73,Pegasi,62.30 O,23,Aqualite,100,Unknown
+74,Typhon,178 O,24,Aqualite,60,Unknown
+74,Typhon,178 O,24,Opalite,40,Unknown
+75,Surtur,516 O,24,Opalite,70,Unknown
+75,Surtur,516 O,24,Wraith,30,Unknown
+76,Vesta,1.81 N,24,Opalite,100,Unknown

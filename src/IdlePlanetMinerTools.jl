@@ -27,5 +27,6 @@ make_crafted_recipies()
 
 include("extract_projects.jl")
 include("extract_rooms.jl")
+include("extract_planets.jl")
 
 end
