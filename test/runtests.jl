@@ -18,7 +18,7 @@ end
     @test length(subtypes(Ore)) == 27
     @test length(subtypes(Alloy)) == 28
     @test length(subtypes(Crafted)) == 44
-    @test length(subtypes(Project)) == 125
+    @test length(subtypes(Project)) == 126    # Telescope24 added by hand
     @test length(ALL_RECIPIES) ==  197
     @test length(subtypes(Room)) == 22
 end
