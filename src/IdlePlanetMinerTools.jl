@@ -29,6 +29,8 @@ include("extract_projects.jl")
 include("extract_rooms.jl")
 include("extract_planets.jl")
 
-# make_planet_definitions()
+make_planet_definitions()
+
+include("project_chart_coordinates.jl")
 
 end

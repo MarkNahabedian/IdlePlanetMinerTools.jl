@@ -146,3 +146,44 @@ end
     @test doctext(Management) == "Hire and assign managers to planets"
 end
 
+@testset "project grid coordinates" begin
+    # only one project at a given grid location.
+    grid = Dict{Tuple{Int, Int}, Type{<:Project}}()
+    for (p, c) in PROJECT_CHART_COORDINATES
+        if c == ()
+            # We don't know grid locations for Surges yet:
+            continue
+        end
+        p2 = get(grid, c, nothing)
+        if p2 == nothing
+            grid[c] = p
+        else
+            println(stdout, "\n[!] Test Failed: at $c have both $p and $p2.")
+            @test false
+        end
+    end
+    # distance between prerequisites
+    d(a, b) = (a[1]-b[1])^2 + (a[2]-b[2])^2
+    for project_type in keys(PROJECT_CHART_COORDINATES)
+        p1g = PROJECT_CHART_COORDINATES[project_type]
+        if isempty(p1g)
+            continue
+        end
+        for p in prerequisites(project_type)
+            expect = 2
+            if project_type == AdvancedFurnace && p == Smelter
+                expect = 5
+            end
+            p2g = PROJECT_CHART_COORDINATES[p]
+            if isempty(p2g)
+                continue
+            end
+            distance2 = d(p1g, p2g)
+            if distance2 > expect
+                println(stdout, "\n[!] Test Failed: distance between $project_type @$p1g and $p @$p2g == $distance2.")
+                @test false
+            end
+        end
+    end
+end
+
