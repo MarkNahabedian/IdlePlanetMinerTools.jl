@@ -6,6 +6,9 @@ include("inventory.jl")
 include("arithmetic.jl")
 include("projects.jl")
 include("processes.jl")
+
+process_speed_scalar(::Mine, ::NoAdsMineBoots) = 1.2
+
 include("recipie.jl")
 include("extraction_tools.jl")
 include("extract_ores.jl")
@@ -26,11 +29,26 @@ make_crafted_recipies()
 @assert 1:99 == sort(map(ordinal, union([ subtypes(x) for x in subtypes(Thing) ]...)))
 
 include("extract_projects.jl")
+
+make_project_definitions()
+include("Telescope24.jl")
+
 include("extract_rooms.jl")
 include("extract_planets.jl")
+
+
+"""
+Exploit is the process by which a new planet is discovered.
+"""
+struct Exploit <: Process end
+
+to_make(::Planet) = Exploit()
+
 
 make_planet_definitions()
 
 include("project_chart_coordinates.jl")
+
+include("planning.jl")
 
 end

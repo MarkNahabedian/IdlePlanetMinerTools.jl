@@ -18,7 +18,7 @@ end
     @test length(subtypes(Ore)) == 27
     @test length(subtypes(Alloy)) == 28
     @test length(subtypes(Crafted)) == 44
-    @test length(subtypes(Project)) == 126    # Telescope24 added by hand
+    @test length(all_projects()) == 126    # Telescope24 added by hand
     @test length(ALL_RECIPIES) ==  197
     @test length(subtypes(Room)) == 22
 end
@@ -185,5 +185,40 @@ end
             end
         end
     end
+end
+
+@testset "Planet precursors" begin
+    @test precursor(Iron) == AnyOf([
+        find_planet("Drasta"),
+        find_planet("Anadius"),
+        find_planet("Dholen")
+    ])
+    @test precursor(Opalite) == AnyOf([
+        find_planet("Typhon"),
+        find_planet("Surtur"),
+        find_planet("Vesta")
+    ])
+end
+
+@testset "precursor" begin
+    @test precursor(ALL_PLANETS[2]) == nothing
+    @test precursor(ALL_PLANETS[10]) == Telescope2
+    @test precursor(Hammer(10)) == lookup_recipie(Hammer)
+    @test precursor(Copper) ==
+        AnyOf([
+        pl"Balor",
+        pl"Drasta",
+            pl"Anadius"
+        ])
+    @test precursor(Iron(5)) == AnyOf([
+        pl"Anadius",
+        pl"Drasta",
+        pl"Dholen"
+    ])
+    @test precursor(rx"Battery") == AllOf([CopperBar, CopperWire])
+    @test precursor(AsteroidAutoMiner) == AllOf([
+        AsteroidHarvester, SolarPanel, AdvancedComputer])
+    @test precursor(AsteroidAutoMiner()) == AllOf([
+        AsteroidHarvester, SolarPanel, AdvancedComputer])
 end
 
