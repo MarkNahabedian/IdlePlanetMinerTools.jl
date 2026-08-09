@@ -1,5 +1,6 @@
 
-export Planet, fetch_planets, make_planet_definitions, ALL_PLANETS
+export Planet, fetch_planets, make_planet_definitions, ALL_PLANETS,
+    find_planet, @pl_str, provides_ore
 
 include_dependency(joinpath(@__DIR__, "planets.csv"))
 
@@ -13,6 +14,8 @@ struct OreYield
     yield::Float32
 end
 
+provides_ore(oy::OreYield, o::Type{<:Ore}) = oy.ore == o
+
 
 """
 Planet represents a Planet.
@@ -24,6 +27,11 @@ struct Planet
     telescope::Union{Nothing, Type{<:Project}}
     ores::Vector{OreYield}
 end
+
+namestring(p::Planet) = p.name
+
+provides_ore(p::Planet, o::Type{<:Ore}) =
+    any(oy -> provides_ore(oy, o), p.ores)
 
 
 function fetch_planets()
@@ -58,6 +66,26 @@ end
 
 ALL_PLANETS = Planet[]
 
+find_planet(planet::Int) =
+    only(filter(ALL_PLANETS) do p
+             p.number == planet
+         end)
+
+function find_planet(planet::AbstractString)
+    m = match(r"[0-9]+", planet)
+    # Name or number?
+    if m isa RegexMatch
+        number = parse(Int, m.match)
+        return find_planet(number)
+    end
+    return best_thing_match(planet, ALL_PLANETS)
+end
+
+macro pl_str(planet)
+    return :(find_planet($planet))
+end
+
+
 function make_planet_definitions()
     df = CSV.read(joinpath(@__DIR__, "planets.csv"), DataFrame)
     this_planet = nothing
@@ -80,7 +108,7 @@ function make_planet_definitions()
             telescope = nothing
         else
             ts = "Telescope$(parse(Int, telescopenum))"
-            telescope = only(filter(subtypes(Project)) do p
+            telescope = only(filter(all_projects()) do p
                                  string(nameof(p)) == ts
                              end)
         end
@@ -89,10 +117,11 @@ function make_planet_definitions()
         price = parse_selling_price(this_planet["Base Price"])
         ore_yields = this_planet_ore_yields
         push!(ALL_PLANETS, Planet(num, name, price, telescope, ore_yields))
-        empty!(this_planet_ore_yields)
+        this_planet_ore_yields = OreYield[]
+        this_pllanet = nothing
     end
     for row in eachrow(df)
-        if this_planet != nothing && row[1] == this_planet[1]
+        if this_planet != nothing && row["No."] == this_planet["No."]
             # Same planet as previous row
             make_ore_yield(row)
         else
@@ -104,6 +133,7 @@ function make_planet_definitions()
             make_ore_yield(row)
         end
     end
+    @assert !isempty(this_planet_ore_yields)
     finish_planet()
 end
 
