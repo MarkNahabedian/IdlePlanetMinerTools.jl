@@ -129,11 +129,6 @@ function make_project_definitions()
             end
         end
     end
-    #=
-    map(println, types)
-    map(println, methods)
-    map(println, recipies)
-    =#
     for t in types
         eval(quote
                  struct $t <: Project end
@@ -151,15 +146,4 @@ function make_project_definitions()
     push!(ALL_RECIPIES,
           map(eval, recipies)...)
 end
-
-make_project_definitions()
-
-# Telescope 24 is not on the wiki page:
-struct Telescope24 <: Project end
-@doc "Extends vision to planets 74 - 76" Telescope24
-prerequisites(::Telescope24) = [Telescope23]
-Recipie(Telescope24,
-        Teleporter(5) + AqualiteAlloy(21),
-        0)
-export Telescope24
 
