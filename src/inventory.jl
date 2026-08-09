@@ -26,9 +26,12 @@ struct Inventory
     end
 end
 
-Base.length(i::Inventory) = length(i.items())
+Base.length(i::Inventory) = length(i.items)
 
 Base.convert(::Type{Inventory}, thing::Thing) = Inventory(thing)
 
 base_selling_price(i::Inventory) = sum(base_selling_price, i.items)
+
+Base.iterate(i::Inventory) = iterate(i.items)
+Base.iterate(i::Inventory, state) = iterate(i.items, state)
 
