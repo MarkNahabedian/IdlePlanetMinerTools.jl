@@ -1,10 +1,26 @@
 
-export Project, prerequisites, next_projects, add_researched_project
+export Project, all_projects, prerequisites, next_projects,
+    add_researched_project
 
 """
 Project represents an Idle Planet Miner project.
 """
 abstract type Project <: Modifier end
+
+function all_projects()
+    result = Vector{Type{<:Project}}()
+    function walk(p)
+        if isconcretetype(p)
+            push!(result, p)
+        else
+            for p1 in subtypes(p)
+                walk(p1)
+            end
+        end
+    end
+    walk(Project)
+    result
+end
 
 
 """
@@ -25,7 +41,7 @@ researches, what are the next projects to be researches?
 function next_projects(modifiers=DEFAULT_MODIFIERS)
     have_projects = map(typeof, filter(m -> m isa Project, modifiers))
     next = []
-    for p in subtypes(Project)
+    for p in all_projects()
         if !isempty(intersect(have_projects, prerequisites(p)))
             if !in(p, have_projects) && !in(p, next)
                 push!(next, p)
