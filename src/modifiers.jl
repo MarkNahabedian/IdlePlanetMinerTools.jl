@@ -1,6 +1,6 @@
 using Markdown
 
-export Modifier, NoAdsMineBoots, DEFAULT_MODIFIERS, doctext
+export Modifier, NoAdsMineBoost, DEFAULT_MODIFIERS, doctext
 
 
 """
@@ -12,10 +12,10 @@ abstract type Modifier end
 
 
 """
-NoAdsMineBoots is the modifier that provides a 1.2 increase in mining
+NoAdsMineBoost is the modifier that provides a 1.2 increase in mining
 rate when you pay for no ads.
 """
-struct NoAdsMineBoots <: Modifier
+struct NoAdsMineBoost <: Modifier
 end
 
 

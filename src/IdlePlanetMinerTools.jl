@@ -7,7 +7,7 @@ include("arithmetic.jl")
 include("projects.jl")
 include("processes.jl")
 
-process_speed_scalar(::Mine, ::NoAdsMineBoots) = 1.2
+process_speed_scalar(::Mine, ::NoAdsMineBoost) = 1.2
 
 include("recipie.jl")
 include("extraction_tools.jl")
@@ -49,6 +49,7 @@ make_planet_definitions()
 
 include("project_chart_coordinates.jl")
 
+include("game_state.jl")
 include("planning.jl")
 
 end
