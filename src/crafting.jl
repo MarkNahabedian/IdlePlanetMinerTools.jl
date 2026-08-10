@@ -6,7 +6,7 @@ struct CraftingAction
 end
 
 """
-    crafting_plan(inv::Inventory)
+    crafting_plan(inv::Inventory, modifiers = DEFAULT_MODIFIERS)
 
 Appliies `Recipie`s to the ~Inventory` until there are no negative
 item counts or there is no known recipie to resolve the current
@@ -14,7 +14,7 @@ shortage.
 
 Returns a list of `CraftingAction`s and the final `Inventory`.
 """
-function crafting_plan(inv::Inventory)
+function crafting_plan(inv::Inventory, modifiers = DEFAULT_MODIFIERS)
     actions = CraftingAction[]
     inventory = inv
     while true
@@ -33,7 +33,7 @@ function crafting_plan(inv::Inventory)
         # Apply the recipie enough times
         multiplier = - need.count
         pushfirst!(actions, CraftingAction(recipie, round(Int, multiplier)))
-        inventory += multiplier * delta(recipie)
+        inventory += multiplier * delta(recipie, modifiers)
     end
     actions, inventory
 end
