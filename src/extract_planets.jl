@@ -28,6 +28,9 @@ struct Planet
     ores::Vector{OreYield}
 end
 
+Base.isequal(p1::Planet, p2::Planet) = p1.number == p2.number
+Base.:(==)(p1::Planet, p2::Planet) = p1.number == p2.number
+
 Base.isless(p1::Planet, p2::Planet) = p1.number < p2.number
 
 namestring(p::Planet) = p.name
