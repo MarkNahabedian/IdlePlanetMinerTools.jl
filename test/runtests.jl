@@ -19,7 +19,7 @@ end
     @test length(subtypes(Alloy)) == 28
     @test length(subtypes(Crafted)) == 44
     @test length(all_projects()) == 126    # Telescope24 added by hand
-    @test length(ALL_RECIPIES) ==  197
+    @test length(ALL_RECIPIES) ==  198     # Telescope24
     @test length(subtypes(Room)) == 22
 end
 
@@ -220,5 +220,38 @@ end
         AsteroidHarvester, SolarPanel, AdvancedComputer])
     @test precursor(AsteroidAutoMiner()) == AllOf([
         AsteroidHarvester, SolarPanel, AdvancedComputer])
+end
+
+@testset "spot-check delta calculations against real game data" begin
+    # I wish I had started collecting data for this test much earlier.
+    # I just have my current game state to work with.
+    let
+        game = GameState()
+        add_modifier!(NoAdsMineBoost(), game)
+        add_modifier!(Engineering(8), game)
+        add_modifier!(Aeronautical(8), game)
+        add_modifier!(Packaging(5), game)
+        add_modifier!(Forge(10), game)
+        add_modifier!(Workshop(10), game)
+        add_modifier!(Astronomy(2), game)
+        add_modifier!(Laboratory(4), game)
+        add_modifier!(Terrarium(4), game)
+        add_modifier!(Lounge(9), game)
+        add_modifier!(BackupGenerator(2), game)
+        add_modifier!(Underforge(4), game)
+        add_modifier!(Dorm(3), game)
+        for project in [
+            AsteroidMiner, Smelter, Management, Telescope1, Beacon, Crafter,
+            Rover, Telescope2, Telescope3, AdvancedMining,
+            AsteroidRefinedDrilling, AdvancedCargoHandling, Telescope4,
+            AdvancedThrusters, Telescope5, AdvancedFurnace, CargoLogistics,
+            AdvancedCrafter, AsteroidHarvester, ResourceDetails,
+            AdvancedItemValue, Colonization, ColonizationEfficiency,
+            ColonizationScouting
+            ]
+            add_researched_project!(project, game)
+        end
+        delta(rx"SmeltingEfficiency", game.modifiers) == BronzeBar(-156)
+    end
 end
 
