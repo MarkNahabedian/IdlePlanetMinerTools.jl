@@ -39,7 +39,8 @@ Assuming that the projects in `modifiers` have already been
 researches, what are the next projects to be researches?
 """
 function next_projects(modifiers=DEFAULT_MODIFIERS)
-    have_projects = map(typeof, filter(m -> m isa Project, modifiers))
+    have_projects = [ typeof(x)
+                      for x in filter(m -> m isa Project, modifiers) ]
     next = []
     for p in all_projects()
         if !isempty(intersect(have_projects, prerequisites(p)))
@@ -53,7 +54,7 @@ end
 
 
 """
-    add_researched_project!(add_this::Project, to::Vector{Modifier}=DEFAULT_MODIFIERS)
+    add_researched_project!(add_this::Type{<:Project}, to::Vector{Modifier}=DEFAULT_MODIFIERS)
 
 Add `add_this` and the transitive closure of its prerequisites to `to`
 if they are not already present.
