@@ -37,8 +37,8 @@ I've not yet decided if that should happen here.
 """
 function delta(r::Recipie, modifiers = DEFAULT_MODIFIERS)
     multiplier = reduce(*,
-                        map(m -> process_ingredient_scalar(to_make(r.make), m),
-                            modifiers);
+                        [ process_ingredient_scalar(to_make(r.make), m)
+                          for m in modifiers ];
                         init = 1.0)
     if r.make <: Thing
         r.make(1) + multiplier * r.ingredients
@@ -50,8 +50,16 @@ end
 
 lookup_recipie(want::AbstractString) = best_thing_match(want, ALL_RECIPIES)
 
-lookup_recipie(want::Type) = only(filter(r -> r.make == want,
-                                         ALL_RECIPIES))
+function lookup_recipie(want::Type)
+    rxs = filter(r -> r.make === want, ALL_RECIPIES)
+    if isempty(rxs)
+        error("No recipie for $want.")
+    elseif length(rxs) == 1
+        return first(rxs)
+    else
+        error("Too many recipies: $rxs")
+    end
+end
 
 macro rx_str(name)
     return :(lookup_recipie($name))
