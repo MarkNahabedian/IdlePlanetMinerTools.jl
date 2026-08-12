@@ -62,6 +62,18 @@ precursor(p::Planet) = p.telescope
 
 
 """
+    precursor(t::Type{<:Thing})
+
+The precursor of any subtype of `Thing` that is not a subtype of
+`Ore` is `AllOf` the ingredients of its `Recipie`.
+"""
+function precursor(t::Type{<:Thing})
+    r = lookup_recipie(t)
+    AllOf(map(typeof, r.ingredients))
+end
+
+
+"""
     function precursor(o::Type{<:Ore})
 
 The precursor of an Ore is any of the Planets that provide that Ore.
@@ -70,16 +82,18 @@ We restrict the result to those planets with the lowest Telescope
 number.
 """
 function precursor(o::Type{<:Ore})
+    # Return a Project's ranking as a Telescope.  Non-Telescopes are
+    # assigned the typemax so actual Telescopes will be ordered lower.
     function telescope_number(t::Type{<:Project})
         m = match(r"Telescope(?<num>[0-9]+)", string(nameof(t)))
         if m == nothing
             # Any actual telescope will be less than this:
-            typemax(Int)
+            return typemax(Int)
         else
-            parse(Int, m["num"])
+            return parse(Int, m["num"])
         end
     end
-    best_telescope = nothing
+    best_telescope = typemax(Int)
     best = Planet[]
     for p in ALL_PLANETS
         if provides_ore(p, o)
@@ -87,12 +101,12 @@ function precursor(o::Type{<:Ore})
                 best_telescope = 0
                 push!(best, p)
             else
-                if (best_telescope == nothing ||
-                    telescope_number(p.telescope) < best_telescope)
+                tnum = telescope_number(p.telescope)
+                if tnum < best_telescope
                     empty!(best)
-                    best_telescope = telescope_number(p.telescope)
+                    best_telescope = tnum
                     push!(best, p)
-                elseif telescope_number(p.telescope) == best_telescope
+                elseif tnum == best_telescope
                     push!(best, p)
                 end
             end
@@ -118,3 +132,54 @@ function precursor(p::Type{<:Project})
     AllOf([prereq..., map(typeof, r.ingredients)...])
 end
 
+#=
+
+It would be nice to have a graph that shows the dependencies that
+gives us a "layered" view of the dependencies.
+
+I think we need to start with a map from entities to what they are
+precursors for.
+
+=#
+
+export make_precursor_to_postcursor_map
+
+function make_precursor_to_postcursor_map()
+    result = Dict{Any, Vector}()
+    result[nothing] = []
+    function note(pre, post)
+        if !haskey(result, pre)
+            result[pre] = []
+        end
+        if post in result[pre]
+            return false
+        end
+        push!(result[pre], post)
+        return true
+    end
+    function walk(x)
+        if x isa Nothing
+            return
+        end
+        if x isa PlanJunction
+            for pre1 in x.precursors
+                if note(pre1, x)
+                    walk(pre1)
+                end
+            end
+            return
+        end
+        pre = precursor(x)
+        if pre isa Nothing
+            note(nothing, x)
+        else
+            if note(pre, x)
+                walk(pre)
+            end
+        end
+    end
+    for project in all_projects()
+        walk(project)
+    end
+    result
+end
