@@ -5,9 +5,10 @@ struct Telescope24 <: Project end
 
 prerequisites(::Telescope24) = [Telescope23]
 
-Recipie(Telescope24,
-        Teleporter(5) + AqualiteAlloy(21),
-        0)
+push!(ALL_RECIPIES,
+      Recipie(Telescope24,
+              Teleporter(5) + AqualiteAlloy(21),
+              0) )
 
 export Telescope24
 
