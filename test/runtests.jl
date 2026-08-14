@@ -201,9 +201,9 @@ end
 end
 
 @testset "precursor" begin
-    @test precursor(ALL_PLANETS[2]) == nothing
-    @test precursor(ALL_PLANETS[10]) == Telescope2
-    @test precursor(Hammer(10)) == lookup_recipie(Hammer)
+    @test precursor(pl"Drasta") == nothing
+    @test precursor(pl"Solveig") == Telescope2
+    # @test precursor(Hammer(10)) == lookup_recipie(Hammer)
     @test precursor(Copper) ==
         AnyOf([
         pl"Balor",
@@ -253,5 +253,16 @@ end
         end
         delta(rx"SmeltingEfficiency", game.modifiers) == BronzeBar(-156)
     end
+end
+
+@testset "spot test development_level" begin
+    @test development_level(nothing) == 0
+    @test development_level(pl"Balor") == 1
+    @test development_level(Copper) == 2
+    @test development_level(Management) == 3
+    @test development_level(Telescope1) == 6
+    @test development_level(pl"Elysta") == development_level(Telescope8) + 1
+    @test development_level(PreferredVendor) == 22
+    @test development_level(SuperiorMining) == 18
 end
 

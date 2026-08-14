@@ -1,6 +1,6 @@
 # A simple planner.
 
-export PlanJunction, AnyOf, AllOf, precursor
+export PlanJunction, AnyOf, AllOf, precursor, development_level
 
 
 abstract type PlanJunction end
@@ -115,9 +115,19 @@ function precursor(o::Type{<:Ore})
     AnyOf(best)
 end
 
-precursor(o::Ore) = precursor(typeof(o))
+precursor(t::Thing) = precursor(typeof(t))
 
-precursor(t::Thing) = lookup_recipie(typeof(t))
+precursor(a::Type{<:Alloy}) =
+    AllOf([Smelter,
+           map(precursor,
+               map(typeof,
+                   lookup_recipie(a).ingredients.items))...])
+
+precursor(c::Type{Crafted}) =
+    AllOf([Crafter,
+           map(precursor,
+               map(typeof,
+                   lookup_recipie(c).ingredients.items))...])
 
 precursor(r::Recipie) = AllOf(map(typeof, r.ingredients.items))
 
@@ -183,3 +193,25 @@ function make_precursor_to_postcursor_map()
     end
     result
 end
+
+
+"""
+    development_level(x)
+
+Return the "development level" of `x`.
+
+It's clear that there are steps in the precursor graph based on
+distance from the null precursor to `x` and what steps are on that
+path.  For example, A given type of Ore has a development level that
+is 1 greater than the earliest planet that produces it.
+"""
+function development_level end
+    
+development_level(::Nothing) = 0
+
+development_level(x::Any) = development_level(precursor(x)) + 1
+
+development_level(a::AllOf) = maximum(development_level, a.precursors)
+
+development_level(a::AnyOf) = minimum(development_level, a.precursors)
+
