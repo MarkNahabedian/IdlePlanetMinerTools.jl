@@ -8,7 +8,7 @@ end
 """
     crafting_plan(inv::Inventory, modifiers = DEFAULT_MODIFIERS)
 
-Appliies `Recipie`s to the ~Inventory` until there are no negative
+Appliies `Recipie`s to the `Inventory` until there are no negative
 item counts or there is no known recipie to resolve the current
 shortage.
 
