@@ -206,12 +206,21 @@ path.  For example, A given type of Ore has a development level that
 is 1 greater than the earliest planet that produces it.
 """
 function development_level end
-    
-development_level(::Nothing) = 0
 
-development_level(x::Any) = development_level(precursor(x)) + 1
+CACHED_DEVELOPMENT_LEVEL = Dict{Any, Int}()
 
-development_level(a::AllOf) = maximum(development_level, a.precursors)
+function development_level(x)
+    if !haskey(CACHED_DEVELOPMENT_LEVEL, x)
+        CACHED_DEVELOPMENT_LEVEL[x] = development_level1(x)
+    end
+    CACHED_DEVELOPMENT_LEVEL[x]
+end
 
-development_level(a::AnyOf) = minimum(development_level, a.precursors)
+development_level1(::Nothing) = 0
+
+development_level1(x::Any) = development_level(precursor(x)) + 1
+
+development_level1(a::AllOf) = maximum(development_level, a.precursors)
+
+development_level1(a::AnyOf) = minimum(development_level, a.precursors)
 
