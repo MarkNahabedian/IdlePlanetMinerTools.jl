@@ -266,3 +266,17 @@ end
     @test development_level(SuperiorMining) == 18
 end
 
+@testset "has_modifier" begin
+    game = GameState()
+    for project in [AsteroidMiner, Smelter, Crafter, AdvancedFurnace,
+                    SmeltingEfficiency, AdvancedAlloyValue, SmeltingEfficiency,
+                    SuperiorFurnace, PreferredVendor
+                    ]
+        add_researched_project!(project, game)
+    end
+    @test has_modifier(game, SuperiorFurnace)
+    @test has_modifier(game, SuperiorFurnace())
+    @test has_modifier(game, PreferredVendor)
+    @test has_modifier(game, PreferredVendor())
+end
+
