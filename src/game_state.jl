@@ -1,4 +1,4 @@
-export GameState, add_modifier!
+export GameState, add_planet!, add_modifier!, has_modifier
 
 
 """
@@ -20,6 +20,28 @@ end
 next_projects(gs::GameState) = next_projects(gs.modifiers)
 
 crafting_plan(gs::GameState) = crafting_plan(gs.inventory, gs.modifiers)
+
+delta(r::Recipie, game::GameState) = delta(r, game.modifiers)
+
+
+"""
+    has_modifier(game::GameState, modifier::Modifier)
+    has_modifier(game::GameState, mtodifier::Type{<:Modifier})
+
+Return true if the modifier is present in the GameState.
+"""
+function has_modifier end
+
+has_modifier(game::GameState, x::Modifier) = x in game.modifiers
+
+function has_modifier(game::GameState, mt::Type{<:Modifier})
+    for m in game.modifiers
+        if m isa mt
+            return true
+        end
+    end
+    return false
+end
 
 
 """
