@@ -47,6 +47,9 @@ function canonicalize_name(name)
 end
 
 
+Base.round(t::Thing) = typeof(t)(round(Int, t.count))
+
+
 """
     all_things()
 
