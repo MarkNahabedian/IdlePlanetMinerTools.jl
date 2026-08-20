@@ -121,6 +121,12 @@ begin
 end
 
 
+"""
+    report_process_scalars(game::GameState)
+
+Computes and shows all of the process scalar modifiers from the
+`GameState`.
+"""
 function report_process_scalars(game::GameState)
     println("\n\ngame state multipliers:")
     for p in subtypes(Process)
