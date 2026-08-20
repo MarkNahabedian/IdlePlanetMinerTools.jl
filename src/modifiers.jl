@@ -32,3 +32,4 @@ DEFAULT_MODIFIERS = Modifier[]
 Returns a text string defining the Modifier.
 """
 doctext(m::Type{<:Modifier}) = chomp(Markdown.plain(Docs.doc(m).content[1]))
+

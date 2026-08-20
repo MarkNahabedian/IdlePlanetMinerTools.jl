@@ -1,5 +1,5 @@
 export Process, Mine, Smelt, Craft, Research, to_make,
-    process_speed_scalar, process_ingredient_scalar
+    process_speed_scalar, process_ingredient_scalar, process_capacity
 
 
 """
@@ -7,10 +7,18 @@ Process is the abstract supertype for transformative operations.
 """
 abstract type Process end
 
+
 """
 Mine is the subtype of `Process` that generates `Ore`.
 """
 struct Mine <: Process end
+
+
+"""
+Transport is the subtype of `Process` that transports `Ore`.
+Transport relates to ship speed.
+"""
+struct Transport <: Process end
 
 
 """
@@ -60,5 +68,13 @@ Returns the scalar multiplier for the amount of ingredients required
 for the Process as adjusted by `Modifier`.
 """
 process_ingredient_scalar(::Process, ::Modifier) = 1
+
+
+"""
+    process_capacity(::Process, ::Modifier)
+
+process_capacity relates to the cargo multiplier.
+"""
+process_capacity(::Process, ::Modifier) = 1
 
 

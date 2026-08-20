@@ -9,6 +9,7 @@ include("processes.jl")
 
 process_speed_scalar(::Mine, ::NoAdsMineBoost) = 1.2
 
+include("managers.jl")
 include("recipie.jl")
 include("extraction_tools.jl")
 include("extract_ores.jl")
