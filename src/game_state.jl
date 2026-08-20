@@ -1,4 +1,4 @@
-export GameState, add_planet!, add_modifier!, has_modifier
+export GameState, add_planet!, add_modifier!, has_modifier, report_process_scalars
 
 
 """
@@ -120,3 +120,16 @@ begin
     end
 end
 
+
+function report_process_scalars(game::GameState)
+    println("\n\ngame state multipliers:")
+    for p in subtypes(Process)
+        for f in ALL_PROCESS_SCALAR_FUNCTIONS
+            s = f(p(), game)
+            if s != 1
+                println("$p $f: $s")
+            end
+        end
+    end
+    println("\n")
+end
