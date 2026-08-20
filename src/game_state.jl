@@ -104,3 +104,19 @@ function add_modifier!(modifier::Modifier, gs::GameState)
     gs
 end
 
+
+begin
+    for f in ALL_PROCESS_SCALAR_FUNCTIONS
+        name = nameof(f)
+        eval(:(function $name(p::Process, g::GameState)
+                   result::Float32 = 1.0
+                   for m in g.modifiers
+                       for p in subtypes(Process)
+                           result *= $name(p(), m)
+                       end
+                   end
+                   result
+               end))
+    end
+end
+
