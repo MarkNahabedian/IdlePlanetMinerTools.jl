@@ -1,5 +1,7 @@
-export Process, Mine, Smelt, Craft, Research, to_make,
-    process_speed_scalar, process_ingredient_scalar, process_capacity
+export Process, Mine, Smelt, Craft, Research, Exploit, Transport,
+    to_make,
+    process_speed_scalar, process_ingredient_scalar, process_capacity,
+    ALL_PROCESS_SCALAR_FUNCTIONS
 
 
 """
@@ -75,6 +77,12 @@ process_ingredient_scalar(::Process, ::Modifier) = 1
 
 process_capacity relates to the cargo multiplier.
 """
-process_capacity(::Process, ::Modifier) = 1
+process_capacity_scalar(::Process, ::Modifier) = 1
 
+
+ALL_PROCESS_SCALAR_FUNCTIONS = [
+    process_speed_scalar,
+    process_ingredient_scalar,
+    process_capacity_scalar
+]
 
