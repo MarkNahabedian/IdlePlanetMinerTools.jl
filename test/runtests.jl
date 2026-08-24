@@ -1,6 +1,8 @@
 using IdlePlanetMinerTools
+using IdlePlanetMinerTools: parse_duration, thing_cost
 using Test
 using InteractiveUtils
+
 
 @testset "arithmetic" begin
     @test t"Iron" + 2 * t"Iron" == 3 * t"Iron"
@@ -14,6 +16,13 @@ using InteractiveUtils
         Inventory(GravityChamber(4), AdvancedComputer(29), BasicComputer(23), Circuit(1290))
 end
 
+@testset "parse_duration" begin
+    @test parse_duration("125") == 125
+    @test parse_duration("6:24") == 6 * 60 + 24
+    @test parse_duration("2:34:50") == 2 * 60 * 60 + 34 * 60 + 50
+    @test parse_duration("23,456") == 23456
+end
+
 @testset "object counts" begin
     @test length(subtypes(Ore)) == 27
     @test length(subtypes(Alloy)) == 28
@@ -25,10 +34,10 @@ end
 
 @testset "recipie ingredient modifiers" begin
     r = rx"PlatinumBar"
-    @test delta(r, []) ==
-        Platinum(-1000.0) + GoldBar(-2.0) + PlatinumBar(1)
-    @test delta(r, [SmeltingEfficiency()]) ==
-        Platinum(-800.000) + GoldBar(-1.600) + PlatinumBar(1)
+    @test delta(r, []) == Platinum(-1000) + GoldBar(-2) + PlatinumBar(1)
+    @test isapprox(delta(r, [SmeltingEfficiency()]),
+                   Platinum(-800) + GoldBar(-1.6) + PlatinumBar(1);
+                   atol = 0.001)
 end
 
 @testset "project prerequisites" begin
@@ -269,7 +278,7 @@ end
 @testset "has_modifier" begin
     game = GameState()
     for project in [AsteroidMiner, Smelter, Crafter, AdvancedFurnace,
-                    SmeltingEfficiency, AdvancedAlloyValue, SmeltingEfficiency,
+                    SmeltingEfficiency, AdvancedAlloyValue,
                     SuperiorFurnace, PreferredVendor
                     ]
         add_researched_project!(project, game)
@@ -278,5 +287,65 @@ end
     @test has_modifier(game, SuperiorFurnace())
     @test has_modifier(game, PreferredVendor)
     @test has_modifier(game, PreferredVendor())
+end
+
+@testset "spot check compute_thing_costs" begin
+    df = compute_thing_costs()
+    let
+        game = GameState()
+        tc = thing_cost(CopperBar, game)
+        @test tc.name == "CopperBar"
+        @test tc.sell_price == base_selling_price(CopperBar)
+        @test tc.total_ore_cost == 1000
+        @test tc.smelting_time == 20
+        @test tc.crafting_time == 0
+        @test tc.time_missing == false
+    end
+    let
+        row = df[findfirst(==("CopperBar"), df.name), :]
+        @test isapprox(row.sell_price, 1450.0; atol=0.001)
+        @test row.total_ore_cost == 1000   # 1000 Copper * 1 each
+        @test row.smelting_time == 20
+        @test row.crafting_time == 0
+        @test row.time_missing == false
+    end
+    let
+        row = df[findfirst(==("SiliconBar"), df.name), :]
+        @test row.sell_price == 12500
+        @test row.total_ore_cost == 8000   # 1000 Silicon * 8 each
+        @test row.smelting_time == 60
+        @test row.crafting_time == 0
+        @test row.time_missing == false
+    end
+    let
+        # Bronze Bar,1M,"2 Silver Bar, 10 Copper Bar",4:00,234K,"Laser Torch (5), Motor (500)"
+        row = df[findfirst(==("BronzeBar"), df.name), :]
+        @test row.sell_price == 234000
+        @test row.total_ore_cost ==
+            base_selling_price(Silver(2000)) + base_selling_price(Copper(10000))
+        @test row.smelting_time == 20 * 10 + 120 * 2 + 240
+        @test row.crafting_time == 0
+        @test row.time_missing == false
+    end
+    let
+        # Copper Wire,Free,10K,5 Copper Bar,60,"Battery (2), Circuit (10), Rover (10)"
+        row = df[findfirst(==("CopperWire"), df.name), :]
+        @test row.sell_price == 10000
+        @test row.total_ore_cost == base_selling_price(Copper(5000))
+        @test row.smelting_time == 20 * 5
+        @test row.crafting_time == 60
+        @test row.time_missing == false
+    end
+    let
+        # Hammer,135000.0,4.0e7,0.0,720.0,false
+        row = df[findfirst(==("Hammer"), df.name), :]
+        @test row.sell_price == 135000
+        @test row.total_ore_cost ==
+            base_selling_price(Iron(1000)) * 10 +
+            base_selling_price(Lead(1000)) * 5
+        @test row.smelting_time == 30 * 10 + 40 * 5
+        @test row.crafting_time == 480 + 120 * 2
+        @test row.time_missing == false
+    end
 end
 

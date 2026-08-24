@@ -53,4 +53,6 @@ include("project_chart_coordinates.jl")
 include("game_state.jl")
 include("planning.jl")
 
+include("development_costs.jl")
+
 end
