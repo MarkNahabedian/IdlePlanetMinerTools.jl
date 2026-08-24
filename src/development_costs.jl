@@ -1,8 +1,8 @@
 # Determine costs and efficiencies for all Things.
 
-using DataFrames
+using DataFrames, CSV
 
-export compute_thing_costs
+export compute_thing_costs, value_gain
 
 function thing_cost(thing::Type{<:Thing}, game::GameState)
     cp = crafting_plan(Inventory(thing(-1)), game)[1]
@@ -39,6 +39,12 @@ function thing_cost(thing::Type{<:Thing}, game::GameState)
     )
 end
 
+"""
+    compute_thing_costs()
+
+Computes a DataFrame of the production costs and process durations for each `Thing`.
+Returns the DataFrame and also saves it to `src/thing_efficiencies.csv`.
+"""
 function compute_thing_costs()
     game = GameState()
     df = DataFrame(
@@ -57,5 +63,23 @@ function compute_thing_costs()
     end
     CSV.write(joinpath(@__DIR__, "thing_efficiencies.csv"), df)
     df
+end
+
+
+"""
+    value_gain()
+
+Reads a DataFrame rom `thing_efficiencies.csv`, computes and adds an
+`appreciation` column and then sorts by that column in descending
+order.
+"""
+function value_gain()
+    # name,sell_price,ingredient_cost,smeltine_time,crafting_time,time_missing
+    df = CSV.read(joinpath(@__DIR__, "thing_efficiencies.csv"), DataFrame)
+    transform!(df,
+               [ :sell_price, :total_ore_cost ] =>
+                   ByRow((sell_for, cost) -> sell_for / cost) =>
+                   :appreciation)
+    sort!(df, :appreciation, rev=true)
 end
 
