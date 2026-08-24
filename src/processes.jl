@@ -24,6 +24,13 @@ struct Transport <: Process end
 
 
 """
+Pack is the subtype of Process that deals with packing Ore for
+Transport.  Pack relates to cargo.
+"""
+struct Pack <: Process end
+
+
+"""
 Smelt is the subtype of Pricess that produces `Alloy`s.
 """
 struct Smelt <: Process end
