@@ -1,6 +1,7 @@
 # A simple planner.
 
-export PlanJunction, AnyOf, AllOf, precursor, development_level
+export PlanJunction, AnyOf, AllOf, precursor, development_level,
+    walk_precursors, show_tiered_production_plan
 
 
 abstract type PlanJunction end
@@ -223,4 +224,74 @@ development_level1(x::Any) = development_level(precursor(x)) + 1
 development_level1(a::AllOf) = maximum(development_level, a.precursors)
 
 development_level1(a::AnyOf) = minimum(development_level, a.precursors)
+
+
+"""
+    walk_precursors(f, x)
+
+Applies the function `f` to x and all of its `precursor`s.
+"""
+function walk_precursors end
+
+
+walk_precursors(f, x::Nothing) = nothing
+
+function walk_precursors(f, x::Any)
+    f(x)
+    walk_precursors(f, precursor(x))
+end
+    
+function walk_precursors(f, a::PlanJunction)
+    for x in a
+        walk_precursors(f, x)
+    end
+end
+
+
+function show_tiered_production_plan(game::GameState,
+                                     desired_projects::Vector{Type{<:Project}})
+    levels = Dict{Int, Set{Any}}()
+    function note(x)
+        dl = development_level(x)
+        if !haskey(levels, dl)
+            levels[dl] = Set()
+        end
+        push!(levels[dl], x)        
+    end
+    for p in desired_projects
+        walk_precursors(note, p)
+    end
+    for level in sort(collect(keys(levels)))
+        level_output = IOBuffer()
+        for x in levels[level]
+            if isa(x, PlanJunction)
+                continue
+            end
+            if x isa Planet
+                if !in(x, game.planets)
+                    println(level_output, "\t$(x.number).$(x.name)")
+                end
+            elseif x <: Thing
+                # skip
+            elseif x <: Project
+                if !has_modifier(game, x)
+                    coord = PROJECT_CHART_COORDINATES[x]
+                    name = "$x"
+                    if x in desired_projects
+                        name = "*$(name)*"
+                    end
+                    d = delta(lookup_recipie(x), game)
+                    items = join(map(round, d.items), ", ")
+                    println(level_output, "\t$name $coord  $items")
+                end
+            else
+                println(level_output, "\t? ", x)
+            end
+            if level_output.size > 0
+                println("\nLEVEL $level:")
+                write(stdout, String(take!(level_output)))
+            end
+        end
+    end
+end
 
