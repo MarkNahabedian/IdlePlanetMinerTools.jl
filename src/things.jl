@@ -49,6 +49,10 @@ end
 
 Base.round(t::Thing) = typeof(t)(round(Int, t.count))
 
+function Base.isapprox(x::T, y::T; atol, rtol, nans, norm) where T <: Thing
+    isapprox(x.count, y.count; atol, rtol, nans, norm)
+end
+
 
 """
     all_things()
@@ -101,7 +105,7 @@ base_selling_price(t::Type{<:Thing}) =
 base_selling_price(t::Thing) = t.count * base_selling_price(typeof(t))
 
 
-PARSE_MATERIALS_MULTIPLIER_SUFFIXES = Dict([
+PARSE_MATERIALS_MULTIPLIER_SUFFIXES = Dict{String, Signed}([
     "" => 1,
     " " => 1,
     "k" => 1000,
@@ -111,10 +115,10 @@ PARSE_MATERIALS_MULTIPLIER_SUFFIXES = Dict([
     "T" => 10 ^ (3 * 4),
     "q" => 10 ^ (3 * 5),
     "Q" => 10 ^ (3 * 6),
-    "s" => 10.0 ^ (3 * 7),
-    "S" => 10.0 ^ (3 * 8),
-    "O" => 10.0 ^ (3 * 9),
-    "N" => 10.0 ^ (3 * 10)
+    "s" => BigInt(10) ^ (3 * 7),
+    "S" => BigInt(10) ^ (3 * 8),
+    "O" => BigInt(10) ^ (3 * 9),
+    "N" => BigInt(10) ^ (3 * 10)
 ])
 
 function parse_selling_price(s::AbstractString)
