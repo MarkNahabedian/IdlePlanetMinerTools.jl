@@ -19,7 +19,8 @@ end
 
 next_projects(gs::GameState) = next_projects(gs.modifiers)
 
-crafting_plan(gs::GameState) = crafting_plan(gs.inventory, gs.modifiers)
+crafting_plan(inventory::Inventory, gs::GameState) =
+    crafting_plan(inventory, gs.modifiers)
 
 delta(r::Recipie, game::GameState) = delta(r, game.modifiers)
 
@@ -133,7 +134,7 @@ function report_process_scalars(game::GameState)
         for f in ALL_PROCESS_SCALAR_FUNCTIONS
             s = f(p(), game)
             if s != 1
-                println("$p $f: $s")
+                println("$p \t$f: \t$s")
             end
         end
     end

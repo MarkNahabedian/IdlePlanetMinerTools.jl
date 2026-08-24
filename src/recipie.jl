@@ -25,6 +25,9 @@ Base.isless(a::Recipie, b::Recipie) =
     base_selling_price(a) < base_selling_price(b)
 
 
+to_make(r::Recipie) = to_make(r.make)
+
+
 """
     delta(r::Recipie, modifiers = DEFAULT_MODIFIERS)
 
