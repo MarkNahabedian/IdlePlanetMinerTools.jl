@@ -9,6 +9,37 @@ using DataFrames
 # following Things.
 
 
+"""
+    parse_duration(s::AbstractString)
+
+Parses a duration string scraped from a table in a kwiki page to a
+number of seconds.
+"""
+function parse_duration(s::AbstractString)
+    let
+        m = match(r"^[0-9:]+$", s)
+        if m != nothing
+            sp = split(m.match, ':')
+            duration = 0
+            for s in sp
+                duration = duration * 60 + parse(Int, s)
+            end
+            return duration
+        end
+    end
+    let
+        m = match(r"^[0-9,]+$", s)
+        if m != nothing
+            return parse(Int, replace(m.match, "," => ""))
+        end
+    end
+    if s == "180,000s (50h)"
+        return 180000
+    end
+    error("Unsupported duration format: $s")
+end
+
+
 PARSE_MATERIALS_REGEXPS = [
     r"(?<name>[a-zA-Z ]+) [(](?<count>[0-9.]+)(?<suffix>[a-zA-Z]?)[)]",
     r"(?<count>[0-9.]+)(?<suffix>[a-zA-Z]?) (?<name>[a-zA-Z ]+)"
@@ -58,14 +89,7 @@ function make_thing_code(ordinal::Int, row, supertype,
     if duration_column_heading isa AbstractString
         duration = row[duration_column_heading]
         if isa(duration, AbstractString)
-            # "180000s (50h)"
-            m = match(r"([0-9,]+)", duration)
-            if m == nothing
-                @warn("Invalid duration $duration")
-                return
-            end
-            duration = m.match
-            duration = parse(Int, replace(duration, "," => "")) 
+            duration = parse_duration(duration)
         end
     end
     if inputs_column_heading isa AbstractString
