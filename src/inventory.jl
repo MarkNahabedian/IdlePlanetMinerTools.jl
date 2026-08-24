@@ -26,6 +26,12 @@ struct Inventory
     end
 end
 
+Base.isapprox(a::Inventory, b::Inventory; atol) =
+    all(a - b) do diff
+        (0 - atol) <= diff.count <= (0 + atol)
+    end
+
+
 Base.length(i::Inventory) = length(i.items)
 
 Base.convert(::Type{Inventory}, thing::Thing) = Inventory(thing)
