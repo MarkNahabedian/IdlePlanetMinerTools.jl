@@ -23,7 +23,7 @@ end
 DEFAULT_MODIFIERS is the list of Modifiers that is used for operations
 like [`delta`](@ref)where none are specified.
 """
-DEFAULT_MODIFIERS = Modifier[]
+DEFAULT_MODIFIERS = Set{Modifier}()
 
 
 """
