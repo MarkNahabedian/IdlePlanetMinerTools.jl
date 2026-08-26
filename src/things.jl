@@ -2,7 +2,8 @@ using InteractiveUtils
 using StringDistances
 
 export Thing, Ore, Alloy, Crafted
-export ordinal, all_things, best_thing_match, @t_str, base_selling_price
+export ordinal, all_things, best_thing_match, @t_str,
+    IdlePlanetMinerTools, base_selling_price
 
 
 """
