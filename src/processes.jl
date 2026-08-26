@@ -58,7 +58,7 @@ to_make(::Type{<:Ore}) = Mine()
 to_make(::Type{<:Alloy}) = Smelt()
 to_make(::Type{<:Crafted}) = Craft()
 to_make(::Type{<:Project}) = Research()
-ty_make(x) = to_make(typeof(x))
+to_make(x::Any) = to_make(typeof(x))
 
 
 """
