@@ -1,5 +1,5 @@
 using IdlePlanetMinerTools
-using IdlePlanetMinerTools: parse_duration, thing_cost
+using IdlePlanetMinerTools: parse_duration, thing_cost, parse_selling_price
 using Test
 using InteractiveUtils
 
@@ -345,6 +345,37 @@ end
             base_selling_price(Lead(1000)) * 5
         @test row.smelting_time == 30 * 10 + 40 * 5
         @test row.crafting_time == 480 + 120 * 2
+        @test row.time_missing == false
+    end
+    let
+        cas, inventory = crafting_plan(Inventory(XyniumAlloy(-1)))
+        row = df[findfirst(==("XyniumAlloy"), df.name), :]
+        @test row.sell_price == 48000000000
+        @test row.total_ore_cost == sum(base_selling_price, -inventory)
+        @test row.smelting_time ==
+            sum(filter(ca -> to_make(ca.recipie) == Smelt(), cas)) do ca
+                ca.count * ca.recipie.duration_seconds
+            end
+        @test row.crafting_time == 0
+        @test row.time_missing == false
+    end
+    let
+        cas, inventory = crafting_plan(Inventory(DeflectorShield(-1)))
+        row = df[findfirst(==("DeflectorShield"), df.name), :]
+        @test row.sell_price == parse_selling_price("320s")
+        @test isapprox(row.total_ore_cost,
+                       - sum(base_selling_price,
+                             filter(t -> to_make(t) == Mine(),
+                                    inventory.items));
+                       rtol = 0.000001)
+        @test row.smelting_time == sum(filter(ca -> to_make(ca.recipie) == Smelt(),
+                                              cas)) do ca
+            ca.count * ca.recipie.duration_seconds
+        end
+        @test row.crafting_time == sum(filter(ca -> to_make(ca.recipie) == Craft(),
+                                              cas)) do ca
+                                                  ca.count * ca.recipie.duration_seconds
+                                              end
         @test row.time_missing == false
     end
 end
