@@ -51,6 +51,7 @@ make_planet_definitions()
 include("project_chart_coordinates.jl")
 
 include("game_state.jl")
+include("planet_directions.jl")
 include("planning.jl")
 
 include("development_costs.jl")
