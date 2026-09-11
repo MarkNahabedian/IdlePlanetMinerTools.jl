@@ -269,7 +269,7 @@ function show_tiered_production_plan(game::GameState,
             end
             if x isa Planet
                 if !in(x, game.planets)
-                    println(level_output, "\t$(x.number).$(x.name)")
+                    println(level_output, "\t$(x.number).$(x.name) \$$(x.base_price) $(DIRECTION_ARROWS[PLANET_DIRECTIONS[x.number]])")
                 end
             elseif x <: Thing
                 # skip
@@ -288,7 +288,7 @@ function show_tiered_production_plan(game::GameState,
                 println(level_output, "\t? ", x)
             end
             if level_output.size > 0
-                println("\nLEVEL $level:")
+                print("LEVEL $level:  ")
                 write(stdout, String(take!(level_output)))
             end
         end
