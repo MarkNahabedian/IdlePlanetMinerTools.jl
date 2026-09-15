@@ -248,6 +248,34 @@ function walk_precursors(f, a::PlanJunction)
 end
 
 
+"""
+    intralevel_ordering(a, b)
+
+Implements a sort ordering for the elements withing a given level in
+`show_tiered_production_plan`.
+
+  * smaller numbered planets before larger numbered ones.
+  * arbitrarily sort planents before projects
+  * arbitrarily sort other things last any others?
+
+"""
+function intralevel_ordering end
+
+intralevel_ordering(a::Planet, b::Planet) = isless(a.number, b.number)
+intralevel_ordering(a::Type{<:Project}, b::Type{<:Project}) =
+    isless(base_selling_price(lookup_recipie(a).ingredients),
+           base_selling_price(lookup_recipie(b).ingredients))
+intralevel_ordering(a::Type{<:Thing}, b::Type{<:Thing}) =
+    isless(base_selling_price(a), base_selling_price(b))
+
+intralevel_ordering(a::Planet, b::Type{<:Project}) = true
+intralevel_ordering(a::Type{<:Project}, b::Planet) = false
+intralevel_ordering(a::Planet, b::Type{<:Thing}) = true
+intralevel_ordering(a::Type{<:Thing}, b::Planet) = false
+intralevel_ordering(a::Type{<:Project}, b::Type{<:Thing}) = true
+intralevel_ordering(a::Type{<:Thing}, b::Type{<:Project}) = false
+
+
 function show_tiered_production_plan(game::GameState,
                                      desired_projects::Vector{Type{<:Project}})
     levels = Dict{Int, Set{Any}}()
@@ -263,7 +291,7 @@ function show_tiered_production_plan(game::GameState,
     end
     for level in sort(collect(keys(levels)))
         level_output = IOBuffer()
-        for x in levels[level]
+        for x in sort(collect(levels[level]); lt = intralevel_ordering)
             if isa(x, PlanJunction)
                 continue
             end
