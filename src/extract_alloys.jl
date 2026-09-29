@@ -35,6 +35,8 @@ function make_alloy_definitions()
         ord += 1
         make_thing_code(ord, row, Alloy, "Alloys", "Material Cost",
                         "Time to Smelt")
+        define_cost_to_unlock_method(row["Alloys"],
+                                     row["Cost To Unlock"])
     end
 end
 

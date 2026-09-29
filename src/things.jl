@@ -3,7 +3,7 @@ using StringDistances
 
 export Thing, Ore, Alloy, Crafted
 export ordinal, all_things, best_thing_match, @t_str,
-    IdlePlanetMinerTools, base_selling_price
+    IdlePlanetMinerTools, base_selling_price, cost_to_unlock
 
 
 """
@@ -106,6 +106,16 @@ base_selling_price(t::Type{<:Thing}) =
 base_selling_price(t::Thing) = t.count * base_selling_price(typeof(t))
 
 
+"""
+    cost_to_unlock(::Type{<:Thing})
+
+Returns the cost to unlock the type's recipie.
+"""
+cost_to_unlock(t::Type{<:Thing}) =
+    error("cost_to_unlock for $t not defined.")
+
+
+
 PARSE_MATERIALS_MULTIPLIER_SUFFIXES = Dict{String, Signed}([
     "" => 1,
     " " => 1,
@@ -128,6 +138,8 @@ function parse_selling_price(s::AbstractString)
     if m isa RegexMatch
         return parse(Float32, m["val"]) *
             PARSE_MATERIALS_MULTIPLIER_SUFFIXES[m["mult"]]
+    elseif s == "Free"
+        return 0
     else
         error("Unrecognized price: $s")
     end
@@ -138,4 +150,9 @@ function define_base_selling_price_method(type, s::AbstractString)
     eval(:(base_selling_price(::Type{$type}) = $price))
 end
 
+function define_cost_to_unlock_method(type, s::AbstractString)
+    price = parse_selling_price(s)
+    name = Symbol(canonicalize_name(type))
+    eval(:(cost_to_unlock(::Type{$name}) = $price))
+end
 
