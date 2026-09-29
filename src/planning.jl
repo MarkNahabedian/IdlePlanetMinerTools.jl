@@ -276,6 +276,41 @@ intralevel_ordering(a::Type{<:Project}, b::Type{<:Thing}) = true
 intralevel_ordering(a::Type{<:Thing}, b::Type{<:Project}) = false
 
 
+tiered_prodiction_plan_string(::GameState, x::Any; keyargs...) = "??? " * string(x)
+
+function tiered_prodiction_plan_string(game::GameState, x::Type{<:Thing}; keyargs...)
+    "$(nameof(x))"  # Show cost to unlock
+end
+
+function tiered_prodiction_plan_string(game::GameState, x::Planet; keyargs...)
+    # Skip if we already have it:
+    if in(x, game.planets)
+        return nothing
+    end
+    join([
+    "$(x.number).$(x.name)",
+    "\$$(x.base_price)",
+        "($(planet_direction(x))$(DIRECTION_ARROWS[PLANET_DIRECTIONS[x.number]]))"
+    ],
+         " ")
+end
+
+function tiered_prodiction_plan_string(game::GameState, x::Type{<:Project};
+                                       desired_projects=[], keyargs...)
+    # Skip if we already have it:
+    if has_modifier(game, x)
+        return nothing
+    end
+    coord = PROJECT_CHART_COORDINATES[x]
+    name = "$x"
+    if x in desired_projects
+        name = "*$(name)*"
+    end
+    d = delta(lookup_recipie(x), game)
+    items = join(map(round, d.items), ", ")
+    "$name $coord  $items"
+end
+
 function show_tiered_production_plan(game::GameState,
                                      desired_projects::Vector{Type{<:Project}})
     levels = Dict{Int, Set{Any}}()
@@ -292,31 +327,12 @@ function show_tiered_production_plan(game::GameState,
     for level in sort(collect(keys(levels)))
         level_output = IOBuffer()
         for x in sort(collect(levels[level]); lt = intralevel_ordering)
-            if isa(x, PlanJunction)
-                continue
-            end
-            if x isa Planet
-                if !in(x, game.planets)
-                    println(level_output, "\t$(x.number).$(x.name) \$$(x.base_price) $(DIRECTION_ARROWS[PLANET_DIRECTIONS[x.number]])")
-                end
-            elseif x <: Thing
-                # skip
-            elseif x <: Project
-                if !has_modifier(game, x)
-                    coord = PROJECT_CHART_COORDINATES[x]
-                    name = "$x"
-                    if x in desired_projects
-                        name = "*$(name)*"
-                    end
-                    d = delta(lookup_recipie(x), game)
-                    items = join(map(round, d.items), ", ")
-                    println(level_output, "\t$name $coord  $items")
-                end
-            else
-                println(level_output, "\t? ", x)
+            tpps = tiered_prodiction_plan_string(game, x; desired_projects)
+            if tpps isa String
+                println(level_output, tpps)
             end
             if level_output.size > 0
-                print("LEVEL $level:  ")
+                print("LEVEL $level:  \t")
                 write(stdout, String(take!(level_output)))
             end
         end
