@@ -278,8 +278,12 @@ intralevel_ordering(a::Type{<:Thing}, b::Type{<:Project}) = false
 
 tiered_prodiction_plan_string(::GameState, x::Any; keyargs...) = "??? " * string(x)
 
-function tiered_prodiction_plan_string(game::GameState, x::Type{<:Thing}; keyargs...)
-    "$(nameof(x))"  # Show cost to unlock
+function tiered_prodiction_plan_string(game::GameState, x::Type{<:Alloy}; keyargs...)
+    "$(nameof(x)) \$$(cost_to_unlock(x))"
+end
+
+function tiered_prodiction_plan_string(game::GameState, x::Type{<:Crafted}; keyargs...)
+    "$(nameof(x)) \$$(cost_to_unlock(x))"
 end
 
 function tiered_prodiction_plan_string(game::GameState, x::Planet; keyargs...)
