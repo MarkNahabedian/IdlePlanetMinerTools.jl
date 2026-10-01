@@ -276,14 +276,17 @@ intralevel_ordering(a::Type{<:Project}, b::Type{<:Thing}) = true
 intralevel_ordering(a::Type{<:Thing}, b::Type{<:Project}) = false
 
 
-tiered_prodiction_plan_string(::GameState, x::Any; keyargs...) = "??? " * string(x)
+tiered_prodiction_plan_string(::GameState, x::Any; keyargs...) =
+    "??? $(string(x)) $(typeof(string(x)))"
 
 function tiered_prodiction_plan_string(game::GameState, x::Type{<:Alloy}; keyargs...)
-    "$(nameof(x)) \$$(cost_to_unlock(x))"
+    ingredients = join(collect(lookup_recipie(x).ingredients), ", ")
+    "$(nameof(x)) \$$(cost_to_unlock(x)) [$ingredients]"
 end
 
 function tiered_prodiction_plan_string(game::GameState, x::Type{<:Crafted}; keyargs...)
-    "$(nameof(x)) \$$(cost_to_unlock(x))"
+    ingredients = join(collect(lookup_recipie(x).ingredients), ", ")
+    "$(nameof(x)) \$$(cost_to_unlock(x)) [$ingredients]"
 end
 
 function tiered_prodiction_plan_string(game::GameState, x::Planet; keyargs...)
@@ -291,10 +294,12 @@ function tiered_prodiction_plan_string(game::GameState, x::Planet; keyargs...)
     if in(x, game.planets)
         return nothing
     end
+    produces = join(map(y -> y.ore, x.ores), ", ")
     join([
-    "$(x.number).$(x.name)",
-    "\$$(x.base_price)",
-        "($(planet_direction(x))$(DIRECTION_ARROWS[PLANET_DIRECTIONS[x.number]]))"
+        "$(x.number).$(x.name)",
+        "\$$(x.base_price)",
+        "($(planet_direction(x))$(DIRECTION_ARROWS[PLANET_DIRECTIONS[x.number]]))",
+        "[ $produces ]"
     ],
          " ")
 end
@@ -342,4 +347,29 @@ function show_tiered_production_plan(game::GameState,
         end
     end
 end
+
+
+#=
+
+show_tiered_production_plan(GameState(), Type{<:Project}[
+    process_ingredientspeed_reduction_projects()...,
+    process_speed_enhancement_projects()...,
+    Smelter,
+    Crafter,
+    Beacon,
+    Rover,
+    AdvancedMining,
+    AdvancedThrusters,
+    AdvancedCargoHandling,
+    SuperiorMining,
+    SuperiorThrusters,
+    SuperiorCargoHandling,
+    PreferredVendor,
+    AsteroidAutoMiner,
+    SuperiorAsteroidHarvester,
+    FurnaceOverdrive,
+    DebrisScanner
+])
+
+=#
 
