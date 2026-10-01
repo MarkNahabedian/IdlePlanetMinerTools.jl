@@ -1,6 +1,7 @@
 
 export Project, all_projects, prerequisites, next_projects,
-    add_researched_project!
+    add_researched_project!, process_speed_enhancement_projects,
+    process_ingredientspeed_reduction_projects
 
 """
 Project represents an Idle Planet Miner project.
@@ -73,5 +74,37 @@ function add_researched_project!(add_this::Type{<:Project},
     end
     add1(add_this)
     to
+end
+
+
+"""
+    process_speed_enhancement_projects()
+
+Returns a list of the projects that improve process speed.
+"""
+function process_speed_enhancement_projects()
+    projects = []
+    for m in methods(process_speed_scalar)
+        if m.sig.parameters[3] <: Project
+            push!(projects, m.sig.parameters[3])
+        end
+    end
+    projects
+end
+
+
+"""
+    process_ingredientspeed_reduction_projects()
+
+Returns a list of the projects that decrease process ingredients.
+"""
+function process_ingredientspeed_reduction_projects()
+    projects = []
+    for m in methods(process_ingredient_scalar)
+        if m.sig.parameters[3] <: Project
+            push!(projects, m.sig.parameters[3])
+        end
+    end
+    projects
 end
 
