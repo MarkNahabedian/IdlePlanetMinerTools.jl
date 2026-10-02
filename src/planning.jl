@@ -1,7 +1,9 @@
+using Format
+
 # A simple planner.
 
 export PlanJunction, AnyOf, AllOf, precursor, development_level,
-    walk_precursors, show_tiered_production_plan
+    walk_precursors, show_tiered_production_plan, identify_revenue_items
 
 
 abstract type PlanJunction end
@@ -304,6 +306,45 @@ function tiered_prodiction_plan_string(game::GameState, x::Planet; keyargs...)
          " ")
 end
 
+struct RevenueThing
+    recipie::Recipie
+    level::Int
+    revenue::Float64
+    appreciation_per_time::Float64
+end
+
+function tiered_prodiction_plan_string(game::GameState, rt::RevenueThing; keyargs...)
+    r = format(rt.revenue, commas=true)
+    "\$ $(nameof(rt.recipie.make)) \$$r"
+end
+
+intralevel_ordering(a::RevenueThing, b::Any) = false
+intralevel_ordering(a::Any, b::RevenueThing) = true
+intralevel_ordering(a::RevenueThing, b::RevenueThing) =
+    error("More than one RevenueThing: $a, $b.")
+
+
+function identify_revenue_items()
+    df = CSV.read(THING_EFFICIENCIES_CSV, DataFrame)
+    levels = Dict{Int, RevenueThing}()
+    for row in eachrow(df)
+        # df is already sorted, so the first thing for a given level
+        # should be the best.
+        if haskey(levels, row.development_level)
+            continue
+        end
+        recipie = lookup_recipie(row.name)
+        levels[row.development_level] =
+            RevenueThing(recipie,
+                         row.development_level,
+                         row.sell_price,
+                         row.appreciation_per_time)
+    end
+    # WE SHOULD EXCLUSE ANY ITEMS FOR WHICH THERE IS AN ITEM AT AN
+    # EARLIER LEVEL WITH BETTER appreciation_per_time.
+    sort(collect(values(levels)); by = x -> x.level)
+end
+
 function tiered_prodiction_plan_string(game::GameState, x::Type{<:Project};
                                        desired_projects=[], keyargs...)
     # Skip if we already have it:
@@ -328,10 +369,17 @@ function show_tiered_production_plan(game::GameState,
         if !haskey(levels, dl)
             levels[dl] = Set()
         end
-        push!(levels[dl], x)        
+        push!(levels[dl], x)
     end
     for p in desired_projects
         walk_precursors(note, p)
+    end
+    for rt in identify_revenue_items()
+        l = rt.level
+        if !haskey(levels, l)
+            levels[l] = Set()
+        end
+        push!(levels[l], rt)
     end
     for level in sort(collect(keys(levels)))
         level_output = IOBuffer()

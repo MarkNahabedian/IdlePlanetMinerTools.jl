@@ -2,7 +2,8 @@
 
 using DataFrames, CSV
 
-export compute_thing_costs
+export compute_thing_costs, THING_EFFICIENCIES_CSV
+
 
 function thing_cost(thing::Type{<:Thing}, game::GameState)
     cp = crafting_plan(Inventory(thing(-1)), game)[1]
@@ -41,6 +42,9 @@ function thing_cost(thing::Type{<:Thing}, game::GameState)
     )
 end
 
+THING_EFFICIENCIES_CSV = joinpath(@__DIR__, "thing_efficiencies.csv")
+
+
 """
     compute_thing_costs()
 
@@ -73,7 +77,7 @@ function compute_thing_costs()
                    ByRow((st, ct, a) -> a / (st + ct)) =>
                    :appreciation_per_time)
     sort!(df, :appreciation_per_time, rev=true)
-    CSV.write(joinpath(@__DIR__, "thing_efficiencies.csv"), df)
+    CSV.write(THING_EFFICIENCIES_CSV, df)
     df
 end
 
