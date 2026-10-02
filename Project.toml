@@ -19,7 +19,7 @@ WebScrapingTools = "8afffa6a-3076-4974-917d-2ce0a0fc8257"
 WebScrapingTools = {url = "https://github.com/MarkNahabedian/WebScrapingTools.jl"}
 
 [compat]
-CSV = "0.10.16"
+CSV = "0.10.16, 1.1"
 Cascadia = "1.0.2"
 DataFrames = "1.8.2"
 Format = "1.3.7"
