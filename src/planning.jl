@@ -340,8 +340,16 @@ function identify_revenue_items()
                          row.sell_price,
                          row.appreciation_per_time)
     end
-    # WE SHOULD EXCLUSE ANY ITEMS FOR WHICH THERE IS AN ITEM AT AN
-    # EARLIER LEVEL WITH BETTER appreciation_per_time.
+    best_apt = 0    # appreciation_per_time
+    # We should exclude any items for which there is an item at an
+    # earlier level with better appreciation_per_time.
+    for level in sort(collect(keys(levels)))
+        if levels[level].appreciation_per_time > best_apt
+            best_apt = levels[level].appreciation_per_time
+        else
+            delete!(levels, level)
+        end
+    end
     sort(collect(values(levels)); by = x -> x.level)
 end
 
