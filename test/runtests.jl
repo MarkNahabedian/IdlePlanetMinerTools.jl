@@ -296,6 +296,8 @@ end
     @test parse_selling_price("1.45B") == 1450000000
     @test parse_selling_price("2.56q") == 2560000000000000
     @test parse_selling_price("145 S") == 145000000000000000000000000
+    @test parse_selling_price("3.2 O") == 3200000000000000000000000000
+    @test parse_selling_price("2.8 N") == 2800000000000000000000000000000
 end
 
 @testset "spot check compute_thing_costs" begin
