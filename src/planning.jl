@@ -1,7 +1,9 @@
+using Format
+
 # A simple planner.
 
 export PlanJunction, AnyOf, AllOf, precursor, development_level,
-    walk_precursors, show_tiered_production_plan
+    walk_precursors, show_tiered_production_plan, identify_revenue_items
 
 
 abstract type PlanJunction end
@@ -276,6 +278,97 @@ intralevel_ordering(a::Type{<:Project}, b::Type{<:Thing}) = true
 intralevel_ordering(a::Type{<:Thing}, b::Type{<:Project}) = false
 
 
+tiered_prodiction_plan_string(::GameState, x::Any; keyargs...) =
+    "??? $(string(x)) $(typeof(string(x)))"
+
+function tiered_prodiction_plan_string(game::GameState, x::Type{<:Alloy}; keyargs...)
+    ingredients = join(collect(lookup_recipie(x).ingredients), ", ")
+    "$(nameof(x)) \$$(cost_to_unlock(x)) [$ingredients]"
+end
+
+function tiered_prodiction_plan_string(game::GameState, x::Type{<:Crafted}; keyargs...)
+    ingredients = join(collect(lookup_recipie(x).ingredients), ", ")
+    "$(nameof(x)) \$$(cost_to_unlock(x)) [$ingredients]"
+end
+
+function tiered_prodiction_plan_string(game::GameState, x::Planet; keyargs...)
+    # Skip if we already have it:
+    if in(x, game.planets)
+        return nothing
+    end
+    produces = join(map(y -> y.ore, x.ores), ", ")
+    join([
+        "$(x.number).$(x.name)",
+        "\$$(x.base_price)",
+        "($(planet_direction(x))$(DIRECTION_ARROWS[PLANET_DIRECTIONS[x.number]]))",
+        "[ $produces ]"
+    ],
+         " ")
+end
+
+struct RevenueThing
+    recipie::Recipie
+    level::Int
+    revenue::Float64
+    appreciation_per_time::Float64
+end
+
+function tiered_prodiction_plan_string(game::GameState, rt::RevenueThing; keyargs...)
+    r = format(rt.revenue, commas=true)
+    "\$ $(nameof(rt.recipie.make)) \$$r"
+end
+
+intralevel_ordering(a::RevenueThing, b::Any) = false
+intralevel_ordering(a::Any, b::RevenueThing) = true
+intralevel_ordering(a::RevenueThing, b::RevenueThing) =
+    error("More than one RevenueThing: $a, $b.")
+
+
+function identify_revenue_items()
+    df = CSV.read(THING_EFFICIENCIES_CSV, DataFrame)
+    levels = Dict{Int, RevenueThing}()
+    for row in eachrow(df)
+        # df is already sorted, so the first thing for a given level
+        # should be the best.
+        if haskey(levels, row.development_level)
+            continue
+        end
+        recipie = lookup_recipie(row.name)
+        levels[row.development_level] =
+            RevenueThing(recipie,
+                         row.development_level,
+                         row.sell_price,
+                         row.appreciation_per_time)
+    end
+    best_apt = 0    # appreciation_per_time
+    # We should exclude any items for which there is an item at an
+    # earlier level with better appreciation_per_time.
+    for level in sort(collect(keys(levels)))
+        if levels[level].appreciation_per_time > best_apt
+            best_apt = levels[level].appreciation_per_time
+        else
+            delete!(levels, level)
+        end
+    end
+    sort(collect(values(levels)); by = x -> x.level)
+end
+
+function tiered_prodiction_plan_string(game::GameState, x::Type{<:Project};
+                                       desired_projects=[], keyargs...)
+    # Skip if we already have it:
+    if has_modifier(game, x)
+        return nothing
+    end
+    coord = PROJECT_CHART_COORDINATES[x]
+    name = "$x"
+    if x in desired_projects
+        name = "*$(name)*"
+    end
+    d = delta(lookup_recipie(x), game)
+    items = join(map(round, d.items), ", ")
+    "$name $coord  $items"
+end
+
 function show_tiered_production_plan(game::GameState,
                                      desired_projects::Vector{Type{<:Project}})
     levels = Dict{Int, Set{Any}}()
@@ -284,42 +377,55 @@ function show_tiered_production_plan(game::GameState,
         if !haskey(levels, dl)
             levels[dl] = Set()
         end
-        push!(levels[dl], x)        
+        push!(levels[dl], x)
     end
     for p in desired_projects
         walk_precursors(note, p)
     end
+    for rt in identify_revenue_items()
+        l = rt.level
+        if !haskey(levels, l)
+            levels[l] = Set()
+        end
+        push!(levels[l], rt)
+    end
     for level in sort(collect(keys(levels)))
         level_output = IOBuffer()
         for x in sort(collect(levels[level]); lt = intralevel_ordering)
-            if isa(x, PlanJunction)
-                continue
-            end
-            if x isa Planet
-                if !in(x, game.planets)
-                    println(level_output, "\t$(x.number).$(x.name) \$$(x.base_price) $(DIRECTION_ARROWS[PLANET_DIRECTIONS[x.number]])")
-                end
-            elseif x <: Thing
-                # skip
-            elseif x <: Project
-                if !has_modifier(game, x)
-                    coord = PROJECT_CHART_COORDINATES[x]
-                    name = "$x"
-                    if x in desired_projects
-                        name = "*$(name)*"
-                    end
-                    d = delta(lookup_recipie(x), game)
-                    items = join(map(round, d.items), ", ")
-                    println(level_output, "\t$name $coord  $items")
-                end
-            else
-                println(level_output, "\t? ", x)
+            tpps = tiered_prodiction_plan_string(game, x; desired_projects)
+            if tpps isa String
+                println(level_output, tpps)
             end
             if level_output.size > 0
-                print("LEVEL $level:  ")
+                print("LEVEL $level:  \t")
                 write(stdout, String(take!(level_output)))
             end
         end
     end
 end
+
+
+#=
+
+show_tiered_production_plan(GameState(), Type{<:Project}[
+    process_ingredientspeed_reduction_projects()...,
+    process_speed_enhancement_projects()...,
+    Smelter,
+    Crafter,
+    Beacon,
+    Rover,
+    AdvancedMining,
+    AdvancedThrusters,
+    AdvancedCargoHandling,
+    SuperiorMining,
+    SuperiorThrusters,
+    SuperiorCargoHandling,
+    PreferredVendor,
+    AsteroidAutoMiner,
+    SuperiorAsteroidHarvester,
+    FurnaceOverdrive,
+    DebrisScanner
+])
+
+=#
 

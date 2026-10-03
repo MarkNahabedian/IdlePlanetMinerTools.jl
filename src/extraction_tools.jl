@@ -56,7 +56,7 @@ function parse_material(material)
     if m == nothing
         error("No match: $name: $material")
     end
-    multiplier = PARSE_MATERIALS_MULTIPLIER_SUFFIXES[m["suffix"]]
+    multiplier = BigInt(10) ^ PARSE_MATERIALS_MULTIPLIER_SUFFIXES[m["suffix"]]
     type = best_thing_match(m["name"])
     count = multiplier * trunc(Int, parse(Float32, m["count"]))
     type(count)

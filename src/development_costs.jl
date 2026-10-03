@@ -2,11 +2,13 @@
 
 using DataFrames, CSV
 
-export compute_thing_costs, value_gain
+export compute_thing_costs, THING_EFFICIENCIES_CSV
+
 
 function thing_cost(thing::Type{<:Thing}, game::GameState)
     cp = crafting_plan(Inventory(thing(-1)), game)[1]
     name = string(nameof(thing))
+    level = development_level(thing)
     sell_price = base_selling_price(thing)
     # Smelt time and craft time can overlap.
     time_missing = false
@@ -31,6 +33,7 @@ function thing_cost(thing::Type{<:Thing}, game::GameState)
     end
     return (
         name = name,
+        development_level = level,
         sell_price = sell_price,
         total_ore_cost = total_ore_cost,
         smelting_time = total_time[Smelt()],
@@ -38,6 +41,9 @@ function thing_cost(thing::Type{<:Thing}, game::GameState)
         time_missing = time_missing
     )
 end
+
+THING_EFFICIENCIES_CSV = joinpath(@__DIR__, "thing_efficiencies.csv")
+
 
 """
     compute_thing_costs()
@@ -49,6 +55,7 @@ function compute_thing_costs()
     game = GameState()
     df = DataFrame(
         :name => String[],
+        :development_level => Int[],
         :sell_price => Float64[],
         :total_ore_cost => Float64[],
         :smelting_time => Float64[],
@@ -61,25 +68,17 @@ function compute_thing_costs()
         end
         push!(df, thing_cost(thing, game))
     end
-    CSV.write(joinpath(@__DIR__, "thing_efficiencies.csv"), df)
-    df
-end
-
-
-"""
-    value_gain()
-
-Reads a DataFrame rom `thing_efficiencies.csv`, computes and adds an
-`appreciation` column and then sorts by that column in descending
-order.
-"""
-function value_gain()
-    # name,sell_price,ingredient_cost,smeltine_time,crafting_time,time_missing
-    df = CSV.read(joinpath(@__DIR__, "thing_efficiencies.csv"), DataFrame)
     transform!(df,
                [ :sell_price, :total_ore_cost ] =>
                    ByRow((sell_for, cost) -> sell_for / cost) =>
                    :appreciation)
-    sort!(df, :appreciation, rev=true)
+    transform!(df,
+               [ :smelting_time, :crafting_time, :appreciation] =>
+                   ByRow((st, ct, a) -> a / (st + ct)) =>
+                   :appreciation_per_time)
+    sort!(df, :appreciation_per_time, rev=true)
+    CSV.write(THING_EFFICIENCIES_CSV, df)
+    df
 end
+
 

@@ -3,7 +3,7 @@ using StringDistances
 
 export Thing, Ore, Alloy, Crafted
 export ordinal, all_things, best_thing_match, @t_str,
-    IdlePlanetMinerTools, base_selling_price
+    IdlePlanetMinerTools, base_selling_price, cost_to_unlock
 
 
 """
@@ -106,28 +106,48 @@ base_selling_price(t::Type{<:Thing}) =
 base_selling_price(t::Thing) = t.count * base_selling_price(typeof(t))
 
 
+"""
+    cost_to_unlock(::Type{<:Thing})
+
+Returns the cost to unlock the type's recipie.
+"""
+cost_to_unlock(t::Type{<:Thing}) =
+    error("cost_to_unlock for $t not defined.")
+
+
+
 PARSE_MATERIALS_MULTIPLIER_SUFFIXES = Dict{String, Signed}([
-    "" => 1,
-    " " => 1,
-    "k" => 1000,
-    "K" => 1000,
-    "M" => 1000000,
-    "B" => 10 ^ (3 * 3),
-    "T" => 10 ^ (3 * 4),
-    "q" => 10 ^ (3 * 5),
-    "Q" => 10 ^ (3 * 6),
-    "s" => BigInt(10) ^ (3 * 7),
-    "S" => BigInt(10) ^ (3 * 8),
-    "O" => BigInt(10) ^ (3 * 9),
-    "N" => BigInt(10) ^ (3 * 10)
+    "" => 0,
+    " " => 0,
+    "k" => 3,
+    "K" => 3,
+    "M" => 6,
+    "B" => 9,
+    "T" => 12,
+    "q" => 15,
+    "Q" => 18,
+    "s" => 21,
+    "S" => 24,
+    "O" => 27,
+    "N" => 30
 ])
 
 function parse_selling_price(s::AbstractString)
-    re = r"(?<val>[0-9.]+)(?<mult>.?)"
+    re = r"(?<whole>[0-9]+)([.](?<frac>[0-9]+)?)? ?(?<mult>[a-zA-Z]?)"
     m = match(re, s)
     if m isa RegexMatch
-        return parse(Float32, m["val"]) *
-            PARSE_MATERIALS_MULTIPLIER_SUFFIXES[m["mult"]]
+        whole = parse(Int, m["whole"])
+        exp = PARSE_MATERIALS_MULTIPLIER_SUFFIXES[m["mult"]]
+        whole = whole * BigInt(10) ^ exp
+        frac = 0
+        mfrac = m["frac"]
+        if mfrac isa AbstractString && length(mfrac) > 0
+            frac = parse(Int, mfrac)
+            frac = frac * BigInt(10) ^ (exp - length(mfrac))
+        end
+        return whole + frac
+    elseif s == "Free"
+        return 0
     else
         error("Unrecognized price: $s")
     end
@@ -138,4 +158,9 @@ function define_base_selling_price_method(type, s::AbstractString)
     eval(:(base_selling_price(::Type{$type}) = $price))
 end
 
+function define_cost_to_unlock_method(type, s::AbstractString)
+    price = parse_selling_price(s)
+    name = Symbol(canonicalize_name(type))
+    eval(:(cost_to_unlock(::Type{$name}) = $price))
+end
 

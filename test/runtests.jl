@@ -289,6 +289,17 @@ end
     @test has_modifier(game, PreferredVendor())
 end
 
+@testset "parse_selling_price" begin
+    @test parse_selling_price("123") == 123
+    @test parse_selling_price("12.3K") == 12300
+    @test parse_selling_price("3.20M") == 3200000
+    @test parse_selling_price("1.45B") == 1450000000
+    @test parse_selling_price("2.56q") == 2560000000000000
+    @test parse_selling_price("145 S") == 145000000000000000000000000
+    @test parse_selling_price("3.2 O") == 3200000000000000000000000000
+    @test parse_selling_price("2.8 N") == 2800000000000000000000000000000
+end
+
 @testset "spot check compute_thing_costs" begin
     df = compute_thing_costs()
     let

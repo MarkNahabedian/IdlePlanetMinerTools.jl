@@ -46,6 +46,8 @@ function make_crafted_recipies()
         ord += 1
         make_thing_code(ord, row, Crafted, "Item", "Material Cost",
                         "Time To Craft/s")
+        define_cost_to_unlock_method(row["Item"],
+                                     row["Unlock Cost"])
     end
 end
 
