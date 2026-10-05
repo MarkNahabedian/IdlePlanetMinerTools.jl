@@ -56,7 +56,7 @@ function compute_thing_costs()
     df = DataFrame(
         :name => String[],
         :development_level => Int[],
-        :sell_price => Float64[],
+        :sell_price => BigInt[],
         :total_ore_cost => Float64[],
         :smelting_time => Float64[],
         :crafting_time => Float64[],

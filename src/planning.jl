@@ -3,7 +3,8 @@ using Format
 # A simple planner.
 
 export PlanJunction, AnyOf, AllOf, precursor, development_level,
-    walk_precursors, show_tiered_production_plan, identify_revenue_items
+    walk_precursors, load_thing_efficiencies,
+    show_tiered_production_plan, identify_revenue_items
 
 
 abstract type PlanJunction end
@@ -323,9 +324,24 @@ intralevel_ordering(a::Any, b::RevenueThing) = true
 intralevel_ordering(a::RevenueThing, b::RevenueThing) =
     error("More than one RevenueThing: $a, $b.")
 
+function load_thing_efficiencies()
+    CSV.read(THING_EFFICIENCIES_CSV, DataFrame;
+             types = Dict(
+                 # Keep in sync with DataFRame definition in
+                 # compute_thing_costs:
+                 :name => String,
+                 :development_level => Int,
+                 :sell_price => BigInt,
+                 :total_ore_cost => Float64,
+                 :smelting_time => Float64,
+                 :crafting_time =>  Float64,
+                 :time_missing => Bool,
+                 :appreciation => Float64))
+end
+
 
 function identify_revenue_items()
-    df = CSV.read(THING_EFFICIENCIES_CSV, DataFrame)
+    df = load_thing_efficiencies()
     levels = Dict{Int, RevenueThing}()
     for row in eachrow(df)
         # df is already sorted, so the first thing for a given level

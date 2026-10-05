@@ -2,6 +2,8 @@ using IdlePlanetMinerTools
 using IdlePlanetMinerTools: parse_duration, thing_cost, parse_selling_price
 using Test
 using InteractiveUtils
+using CSV
+using DataFrames
 
 
 @testset "arithmetic" begin
@@ -388,6 +390,21 @@ end
                                                   ca.count * ca.recipie.duration_seconds
                                               end
         @test row.time_missing == false
+    end
+end
+
+@testset "test prices between crafted.csv and thing_efficiencies.csv" begin
+    crafted = CSV.read("../src/crafted.csv", DataFrame)
+    te = load_thing_efficiencies()
+    for crafted_row in eachrow(crafted)
+        cname = canonicalize_name(crafted_row["Item"])
+        te_row = te[te.name .== cname, :]
+        if isempty(te_row)
+            continue
+        end
+        te_row = first(te_row)
+        println(cname)
+        @test parse_selling_price(crafted_row["Sell Price"]) == te_row["sell_price"]
     end
 end
 
