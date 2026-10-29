@@ -301,7 +301,7 @@ function tiered_prodiction_plan_string(game::GameState, x::Planet; keyargs...)
     join([
         "$(x.number).$(x.name)",
         "\$$(x.base_price)",
-        "($(planet_direction(x))$(DIRECTION_ARROWS[PLANET_DIRECTIONS[x.number]]))",
+        "($(planet_direction(x))$(planet_direction_arrow(x)))",
         "[ $produces ]"
     ],
          " ")
