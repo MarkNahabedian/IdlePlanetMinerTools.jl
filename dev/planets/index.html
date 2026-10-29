@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Planets · IdlePlanetMinerTools.jl</title><meta name="title" content="Planets · IdlePlanetMinerTools.jl"/><meta property="og:title" content="Planets · IdlePlanetMinerTools.jl"/><meta property="twitter:title" content="Planets · IdlePlanetMinerTools.jl"/><meta name="description" content="Documentation for IdlePlanetMinerTools.jl."/><meta property="og:description" content="Documentation for IdlePlanetMinerTools.jl."/><meta property="twitter:description" content="Documentation for IdlePlanetMinerTools.jl."/><meta property="og:url" content="https://MarkNahabedian.github.io/IdlePlanetMinerTools.jl/planets/"/><meta property="twitter:url" content="https://MarkNahabedian.github.io/IdlePlanetMinerTools.jl/planets/"/><link rel="canonical" href="https://MarkNahabedian.github.io/IdlePlanetMinerTools.jl/planets/"/><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.63.2/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../search_index.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../">IdlePlanetMinerTools.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../">Home</a></li><li><span class="tocitem">Appendicies</span><ul><li class="is-active"><a class="tocitem" href>Planets</a><ul class="internal"><li><a class="tocitem" href="#Planets"><span>Planets</span></a></li></ul></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Appendicies</a></li><li class="is-active"><a href>Planets</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Planets</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/MarkNahabedian/IdlePlanetMinerTools.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/MarkNahabedian/IdlePlanetMinerTools.jl/blob/main/docs/src/planets.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h2 id="Planets"><a class="docs-heading-anchor" href="#Planets">Planets</a><a id="Planets-1"></a><a class="docs-heading-anchor-permalink" href="#Planets" title="Permalink"></a></h2><table>
+  <tr>
+    <th>Number</th>
+    <th>Name</th>
+    <th>Direction</th>
+    <th>Telescope</th>
+    <th>Cost</th>
+    <th>Ores</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Balor</td>
+    <td>-41.0 ←</td>
+    <td>0</td>
+    <td>100</td>
+    <td>
+      <div>
+        <div>Copper 1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Drasta</td>
+    <td>23.0 ↖</td>
+    <td>0</td>
+    <td>200</td>
+    <td>
+      <div>
+        <div>Copper 0.8</div>
+        <div>Iron 0.2</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Anadius</td>
+    <td>152.0 →</td>
+    <td>0</td>
+    <td>500</td>
+    <td>
+      <div>
+        <div>Copper 0.5</div>
+        <div>Iron 0.5</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>Dholen</td>
+    <td>217.0 ↘</td>
+    <td>0</td>
+    <td>1.25K</td>
+    <td>
+      <div>
+        <div>Iron 0.8</div>
+        <div>Lead 0.2</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>Verr</td>
+    <td>53.0 ↑</td>
+    <td>1</td>
+    <td>5K</td>
+    <td>
+      <div>
+        <div>Lead 0.5</div>
+        <div>Iron 0.3</div>
+        <div>Copper 0.2</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>Newton</td>
+    <td>7.0 ↖</td>
+    <td>1</td>
+    <td>9K</td>
+    <td>
+      <div>
+        <div>Lead 1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>Widow</td>
+    <td>-12.0 ←</td>
+    <td>1</td>
+    <td>15K</td>
+    <td>
+      <div>
+        <div>Iron 0.4</div>
+        <div>Copper 0.4</div>
+        <div>Silicon 0.2</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>Acheron</td>
+    <td>-31.0 ←</td>
+    <td>2</td>
+    <td>25K</td>
+    <td>
+      <div>
+        <div>Silicon 0.6</div>
+        <div>Copper 0.4</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>Yangtze</td>
+    <td>266.0 ↓</td>
+    <td>2</td>
+    <td>40K</td>
+    <td>
+      <div>
+        <div>Silicon 0.8</div>
+        <div>Aluminum 0.2</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>Solveig</td>
+    <td>160.0 →</td>
+    <td>2</td>
+    <td>75K</td>
+    <td>
+      <div>
+        <div>Aluminum 0.5</div>
+        <div>Silicon 0.3</div>
+        <div>Lead 0.2</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>Imir</td>
+    <td>135.0 ↗</td>
+    <td>3</td>
+    <td>150K</td>
+    <td>
+      <div>
+        <div>Aluminum 1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td>Relic</td>
+    <td>180.0 ↘</td>
+    <td>3</td>
+    <td>250K</td>
+    <td>
+      <div>
+        <div>Lead 0.45</div>
+        <div>Silicon 0.35</div>
+        <div>Silver 0.2</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>Nith</td>
+    <td>193.0 ↘</td>
+    <td>3</td>
+    <td>400K</td>
+    <td>
+      <div>
+        <div>Silver 0.8</div>
+        <div>Aluminum 0.2</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td>Batalla</td>
+    <td>168.0 →</td>
+    <td>4</td>
+    <td>800K</td>
+    <td>
+      <div>
+        <div>Copper 0.4</div>
+        <div>Iron 0.4</div>
+        <div>Gold 0.2</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td>Micah</td>
+    <td>90.0 ↗</td>
+    <td>4</td>
+    <td>1.5M</td>
+    <td>
+      <div>
+        <div>Gold 0.5</div>
+        <div>Silver 0.5</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td>Pranas</td>
+    <td>102.0 ↗</td>
+    <td>4</td>
+    <td>3.0M</td>
+    <td>
+      <div>
+        <div>Gold 1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td>Castellus</td>
+    <td>259.0 ↓</td>
+    <td>5</td>
+    <td>6M</td>
+    <td>
+      <div>
+        <div>Aluminum 0.4</div>
+        <div>Silicon 0.35</div>
+        <div>Diamond 0.25</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td>Gorgon</td>
+    <td>-76.0 ↙</td>
+    <td>5</td>
+    <td>12M</td>
+    <td>
+      <div>
+        <div>Diamond 0.8</div>
+        <div>Lead 0.2</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td>Parnitha</td>
+    <td>18.0 ↖</td>
+    <td>5</td>
+    <td>25M</td>
+    <td>
+      <div>
+        <div>Gold 0.7</div>
+        <div>Platinum 0.3</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>Orisoni</td>
+    <td>33.0 ↖</td>
+    <td>6</td>
+    <td>50M</td>
+    <td>
+      <div>
+        <div>Platinum 0.7</div>
+        <div>Diamond 0.3</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td>Theseus</td>
+    <td>-39.0 ←</td>
+    <td>6</td>
+    <td>100M</td>
+    <td>
+      <div>
+        <div>Platinum 1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td>Zelene</td>
+    <td>230.0 ↓</td>
+    <td>6</td>
+    <td>200M</td>
+    <td>
+      <div>
+        <div>Silver 0.7</div>
+        <div>Titanium 0.3</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>23</td>
+    <td>Han</td>
+    <td>208.0 ↘</td>
+    <td>7</td>
+    <td>400M</td>
+    <td>
+      <div>
+        <div>Titanium 0.7</div>
+        <div>Diamond 0.2</div>
+        <div>Gold 0.1</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td>Strennus</td>
+    <td>150.0 →</td>
+    <td>7</td>
+    <td>800M</td>
+    <td>
+      <div>
+        <div>Titanium 0.7</div>
+        <div>Platinum 0.3</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>25</td>
+    <td>Osun</td>
+    <td>60.0 ↑</td>
+    <td>7</td>
+    <td>1.6B</td>
+    <td>
+      <div>
+        <div>Aluminum 0.6</div>
+        <div>Iridium 0.4</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>26</td>
+    <td>Ploitari</td>
+    <td>50.0 ↑</td>
+    <td>8</td>
+    <td>3.2B</td>
+    <td>
+      <div>
+        <div>Iridium 0.5</div>
+        <div>Diamond 0.5</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td>Elysta</td>
+    <td>9.0 ↖</td>
+    <td>8</td>
+    <td>6.4B</td>
+    <td>
+      <div>
+        <div>Iridium 1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>28</td>
+    <td>Tikkun</td>
+    <td>1.0 ↖</td>
+    <td>8</td>
+    <td>12.5B</td>
+    <td>
+      <div>
+        <div>Iridium 0.4</div>
+        <div>Titanium 0.35</div>
+        <div>Palladium 0.25</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>29</td>
+    <td>Satent</td>
+    <td>-11.0 ←</td>
+    <td>9</td>
+    <td>25B</td>
+    <td>
+      <div>
+        <div>Palladium 0.6</div>
+        <div>Titanium 0.4</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>30</td>
+    <td>Urla Rast</td>
+    <td>-51.0 ↙</td>
+    <td>9</td>
+    <td>50B</td>
+    <td>
+      <div>
+        <div>Palladium 0.9</div>
+        <div>Diamond 0.1</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>31</td>
+    <td>Vular</td>
+    <td>-47.0 ↙</td>
+    <td>9</td>
+    <td>100B</td>
+    <td>
+      <div>
+        <div>Palladium 0.7</div>
+        <div>Osmium 0.3</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>32</td>
+    <td>Nibiru</td>
+    <td>78.0 ↑</td>
+    <td>10</td>
+    <td>250B</td>
+    <td>
+      <div>
+        <div>Osmium 0.6</div>
+        <div>Iridium 0.4</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>33</td>
+    <td>Xena</td>
+    <td>71.0 ↑</td>
+    <td>10</td>
+    <td>600B</td>
+    <td>
+      <div>
+        <div>Osmium 1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>34</td>
+    <td>Rupert</td>
+    <td>87.0 ↑</td>
+    <td>10</td>
+    <td>1.5T</td>
+    <td>
+      <div>
+        <div>Palladium 0.55</div>
+        <div>Osmium 0.3</div>
+        <div>Rhodium 0.15</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>35</td>
+    <td>Pax</td>
+    <td>127.0 ↗</td>
+    <td>11</td>
+    <td>4T</td>
+    <td>
+      <div>
+        <div>Rhodium 0.5</div>
+        <div>Platinum 0.5</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>36</td>
+    <td>Ivyra</td>
+    <td>163.0 →</td>
+    <td>11</td>
+    <td>10T</td>
+    <td>
+      <div>
+        <div>Rhodium 1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>37</td>
+    <td>Utritis</td>
+    <td>235.0 ↓</td>
+    <td>11</td>
+    <td>25T</td>
+    <td>
+      <div>
+        <div>Rhodium 0.75</div>
+        <div>Inerton 0.25</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>38</td>
+    <td>Dosie</td>
+    <td>244.0 ↓</td>
+    <td>12</td>
+    <td>62T</td>
+    <td>
+      <div>
+        <div>Inerton 0.5</div>
+        <div>Osmium 0.5</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>39</td>
+    <td>Zulu</td>
+    <td>-86.0 ↙</td>
+    <td>12</td>
+    <td>160T</td>
+    <td>
+      <div>
+        <div>Inerton 1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>40</td>
+    <td>Unicae</td>
+    <td>-22.0 ←</td>
+    <td>12</td>
+    <td>400T</td>
+    <td>
+      <div>
+        <div>Inerton 0.8</div>
+        <div>Quadium 0.2</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>41</td>
+    <td>Dune</td>
+    <td>192.0 ↘</td>
+    <td>13</td>
+    <td>1q</td>
+    <td>
+      <div>
+        <div>Osmium 0.6</div>
+        <div>Quadium 0.4</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>42</td>
+    <td>Naraka</td>
+    <td>183.0 ↘</td>
+    <td>13</td>
+    <td>2.50q</td>
+    <td>
+      <div>
+        <div>Quadium 1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>43</td>
+    <td>Daedalus</td>
+    <td>172.0 →</td>
+    <td>13</td>
+    <td>6.20q</td>
+    <td>
+      <div>
+        <div>Quadium 0.6</div>
+        <div>Inerton 0.25</div>
+        <div>Scrith 0.15</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>44</td>
+    <td>Clovis</td>
+    <td>99.0 ↗</td>
+    <td>14</td>
+    <td>15q</td>
+    <td>
+      <div>
+        <div>Scrith 0.5</div>
+        <div>Quadium 0.5</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>45</td>
+    <td>Zero</td>
+    <td>80.0 ↑</td>
+    <td>14</td>
+    <td>40q</td>
+    <td>
+      <div>
+        <div>Scrith 1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>46</td>
+    <td>Sotomi</td>
+    <td>113.0 ↗</td>
+    <td>14</td>
+    <td>100q</td>
+    <td>
+      <div>
+        <div>Scrith 0.75</div>
+        <div>Uru 0.25</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>47</td>
+    <td>Remidian</td>
+    <td>28.0 ↖</td>
+    <td>15</td>
+    <td>250q</td>
+    <td>
+      <div>
+        <div>Uru 0.6</div>
+        <div>Quadium 0.4</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>48</td>
+    <td>Muse</td>
+    <td>37.0 ↖</td>
+    <td>15</td>
+    <td>600q</td>
+    <td>
+      <div>
+        <div>Uru 1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>49</td>
+    <td>Arabis</td>
+    <td>45.0 ↖</td>
+    <td>15</td>
+    <td>1.50Q</td>
+    <td>
+      <div>
+        <div>Uru 0.5</div>
+        <div>Vibranium 0.5</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>50</td>
+    <td>Vesna</td>
+    <td>-58.0 ↙</td>
+    <td>16</td>
+    <td>3.80Q</td>
+    <td>
+      <div>
+        <div>Vibranium 0.6</div>
+        <div>Scrith 0.4</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>51</td>
+    <td>Chandra</td>
+    <td>-66.0 ↙</td>
+    <td>16</td>
+    <td>10.00Q</td>
+    <td>
+      <div>
+        <div>Vibranium 1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>52</td>
+    <td>Vega</td>
+    <td>-31.0 ←</td>
+    <td>16</td>
+    <td>25.00Q</td>
+    <td>
+      <div>
+        <div>Vibranium 0.7</div>
+        <div>Aether 0.2</div>
+        <div>Rhodium 0.1</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>53</td>
+    <td>Crius</td>
+    <td>256.0 ↓</td>
+    <td>17</td>
+    <td>60.00Q</td>
+    <td>
+      <div>
+        <div>Aether 0.5</div>
+        <div>Scrith 0.5</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>54</td>
+    <td>Singhana</td>
+    <td>262.0 ↓</td>
+    <td>17</td>
+    <td>150.00Q</td>
+    <td>
+      <div>
+        <div>Aether 1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>55</td>
+    <td>Zumbia</td>
+    <td>-80.0 ↙</td>
+    <td>17</td>
+    <td>360.00Q</td>
+    <td>
+      <div>
+        <div>Aether 0.7</div>
+        <div>Vibranium 0.2</div>
+        <div>Viterium 0.1</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>56</td>
+    <td>Elysium</td>
+    <td>219.0 ↘</td>
+    <td>18</td>
+    <td>900.00Q</td>
+    <td>
+      <div>
+        <div>Viterium 0.6</div>
+        <div>Uru 0.4</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>57</td>
+    <td>Nyota</td>
+    <td>228.0 ↓</td>
+    <td>18</td>
+    <td>2.60s</td>
+    <td>
+      <div>
+        <div>Viterium 1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>58</td>
+    <td>Doral</td>
+    <td>204.0 ↘</td>
+    <td>18</td>
+    <td>7.50s</td>
+    <td>
+      <div>
+        <div>Viterium 0.4</div>
+        <div>Aether 0.4</div>
+        <div>Xynium 0.2</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>59</td>
+    <td>Nikara</td>
+    <td>151.0 →</td>
+    <td>19</td>
+    <td>21.00s</td>
+    <td>
+      <div>
+        <div>Xynium 0.7</div>
+        <div>Vibranium 0.3</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>60</td>
+    <td>Limbo</td>
+    <td>139.0 →</td>
+    <td>19</td>
+    <td>59.00s</td>
+    <td>
+      <div>
+        <div>Xynium 1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>61</td>
+    <td>Bob</td>
+    <td>133.0 ↗</td>
+    <td>19</td>
+    <td>170.00s</td>
+    <td>
+      <div>
+        <div>Xynium 0.7</div>
+        <div>Quolium 0.3</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>62</td>
+    <td>Midas</td>
+    <td>121.0 ↗</td>
+    <td>20</td>
+    <td>460.00s</td>
+    <td>
+      <div>
+        <div>Quolium 0.55</div>
+        <div>Aether 0.45</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>63</td>
+    <td>Antigone</td>
+    <td>114.0 ↗</td>
+    <td>20</td>
+    <td>1.30S</td>
+    <td>
+      <div>
+        <div>Quolium 1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>64</td>
+    <td>Hecate</td>
+    <td>105.0 ↗</td>
+    <td>20</td>
+    <td>3.90S</td>
+    <td>
+      <div>
+        <div>Quolium 0.5</div>
+        <div>Xynium 0.25</div>
+        <div>Luterium 0.25</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>65</td>
+    <td>Sterop</td>
+    <td>64.0 ↑</td>
+    <td>21</td>
+    <td>11.00S</td>
+    <td>
+      <div>
+        <div>Luterium 0.6</div>
+        <div>Quolium 0.2</div>
+        <div>Viterium 0.17</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>66</td>
+    <td>Lavinia</td>
+    <td>57.0 ↑</td>
+    <td>21</td>
+    <td>33.00S</td>
+    <td>
+      <div>
+        <div>Luterium 1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>67</td>
+    <td>Ren</td>
+    <td>70.0 ↑</td>
+    <td>21</td>
+    <td>95.00S</td>
+    <td>
+      <div>
+        <div>Luterium 0.7</div>
+        <div>Quolium 0.2</div>
+        <div>Wraith 0.1</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>68</td>
+    <td>Gorgons</td>
+    <td>17.0 ↖</td>
+    <td>22</td>
+    <td>270.00S</td>
+    <td>
+      <div>
+        <div>Wraith 0.6</div>
+        <div>Xynium 0.4</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>69</td>
+    <td>Pontus</td>
+    <td>23.0 ↖</td>
+    <td>22</td>
+    <td>800.00S</td>
+    <td>
+      <div>
+        <div>Wraith 0.8</div>
+        <div>Luterium 0.2</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>70</td>
+    <td>Leto</td>
+    <td>7.0 ↖</td>
+    <td>22</td>
+    <td>2.40 O</td>
+    <td>
+      <div>
+        <div>Wraith 1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>71</td>
+    <td>Laconia</td>
+    <td>-49.0 ↙</td>
+    <td>23</td>
+    <td>6.92 O</td>
+    <td>
+      <div>
+        <div>Wraith 0.4</div>
+        <div>Luterium 0.4</div>
+        <div>Aqualite 0.2</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>72</td>
+    <td>Awohali</td>
+    <td>-37.0 ←</td>
+    <td>23</td>
+    <td>20.80 O</td>
+    <td>
+      <div>
+        <div>Aqualite 0.7</div>
+        <div>Quolium 0.3</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>73</td>
+    <td>Pegasi</td>
+    <td>-22.0 ←</td>
+    <td>23</td>
+    <td>62.30 O</td>
+    <td>
+      <div>
+        <div>Aqualite 1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>74</td>
+    <td>Typhon</td>
+    <td>190.0 ↘</td>
+    <td>24</td>
+    <td>178 O</td>
+    <td>
+      <div>
+        <div>Aqualite 0.6</div>
+        <div>Opalite 0.4</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>75</td>
+    <td>Surtur</td>
+    <td>179.0 →</td>
+    <td>24</td>
+    <td>516 O</td>
+    <td>
+      <div>
+        <div>Opalite 0.7</div>
+        <div>Wraith 0.3</div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>76</td>
+    <td>Vesta</td>
+    <td>168.0 →</td>
+    <td>24</td>
+    <td>1.81 N</td>
+    <td>
+      <div>
+        <div>Opalite 1.0</div>
+      </div>
+    </td>
+  </tr>
+</table></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../">« Home</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.19.0 on <span class="colophon-date" title="Thursday 29 October 2026 22:13">Thursday 29 October 2026</span>. Using Julia version 1.13.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
