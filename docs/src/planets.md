@@ -1,4 +1,4 @@
-# Planets
+## Planets
 
 ```@setup planet_table
 using XML, IdlePlanetMinerTools
