@@ -1,19 +1,7 @@
 
-export PLANET_DIRECTIONS, DIRECTION_ARROWS
+export PLANET_DIRECTIONS
 
 PLANET_DIRECTIONS = Dict{Int, Symbol}()
-
-DIRECTION_ARROWS = Dict{Symbol, Char}(
-    :N => '\u2191',
-    :NE => '\u2197',
-    :E => '\u2192',
-    :SE => '\u2198',
-    :S => '\u2193',
-    :SW => '\u2199',
-    :W => '\u2190',
-    :NW => '\u2196',
-    :unknown => ' '
-)
 
 PLANET_DIRECTIONS[1] = :NW
 PLANET_DIRECTIONS[2] = :NE

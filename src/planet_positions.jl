@@ -1,4 +1,5 @@
-export PLANET_POSITIONS, MOTHERSHIP_LOCATION, planet_direction
+export PLANET_POSITIONS, MOTHERSHIP_LOCATION, planet_direction,
+    planet_compass_point, DIRECTION_ARROWS, planet_direction_arrow
 
 #=
 
@@ -148,5 +149,39 @@ function planet_direction(planet::Planet)
     x, y = PLANET_POSITIONS[planet.name] - MOTHERSHIP_LOCATION
     round(90 - rad2deg(atan(y, x)))
 end
+
+
+"""
+    planet_compass_point(planet::Planet)
+
+Returns a symbol designating the cotant of the compass rose of the
+planet's direction.
+"""
+function planet_compass_point(planet::Planet)
+    cfrac = planet_direction(planet) / 360
+    d = cfrac - 1/16     # offset counterclockwise by half a compass point
+    (:N, :NE, :E, :SE, :S, :SW, :W, :NW)[mod1(round(Int, 8 * d), 8)]
+end
+
+
+DIRECTION_ARROWS = Dict{Symbol, Char}(
+    :N => '\u2191',
+    :NE => '\u2197',
+    :E => '\u2192',
+    :SE => '\u2198',
+    :S => '\u2193',
+    :SW => '\u2199',
+    :W => '\u2190',
+    :NW => '\u2196',
+    :unknown => ' '
+)
+
+
+"""
+    planet_direction_arrow(planet::Planet)
+
+Returns the arrow character corresponding the the planet's direction.
+"""
+planet_direction_arrow(planet::Planet) = DIRECTION_ARROWS[planet_compass_point(planet)]
 
 
