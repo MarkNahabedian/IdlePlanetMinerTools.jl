@@ -1,5 +1,12 @@
-using IdlePlanetMinerTools
+using Pkg
+Pkg.activate(; temp = true)
+Pkg.add("Documenter")
 using Documenter
+using Markdown
+
+Pkg.activate(joinpath(dirname(dirname(@__FILE__)), "Project.toml"))
+
+using IdlePlanetMinerTools
 
 DocMeta.setdocmeta!(IdlePlanetMinerTools, :DocTestSetup, :(using IdlePlanetMinerTools); recursive=true)
 
@@ -14,6 +21,9 @@ makedocs(;
     ),
     pages=[
         "Home" => "index.md",
+        "Appendicies" => [
+            "Planets" => "planets.md"
+        ]
     ],
 )
 

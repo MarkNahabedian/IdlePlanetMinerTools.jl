@@ -22,8 +22,10 @@ Planet represents a Planet.
 """
 struct Planet
     number::Int
-    name::String
+    name::AbstractString
+    price_string::AbstractString
     base_price::Float32
+    telescope_number::Int
     telescope::Union{Nothing, Type{<:Project}}
     ores::Vector{OreYield}
 end
@@ -110,18 +112,22 @@ function make_planet_definitions()
     function finish_planet()
         telescopenum = this_planet["Telescope Number"]
         if telescopenum == "Default"
+            telescopenum = 0
             telescope = nothing
         else
-            ts = "Telescope$(parse(Int, telescopenum))"
+            telescopenum = parse(Int, telescopenum)
+            ts = "Telescope$(telescopenum)"
             telescope = only(filter(all_projects()) do p
                                  string(nameof(p)) == ts
                              end)
         end
         num = this_planet["No."]
         name = this_planet["Planet"]
-        price = parse_selling_price(this_planet["Base Price"])
+        price_string = this_planet["Base Price"]
+        price = parse_selling_price(price_string)
         ore_yields = this_planet_ore_yields
-        push!(ALL_PLANETS, Planet(num, name, price, telescope, ore_yields))
+        push!(ALL_PLANETS, Planet(num, name, price_string, price,
+                                  telescopenum, telescope, ore_yields))
         this_planet_ore_yields = OreYield[]
         this_pllanet = nothing
     end
