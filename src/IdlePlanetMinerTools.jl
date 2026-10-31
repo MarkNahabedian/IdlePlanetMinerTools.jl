@@ -36,7 +36,7 @@ include("Telescope24.jl")
 
 include("extract_rooms.jl")
 include("extract_planets.jl")
-
+include("ore_planets.jl")
 
 """
 Exploit is the process by which a new planet is discovered.
@@ -58,5 +58,8 @@ include("planning.jl")
 include("development_costs.jl")
 
 include("tables.jl")
+
+export ORE_PLANETS
+ORE_PLANETS = make_ore_planets()
 
 end
