@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Crafted Items · IdlePlanetMinerTools.jl</title><meta name="title" content="Crafted Items · IdlePlanetMinerTools.jl"/><meta property="og:title" content="Crafted Items · IdlePlanetMinerTools.jl"/><meta property="twitter:title" content="Crafted Items · IdlePlanetMinerTools.jl"/><meta name="description" content="Documentation for IdlePlanetMinerTools.jl."/><meta property="og:description" content="Documentation for IdlePlanetMinerTools.jl."/><meta property="twitter:description" content="Documentation for IdlePlanetMinerTools.jl."/><meta property="og:url" content="https://MarkNahabedian.github.io/IdlePlanetMinerTools.jl/crafted/"/><meta property="twitter:url" content="https://MarkNahabedian.github.io/IdlePlanetMinerTools.jl/crafted/"/><link rel="canonical" href="https://MarkNahabedian.github.io/IdlePlanetMinerTools.jl/crafted/"/><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.63.2/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../search_index.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../">IdlePlanetMinerTools.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../">Home</a></li><li><span class="tocitem">Appendicies</span><ul><li><a class="tocitem" href="../planets/">Planets</a></li><li><a class="tocitem" href="../ores/">Ores</a></li><li><a class="tocitem" href="../alloys/">Alloys</a></li><li class="is-active"><a class="tocitem" href>Crafted Items</a><ul class="internal"><li><a class="tocitem" href="#Crafted-Items"><span>Crafted Items</span></a></li></ul></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Appendicies</a></li><li class="is-active"><a href>Crafted Items</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Crafted Items</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/MarkNahabedian/IdlePlanetMinerTools.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/MarkNahabedian/IdlePlanetMinerTools.jl/blob/main/docs/src/crafted.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h2 id="Crafted-Items"><a class="docs-heading-anchor" href="#Crafted-Items">Crafted Items</a><a id="Crafted-Items-1"></a><a class="docs-heading-anchor-permalink" href="#Crafted-Items" title="Permalink"></a></h2><table>
+  <tr>
+    <th>Name</th>
+    <th>
+      <div>
+        <div>Recipie</div>
+        <div>Unlock</div>
+      </div>
+    </th>
+    <th>Base Price</th>
+    <th>
+      <div>
+        <div>Base</div>
+        <div>Production</div>
+        <div>Time</div>
+      </div>
+    </th>
+    <th>Ingredients</th>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>CopperWire</td>
+    <td>60</td>
+    <td>10000</td>
+    <td>60</td>
+    <td>
+      <div>
+        <div>CopperBar -5.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>IronNails</td>
+    <td>120</td>
+    <td>20000</td>
+    <td>120</td>
+    <td>
+      <div>
+        <div>IronBar -5.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>Battery</td>
+    <td>240</td>
+    <td>70000</td>
+    <td>240</td>
+    <td>
+      <div>
+        <div>CopperBar -10.0</div>
+        <div>CopperWire -2.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>Hammer</td>
+    <td>480</td>
+    <td>135000</td>
+    <td>480</td>
+    <td>
+      <div>
+        <div>LeadBar -5.0</div>
+        <div>IronNails -2.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>Glass</td>
+    <td>720</td>
+    <td>220000</td>
+    <td>720</td>
+    <td>
+      <div>
+        <div>SiliconBar -10.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>Circuit</td>
+    <td>1200</td>
+    <td>620000</td>
+    <td>1200</td>
+    <td>
+      <div>
+        <div>SiliconBar -5.0</div>
+        <div>AluminumBar -5.0</div>
+        <div>CopperWire -10.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>Lens</td>
+    <td>2400</td>
+    <td>1100000</td>
+    <td>2400</td>
+    <td>
+      <div>
+        <div>SilverBar -5.0</div>
+        <div>Glass -1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>Laser</td>
+    <td>3600</td>
+    <td>3200000</td>
+    <td>3600</td>
+    <td>
+      <div>
+        <div>IronBar -10.0</div>
+        <div>GoldBar -5.0</div>
+        <div>Lens -1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>BasicComputer</td>
+    <td>4800</td>
+    <td>7600000</td>
+    <td>4800</td>
+    <td>
+      <div>
+        <div>SilverBar -5.0</div>
+        <div>Circuit -5.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>SolarPanel</td>
+    <td>6000</td>
+    <td>12500000</td>
+    <td>6000</td>
+    <td>
+      <div>
+        <div>Glass -10.0</div>
+        <div>Circuit -5.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>LaserTorch</td>
+    <td>7200</td>
+    <td>31000000</td>
+    <td>7200</td>
+    <td>
+      <div>
+        <div>BronzeBar -5.0</div>
+        <div>Lens -5.0</div>
+        <div>Laser -2.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>AdvancedBattery</td>
+    <td>9000</td>
+    <td>35000000</td>
+    <td>9000</td>
+    <td>
+      <div>
+        <div>SteelBar -20.0</div>
+        <div>Battery -30.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>ThermalScanner</td>
+    <td>10800</td>
+    <td>71500000</td>
+    <td>10800</td>
+    <td>
+      <div>
+        <div>PlatinumBar -5.0</div>
+        <div>Glass -5.0</div>
+        <div>Laser -2.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>AdvancedComputer</td>
+    <td>12600</td>
+    <td>180000000</td>
+    <td>12600</td>
+    <td>
+      <div>
+        <div>TitaniumBar -5.0</div>
+        <div>BasicComputer -5.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>NavigationModule</td>
+    <td>13500</td>
+    <td>1000000000</td>
+    <td>13500</td>
+    <td>
+      <div>
+        <div>LaserTorch -2.0</div>
+        <div>ThermalScanner -1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>PlasmaTorch</td>
+    <td>15000</td>
+    <td>1150000000</td>
+    <td>15000</td>
+    <td>
+      <div>
+        <div>IridiumBar -15.0</div>
+        <div>LaserTorch -5.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>RadioTower</td>
+    <td>15600</td>
+    <td>1450000000</td>
+    <td>15600</td>
+    <td>
+      <div>
+        <div>AluminumBar -150.0</div>
+        <div>PlatinumBar -75.0</div>
+        <div>TitaniumBar -50.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>Telescope</td>
+    <td>16800</td>
+    <td>2700000000</td>
+    <td>16800</td>
+    <td>
+      <div>
+        <div>Lens -20.0</div>
+        <div>AdvancedComputer -1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>SatelliteDish</td>
+    <td>18000</td>
+    <td>3400000000</td>
+    <td>18000</td>
+    <td>
+      <div>
+        <div>SteelBar -150.0</div>
+        <div>PalladiumBar -30.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>Motor</td>
+    <td>19200</td>
+    <td>7000000000</td>
+    <td>19200</td>
+    <td>
+      <div>
+        <div>BronzeBar -500.0</div>
+        <div>Hammer -200.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>Accumulator</td>
+    <td>20400</td>
+    <td>12000000000</td>
+    <td>20400</td>
+    <td>
+      <div>
+        <div>OsmiumBar -20.0</div>
+        <div>AdvancedBattery -3.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>NuclearCapsule</td>
+    <td>21000</td>
+    <td>26000000000</td>
+    <td>21000</td>
+    <td>
+      <div>
+        <div>RhodiumBar -5.0</div>
+        <div>PlasmaTorch -1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>WindTurbine</td>
+    <td>21600</td>
+    <td>140000000000</td>
+    <td>21600</td>
+    <td>
+      <div>
+        <div>AluminumBar -300.0</div>
+        <div>Motor -1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>SpaceProbe</td>
+    <td>22200</td>
+    <td>180000000000</td>
+    <td>22200</td>
+    <td>
+      <div>
+        <div>SolarPanel -25.0</div>
+        <div>Telescope -1.0</div>
+        <div>SatelliteDish -1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>NuclearReactor</td>
+    <td>22800</td>
+    <td>1000000000000</td>
+    <td>22800</td>
+    <td>
+      <div>
+        <div>IridiumBar -300.0</div>
+        <div>NuclearCapsule -1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>Collider</td>
+    <td>23100</td>
+    <td>2000000000000</td>
+    <td>23100</td>
+    <td>
+      <div>
+        <div>InertonAlloy -500.0</div>
+        <div>QuadiumAlloy -100.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>GravityChamber</td>
+    <td>24300</td>
+    <td>15000000000000</td>
+    <td>24300</td>
+    <td>
+      <div>
+        <div>AdvancedComputer -60.0</div>
+        <div>NuclearReactor -1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>Robot</td>
+    <td>26000</td>
+    <td>50000000000000</td>
+    <td>26000</td>
+    <td>
+      <div>
+        <div>ScrithAlloy -300.0</div>
+        <div>Accumulator -90.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>FusionCapsule</td>
+    <td>27000</td>
+    <td>240000000000000</td>
+    <td>27000</td>
+    <td>
+      <div>
+        <div>UruAlloy -200.0</div>
+        <div>VibraniumAlloy -100.0</div>
+        <div>NuclearCapsule -100.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>Teleporter</td>
+    <td>29000</td>
+    <td>1800000000000000</td>
+    <td>29000</td>
+    <td>
+      <div>
+        <div>NavigationModule -250.0</div>
+        <div>GravityChamber -1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>FusionReactor</td>
+    <td>31000</td>
+    <td>40000000000000000</td>
+    <td>31000</td>
+    <td>
+      <div>
+        <div>NuclearReactor -50.0</div>
+        <div>Collider -40.0</div>
+        <div>FusionCapsule -1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>SubspaceRelay</td>
+    <td>32300</td>
+    <td>1000000000000000000</td>
+    <td>32300</td>
+    <td>
+      <div>
+        <div>SatelliteDish -100.0</div>
+        <div>SpaceProbe -70.0</div>
+        <div>Teleporter -1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>AdvancedRobot</td>
+    <td>62300</td>
+    <td>29500000000000000000</td>
+    <td>62300</td>
+    <td>
+      <div>
+        <div>Robot -100.0</div>
+        <div>FusionReactor -5.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>AdvancedTeleporter</td>
+    <td>115200</td>
+    <td>650000000000000000000</td>
+    <td>115200</td>
+    <td>
+      <div>
+        <div>XyniumAlloy -1000.0</div>
+        <div>Teleporter -100.0</div>
+        <div>SubspaceRelay -5.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>QuantumCPU</td>
+    <td>120000</td>
+    <td>14000000000000000000000</td>
+    <td>120000</td>
+    <td>
+      <div>
+        <div>QuoliumAlloy -500.0</div>
+        <div>AdvancedRobot -4.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>DeflectorShield</td>
+    <td>125000</td>
+    <td>320000000000000000000000</td>
+    <td>125000</td>
+    <td>
+      <div>
+        <div>LuteriumAlloy -400.0</div>
+        <div>AdvancedTeleporter -4.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>WarpCore</td>
+    <td>180000</td>
+    <td>6800000000000000000000000</td>
+    <td>180000</td>
+    <td>
+      <div>
+        <div>WindTurbine -160.0</div>
+        <div>FusionReactor -40.0</div>
+        <div>QuantumCPU -4.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>DeepSpaceScanner</td>
+    <td>188000</td>
+    <td>145000000000000000000000000</td>
+    <td>188000</td>
+    <td>
+      <div>
+        <div>AqualiteAlloy -1000.0</div>
+        <div>AdvancedBattery -250.0</div>
+        <div>DeflectorShield -4.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>AntimatterCell</td>
+    <td>194000</td>
+    <td>3200000000000000000000000000</td>
+    <td>194000</td>
+    <td>
+      <div>
+        <div>PalladiumBar -10000.0</div>
+        <div>NuclearReactor -50.0</div>
+        <div>WarpCore -4.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>AtmosphericProcessor</td>
+    <td>missing</td>
+    <td>68000000000000000000000000000</td>
+    <td>missing</td>
+    <td>
+      <div>
+        <div>IridiumBar -10000.0</div>
+        <div>QuantumCPU -15.0</div>
+        <div>DeepSpaceScanner -4.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>OrbitalDock</td>
+    <td>missing</td>
+    <td>2800000000000000000000000000000</td>
+    <td>missing</td>
+    <td>
+      <div>
+        <div>WraithAlloy -6000.0</div>
+        <div>WarpCore -10.0</div>
+        <div>AntimatterCell -4.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>SolarCollector</td>
+    <td>missing</td>
+    <td>2800000000000000000000000000000</td>
+    <td>missing</td>
+    <td>
+      <div>
+        <div>SolarPanel -1000.0</div>
+        <div>DeflectorShield -20.0</div>
+        <div>DeepSpaceScanner -132.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>NeuralMatrix</td>
+    <td>missing</td>
+    <td>452000000000000000000000000000000</td>
+    <td>missing</td>
+    <td>
+      <div>
+        <div>OsmiumBar -16000.0</div>
+        <div>AntimatterCell -4.0</div>
+        <div>SolarCollector -1.0</div>
+      </div>
+    </td>
+  </tr>
+  <tr id="crafted_(nameof(i))">
+    <td>PhaseGate</td>
+    <td>missing</td>
+    <td>452000000000000000000000000000000</td>
+    <td>missing</td>
+    <td>
+      <div>
+        <div>AdvancedTeleporter -1000.0</div>
+        <div>DeepSpaceScanner -100.0</div>
+        <div>OrbitalDock -1.0</div>
+      </div>
+    </td>
+  </tr>
+</table></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../alloys/">« Alloys</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.19.0 on <span class="colophon-date" title="Saturday 31 October 2026 12:55">Saturday 31 October 2026</span>. Using Julia version 1.13.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
