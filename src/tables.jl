@@ -45,7 +45,7 @@ export PLANET_TABLE_COLUMNS
 
 PLANET_TABLE_COLUMNS = (:Number, :Name, :Direction, :Telescope, :Cost, :Ores)
 
-xml_id(p::Planet) = "planet$(p.name)"
+xml_id(p::Planet) = "planet_$(p.name)"
 
 table_cell_content(planet::Planet, column::Val{:Number}) = "$(planet.number)"
 table_cell_content(planet::Planet, column::Val{:Name}) = planet.name
@@ -104,7 +104,9 @@ table_cell_content(x::Type{<:Thing}, column::Val{:Name}) =
 table_cell_content(x::Type{<:Ore}, column::Val{:Planets}) =
     XML.h("div",
           map(ORE_PLANETS[x]) do planet
-              XML.h("div", planet.name)
+              XML.h("div",
+                    XML.h("a", planet.name;
+                          href = "../planets/index.html#$(xml_id(planet))"))
           end...)
 
 # Probably should use the compact string representation
