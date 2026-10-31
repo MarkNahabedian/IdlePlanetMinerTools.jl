@@ -71,9 +71,10 @@ export ORE_TABLE_COLUMNS
 
 ORE_TABLE_COLUMNS = (:Name, # :RecipieUnlock,
                      :Planets, :BasePrice,
-                     # :ImmediaterItems, :IndirectItems
+                     # :UsedIn
                      )
 
+xml_id(t::Thing) = xml_id(typeof(t))
 xml_id(o::Type{<:Ore}) = "ore_$(nameof(o))"
 
 column_name_pretty(column::Val{:RecipieUnlock}) =
@@ -83,10 +84,7 @@ column_name_pretty(column::Val{:RecipieUnlock}) =
 
 column_name_pretty(column::Val{:BasePrice}) = "Base Price"
 
-column_name_pretty(column::Val{:ImmediaterItems}) =
-    XML.h("div",
-          XML.h("div", "Immediate"),
-          XML.h("div", "Products"))
+column_name_pretty(column::Val{:UsedIn}) = "Used In"
 
 column_name_pretty(column::Val{:IndirectItems}) =
     XML.h("div",
@@ -114,8 +112,13 @@ table_cell_content(x::Type{<:Ore}, column::Val{:BasePrice}) =
     "$(base_selling_price(x))"
 
 
-# table_cell_content(x::Type{<:Ore}, column::Val{:ImmediaterItems})
-# table_cell_content(x::Type{<:Ore}, column::Val{:IndirectItems})
+# table_cell_content(x::Type{<:Thing}, column::Val{:UsedIn})
+#=
+begin
+    map(println, crafting_plan(rx"NuclearCapsule".ingredients)[1])
+    nothing
+end
+=#
     
                    
 ############################################################
@@ -127,7 +130,7 @@ export ALLOY_TABLE_COLUMNS
 
 ALLOY_TABLE_COLUMNS = (:Name, :RecipieUnlock, :BasePrice,
                        :BaseProdictionTime, :Ingredients,
-                       # :ImmediaterItems, :IndirectItems
+                       # :UsedIn
                        )
 
 xml_id(a::Type{<:Alloy}) = "alloy_$(nameof(a))"
@@ -153,15 +156,19 @@ table_cell_content(x::Type{<:Thing}, column::Val{:BaseProdictionTime}) =
 table_cell_content(x::Type{<:Thing}, column::Val{:Ingredients}) =
     let
         r = lookup_recipie(x)
+        base = Dict(
+            Ore => "../ores/index.html",
+            Alloy => "../alloys/index.html",
+            Crafted => "../crafted/index.html")
         XML.h("div",
-              map(r.ingredients) do ingredient
+              map(r.ingredients.items) do item
                   XML.h("div",
-                        "$(nameof(typeof(ingredient))) $(ingredient.count)")
+                        XML.h("a", "$(nameof(typeof(item))) $(item.count)";
+                              href = "$(base[supertype(typeof(item))])#$(xml_id(item))"))
                   end...)
     end
 
-# table_cell_content(x::Type{<:Ore}, column::Val{:ImmediaterItems})
-# table_cell_content(x::Type{<:Ore}, column::Val{:IndirectItems})
+# table_cell_content(x::Type{<:Ore}, column::Val{:UsedeIn})
 
 ############################################################
 # Crafted Items
@@ -172,7 +179,7 @@ export CRAFTED_TABLE_COLUMNS
 
 CRAFTED_TABLE_COLUMNS = (:Name, :RecipieUnlock, :BasePrice,
                          :BaseProdictionTime, :Ingredients,
-                         # :ImmediaterItems, :IndirectItems
+                         # :UsedIn
                          )
 
 xml_id(i::Type{<:Crafted}) = "crafted_(nameof(i))"
