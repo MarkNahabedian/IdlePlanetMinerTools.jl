@@ -22,7 +22,10 @@ makedocs(;
     pages=[
         "Home" => "index.md",
         "Appendicies" => [
-            "Planets" => "planets.md"
+            "Planets" => "planets.md",
+            "Ores" => "ores.md",
+            "Alloys" => "alloys.md",
+            "Crafted Items" => "crafted.md"
         ]
     ],
 )
