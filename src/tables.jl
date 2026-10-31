@@ -69,8 +69,8 @@ table_cell_content(planet::Planet, column::Val{:Ores}) =
 
 export ORE_TABLE_COLUMNS
 
-ORE_TABLE_COLUMNS = (:Name, # :RecipieUnlock, :Planets,
-                     :BasePrice,
+ORE_TABLE_COLUMNS = (:Name, # :RecipieUnlock,
+                     :Planets, :BasePrice,
                      # :ImmediaterItems, :IndirectItems
                      )
 
@@ -100,8 +100,12 @@ table_cell_content(x::Type{<:Thing}, column::Val{:Name}) =
     end
 
 # table_cell_content(x::Type{<:Ore}, column::Val{:RecipieUnlock})
-# table_cell_content(x::Type{<:Ore}, column::Val{:Planets})
 
+table_cell_content(x::Type{<:Ore}, column::Val{:Planets}) =
+    XML.h("div",
+          map(ORE_PLANETS[x]) do planet
+              XML.h("div", planet.name)
+          end...)
 
 # Probably should use the compact string representation
 table_cell_content(x::Type{<:Ore}, column::Val{:BasePrice}) =
