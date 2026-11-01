@@ -19,6 +19,12 @@
     /* Match Documenter's standard background color so data doesn't bleed behind text */
     background-color: var(--documenter-bg, white); 
   }
+
+/* Apply an offset to the element targeted by the active link hash */
+.table-container tr:target,
+article.content tr:target {
+  scroll-margin-top: 4lh; /* Adjust this value to match the exact height of your header row */
+}
 </style>
 ```
 
