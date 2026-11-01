@@ -182,6 +182,6 @@ CRAFTED_TABLE_COLUMNS = (:Name, :RecipieUnlock, :BasePrice,
                          # :UsedIn
                          )
 
-xml_id(i::Type{<:Crafted}) = "crafted_(nameof(i))"
+xml_id(i::Type{<:Crafted}) = "crafted_$(nameof(i))"
 
 
