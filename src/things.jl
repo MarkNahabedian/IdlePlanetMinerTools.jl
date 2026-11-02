@@ -2,8 +2,9 @@ using InteractiveUtils
 using StringDistances
 
 export Thing, Ore, Alloy, Crafted
-export ordinal, all_things, best_thing_match, @t_str, canonicalize_name,
-    parse_selling_price, base_selling_price, cost_to_unlock
+export ordinal, all_things,
+    best_thing_match, @t_str, canonicalize_name, parse_selling_price,
+    unparse_selling_price, base_selling_price, cost_to_unlock
 
 
 """
@@ -116,9 +117,9 @@ cost_to_unlock(t::Type{<:Thing}) =
 
 
 
-PARSE_MATERIALS_MULTIPLIER_SUFFIXES = Dict{String, Signed}([
-    "" => 0,
+PARSE_MATERIALS_MULTIPLIER_SUFFIXES = OrderedDict{String, Signed}([
     " " => 0,
+    "" => 0,
     "k" => 3,
     "K" => 3,
     "M" => 6,
@@ -151,6 +152,41 @@ function parse_selling_price(s::AbstractString)
     else
         error("Unrecognized price: $s")
     end
+end
+
+function unparse_selling_price(x::Number)
+    l = log(10, x)
+    magnitudes = collect(values(PARSE_MATERIALS_MULTIPLIER_SUFFIXES))
+    suffixes = collect(keys(PARSE_MATERIALS_MULTIPLIER_SUFFIXES))
+    max_i = length(PARSE_MATERIALS_MULTIPLIER_SUFFIXES)
+    for i in 2 : max_i
+        if l >= magnitudes[i] && ((i >= max_i)
+                                  || l < magnitudes[i + 1])
+            suffix = suffixes[i]
+            m = exact_decimal_string(x // BigInt(10) ^ magnitudes[i])
+            return "$m$suffix"
+        end
+    end
+    return x
+end
+
+# Thanks Google Gemeni:
+function exact_decimal_string(r::Rational)
+    # Perform integer division to separate whole and fractional parts
+    whole = div(r.num, r.den)
+    rem_num = rem(r.num, r.den)
+    if rem_num == 0
+        return string(whole)
+    end
+    # Extract the decimal fraction exactly
+    frac_str = ""
+    while rem_num != 0
+        rem_num *= 10
+        digit = div(rem_num, r.den)
+        frac_str *= string(digit)
+        rem_num = rem(rem_num, r.den)
+    end
+    return "$whole.$frac_str"
 end
 
 function define_base_selling_price_method(type, s::AbstractString)

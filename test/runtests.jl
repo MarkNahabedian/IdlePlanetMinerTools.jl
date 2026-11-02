@@ -1,5 +1,5 @@
 using IdlePlanetMinerTools
-using IdlePlanetMinerTools: parse_duration, thing_cost, parse_selling_price
+using IdlePlanetMinerTools: parse_duration, thing_cost
 using Test
 using InteractiveUtils
 using CSV
@@ -300,6 +300,17 @@ end
     @test parse_selling_price("145 S") == 145000000000000000000000000
     @test parse_selling_price("3.2 O") == 3200000000000000000000000000
     @test parse_selling_price("2.8 N") == 2800000000000000000000000000000
+end
+
+@testset "unparse_selling_price" begin
+    @test unparse_selling_price(parse_selling_price("123")) == "123"
+    @test unparse_selling_price(parse_selling_price("12.3K")) == "12.3K"
+    @test unparse_selling_price(parse_selling_price("3.2M")) == "3.2M"
+    @test unparse_selling_price(parse_selling_price("1.45B")) == "1.45B"
+    @test unparse_selling_price(parse_selling_price("2.56q")) == "2.56q"
+    @test unparse_selling_price(parse_selling_price("145S")) == "145S"
+    @test unparse_selling_price(parse_selling_price("3.2O")) == "3.2O"
+    @test unparse_selling_price(parse_selling_price("2.8N")) == "2.8N"
 end
 
 @testset "spot check compute_thing_costs" begin

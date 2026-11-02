@@ -1,5 +1,7 @@
 module IdlePlanetMinerTools
 
+using OrderedCollections
+
 include("modifiers.jl")
 include("things.jl")
 include("inventory.jl")
