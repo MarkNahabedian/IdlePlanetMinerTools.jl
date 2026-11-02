@@ -1,8 +1,22 @@
 # Determine costs and efficiencies for all Things.
 
-using DataFrames, CSV
+export ThingConsolidatedCosts, thing_cost, all_things_colsolidated_costs_sorted
 
-export compute_thing_costs, THING_EFFICIENCIES_CSV
+struct ThingConsolidatedCosts
+    thing::Type{<:Thing}
+    name::AbstractString
+    development_level::Int
+    sell_price::Float64
+    total_ore_cost::Float64
+    smelting_time::Float64
+    crafting_time::Float64
+    time_missing::Bool
+end
+
+appreciation(x::ThingConsolidatedCosts) = x.sell_price / x.total_ore_cost
+
+appreciation_per_time(x::ThingConsolidatedCosts) =
+    appreciation(x) / (x.smelting_time + x.crafting_time)
 
 
 function thing_cost(thing::Type{<:Thing}, game::GameState)
@@ -31,54 +45,15 @@ function thing_cost(thing::Type{<:Thing}, game::GameState)
             end
         end
     end
-    return (
-        name = name,
-        development_level = level,
-        sell_price = sell_price,
-        total_ore_cost = total_ore_cost,
-        smelting_time = total_time[Smelt()],
-        crafting_time = total_time[Craft()],
-        time_missing = time_missing
-    )
+    return ThingConsolidatedCosts(thing,
+                                  name, level, sell_price, total_ore_cost,
+                                  total_time[Smelt()],
+                                  total_time[Craft()],
+                                  time_missing)
 end
 
-THING_EFFICIENCIES_CSV = joinpath(@__DIR__, "thing_efficiencies.csv")
-
-
-"""
-    compute_thing_costs()
-
-Computes a DataFrame of the production costs and process durations for each `Thing`.
-Returns the DataFrame and also saves it to `src/thing_efficiencies.csv`.
-"""
-function compute_thing_costs()
-    game = GameState()
-    df = DataFrame(
-        :name => String[],
-        :development_level => Int[],
-        :sell_price => BigInt[],
-        :total_ore_cost => Float64[],
-        :smelting_time => Float64[],
-        :crafting_time => Float64[],
-        :time_missing => Bool[]
-    )
-    for thing in all_things()
-        if thing <: Ore
-            continue
-        end
-        push!(df, thing_cost(thing, game))
-    end
-    transform!(df,
-               [ :sell_price, :total_ore_cost ] =>
-                   ByRow((sell_for, cost) -> sell_for / cost) =>
-                   :appreciation)
-    transform!(df,
-               [ :smelting_time, :crafting_time, :appreciation] =>
-                   ByRow((st, ct, a) -> a / (st + ct)) =>
-                   :appreciation_per_time)
-    sort!(df, :appreciation_per_time, rev=true)
-    CSV.write(THING_EFFICIENCIES_CSV, df)
-    df
-end
-
+all_things_colsolidated_costs_sorted(; game = GameState()) =
+    sort(map(t -> thing_cost(t, game), all_things());
+         by = x -> appreciation_per_time(x),
+         rev=true)
 

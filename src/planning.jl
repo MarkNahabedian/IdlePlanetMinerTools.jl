@@ -3,8 +3,8 @@ using Format
 # A simple planner.
 
 export PlanJunction, AnyOf, AllOf, precursor, development_level,
-    walk_precursors, load_thing_efficiencies,
-    show_tiered_production_plan, identify_revenue_items
+    walk_precursors, show_tiered_production_plan,
+    identify_revenue_items
 
 
 abstract type PlanJunction end
@@ -324,37 +324,22 @@ intralevel_ordering(a::Any, b::RevenueThing) = true
 intralevel_ordering(a::RevenueThing, b::RevenueThing) =
     error("More than one RevenueThing: $a, $b.")
 
-function load_thing_efficiencies()
-    CSV.read(THING_EFFICIENCIES_CSV, DataFrame;
-             types = Dict(
-                 # Keep in sync with DataFRame definition in
-                 # compute_thing_costs:
-                 :name => String,
-                 :development_level => Int,
-                 :sell_price => BigInt,
-                 :total_ore_cost => Float64,
-                 :smelting_time => Float64,
-                 :crafting_time =>  Float64,
-                 :time_missing => Bool,
-                 :appreciation => Float64))
-end
-
 
 function identify_revenue_items()
-    df = load_thing_efficiencies()
+    costs = all_things_colsolidated_costs_sorted()
     levels = Dict{Int, RevenueThing}()
-    for row in eachrow(df)
-        # df is already sorted, so the first thing for a given level
+    for tsc in collect(costs)
+        # costs is already sorted, so the first thing for a given level
         # should be the best.
-        if haskey(levels, row.development_level)
+        if haskey(levels, tsc.development_level)
             continue
         end
-        recipie = lookup_recipie(row.name)
-        levels[row.development_level] =
+        recipie = lookup_recipie(tsc.name)
+        levels[tsc.development_level] =
             RevenueThing(recipie,
-                         row.development_level,
-                         row.sell_price,
-                         row.appreciation_per_time)
+                         tsc.development_level,
+                         tsc.sell_price,
+                         appreciation_per_time(tsc))
     end
     best_apt = 0    # appreciation_per_time
     # We should exclude any items for which there is an item at an

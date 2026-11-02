@@ -313,10 +313,9 @@ end
     @test unparse_selling_price(parse_selling_price("2.8N")) == "2.8N"
 end
 
-@testset "spot check compute_thing_costs" begin
-    df = compute_thing_costs()
+@testset "spot check thing_cost" begin
+    game = GameState()
     let
-        game = GameState()
         tc = thing_cost(CopperBar, game)
         @test tc.name == "CopperBar"
         @test tc.sell_price == base_selling_price(CopperBar)
@@ -326,96 +325,73 @@ end
         @test tc.time_missing == false
     end
     let
-        row = df[findfirst(==("CopperBar"), df.name), :]
-        @test isapprox(row.sell_price, 1450.0; atol=0.001)
-        @test row.total_ore_cost == 1000   # 1000 Copper * 1 each
-        @test row.smelting_time == 20
-        @test row.crafting_time == 0
-        @test row.time_missing == false
-    end
-    let
-        row = df[findfirst(==("SiliconBar"), df.name), :]
-        @test row.sell_price == 12500
-        @test row.total_ore_cost == 8000   # 1000 Silicon * 8 each
-        @test row.smelting_time == 60
-        @test row.crafting_time == 0
-        @test row.time_missing == false
+        tc = thing_cost(SiliconBar, game)
+        @test tc.sell_price == 12500
+        @test tc.total_ore_cost == 8000   # 1000 Silicon * 8 each
+        @test tc.smelting_time == 60
+        @test tc.crafting_time == 0
+        @test tc.time_missing == false
     end
     let
         # Bronze Bar,1M,"2 Silver Bar, 10 Copper Bar",4:00,234K,"Laser Torch (5), Motor (500)"
-        row = df[findfirst(==("BronzeBar"), df.name), :]
-        @test row.sell_price == 234000
-        @test row.total_ore_cost ==
+        tc = thing_cost(BronzeBar, game)
+        @test tc.sell_price == 234000
+        @test tc.total_ore_cost ==
             base_selling_price(Silver(2000)) + base_selling_price(Copper(10000))
-        @test row.smelting_time == 20 * 10 + 120 * 2 + 240
-        @test row.crafting_time == 0
-        @test row.time_missing == false
+        @test tc.smelting_time == 20 * 10 + 120 * 2 + 240
+        @test tc.crafting_time == 0
+        @test tc.time_missing == false
     end
     let
         # Copper Wire,Free,10K,5 Copper Bar,60,"Battery (2), Circuit (10), Rover (10)"
-        row = df[findfirst(==("CopperWire"), df.name), :]
-        @test row.sell_price == 10000
-        @test row.total_ore_cost == base_selling_price(Copper(5000))
-        @test row.smelting_time == 20 * 5
-        @test row.crafting_time == 60
-        @test row.time_missing == false
+        tc = thing_cost(CopperWire, game)
+        @test tc.sell_price == 10000
+        @test tc.total_ore_cost == base_selling_price(Copper(5000))
+        @test tc.smelting_time == 20 * 5
+        @test tc.crafting_time == 60
+        @test tc.time_missing == false
     end
     let
         # Hammer,135000.0,4.0e7,0.0,720.0,false
-        row = df[findfirst(==("Hammer"), df.name), :]
-        @test row.sell_price == 135000
-        @test row.total_ore_cost ==
+        tc = thing_cost(Hammer, game)
+        @test tc.sell_price == 135000
+        @test tc.total_ore_cost ==
             base_selling_price(Iron(1000)) * 10 +
             base_selling_price(Lead(1000)) * 5
-        @test row.smelting_time == 30 * 10 + 40 * 5
-        @test row.crafting_time == 480 + 120 * 2
-        @test row.time_missing == false
+        @test tc.smelting_time == 30 * 10 + 40 * 5
+        @test tc.crafting_time == 480 + 120 * 2
+        @test tc.time_missing == false
     end
     let
         cas, inventory = crafting_plan(Inventory(XyniumAlloy(-1)))
-        row = df[findfirst(==("XyniumAlloy"), df.name), :]
-        @test row.sell_price == 48000000000
-        @test row.total_ore_cost == sum(base_selling_price, -inventory)
-        @test row.smelting_time ==
+        tc = thing_cost(XyniumAlloy, game)
+        @test tc.sell_price == 48000000000
+        @test tc.total_ore_cost == sum(base_selling_price, -inventory)
+        @test tc.smelting_time ==
             sum(filter(ca -> to_make(ca.recipie) == Smelt(), cas)) do ca
                 ca.count * ca.recipie.duration_seconds
             end
-        @test row.crafting_time == 0
-        @test row.time_missing == false
+        @test tc.crafting_time == 0
+        @test tc.time_missing == false
     end
     let
         cas, inventory = crafting_plan(Inventory(DeflectorShield(-1)))
-        row = df[findfirst(==("DeflectorShield"), df.name), :]
-        @test row.sell_price == parse_selling_price("320s")
-        @test isapprox(row.total_ore_cost,
+        tc = thing_cost(DeflectorShield, game)
+        @test tc.sell_price == parse_selling_price("320s")
+        @test isapprox(tc.total_ore_cost,
                        - sum(base_selling_price,
                              filter(t -> to_make(t) == Mine(),
                                     inventory.items));
                        rtol = 0.000001)
-        @test row.smelting_time == sum(filter(ca -> to_make(ca.recipie) == Smelt(),
+        @test tc.smelting_time == sum(filter(ca -> to_make(ca.recipie) == Smelt(),
                                               cas)) do ca
             ca.count * ca.recipie.duration_seconds
         end
-        @test row.crafting_time == sum(filter(ca -> to_make(ca.recipie) == Craft(),
+        @test tc.crafting_time == sum(filter(ca -> to_make(ca.recipie) == Craft(),
                                               cas)) do ca
                                                   ca.count * ca.recipie.duration_seconds
                                               end
-        @test row.time_missing == false
-    end
-end
-
-@testset "test prices between crafted.csv and thing_efficiencies.csv" begin
-    crafted = CSV.read("../src/crafted.csv", DataFrame)
-    te = load_thing_efficiencies()
-    for crafted_row in eachrow(crafted)
-        cname = canonicalize_name(crafted_row["Item"])
-        te_row = te[te.name .== cname, :]
-        if isempty(te_row)
-            continue
-        end
-        te_row = first(te_row)
-        println(cname)
-        @test parse_selling_price(crafted_row["Sell Price"]) == te_row["sell_price"]
+        @test tc.time_missing == false
     end
 end
 
