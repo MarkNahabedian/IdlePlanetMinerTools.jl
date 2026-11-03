@@ -1,6 +1,7 @@
 module IdlePlanetMinerTools
 
 using OrderedCollections
+using PropertyMethods
 
 include("modifiers.jl")
 include("things.jl")
@@ -55,9 +56,8 @@ include("project_chart_coordinates.jl")
 include("game_state.jl")
 # include("planet_directions.jl")
 include("planet_positions.jl")
-include("planning.jl")
-
 include("development_costs.jl")
+include("planning.jl")
 
 include("tables.jl")
 

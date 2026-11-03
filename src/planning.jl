@@ -308,11 +308,33 @@ function tiered_prodiction_plan_string(game::GameState, x::Planet; keyargs...)
 end
 
 struct RevenueThing
+    consolidated_costs::ThingConsolidatedCosts
     recipie::Recipie
-    level::Int
-    revenue::Float64
-    appreciation_per_time::Float64
 end
+
+Base.getproperty(x::RevenueThing, ::Val{:name}) =
+    x.consolidated_costs.name
+
+Base.getproperty(x::RevenueThing, ::Val{:development_level}) =
+    x.consolidated_costs.development_level
+
+Base.getproperty(x::RevenueThing, ::Val{:sell_price}) =
+    x.consolidated_costs.sell_price
+
+Base.getproperty(x::RevenueThing, ::Val{:total_ore_cost}) =
+    x.consolidated_costs.total_ore_cost
+
+Base.getproperty(x::RevenueThing, ::Val{:smelting_time}) =
+    x.consolidated_costs.smelting_time
+
+Base.getproperty(x::RevenueThing, ::Val{:crafting_time}) =
+    x.consolidated_costs.crafting_time
+
+Base.getproperty(x::RevenueThing, ::Val{:appreciation_per_time}) =
+    x.consolidated_costs.appreciation_per_time
+
+@property_trampolines RevenueThing
+
 
 function tiered_prodiction_plan_string(game::GameState, rt::RevenueThing; keyargs...)
     r = format(rt.revenue, commas=true)
@@ -325,8 +347,8 @@ intralevel_ordering(a::RevenueThing, b::RevenueThing) =
     error("More than one RevenueThing: $a, $b.")
 
 
-function identify_revenue_items()
-    costs = all_things_colsolidated_costs_sorted()
+function identify_revenue_items(; game = GameState(), best_only = false)
+    costs = all_things_colsolidated_costs_sorted(; game = game)
     levels = Dict{Int, RevenueThing}()
     for tsc in collect(costs)
         # costs is already sorted, so the first thing for a given level
@@ -336,22 +358,23 @@ function identify_revenue_items()
         end
         recipie = lookup_recipie(tsc.name)
         levels[tsc.development_level] =
-            RevenueThing(recipie,
-                         tsc.development_level,
-                         tsc.sell_price,
-                         appreciation_per_time(tsc))
+            RevenueThing(tsc, recipie)
     end
-    best_apt = 0    # appreciation_per_time
-    # We should exclude any items for which there is an item at an
-    # earlier level with better appreciation_per_time.
-    for level in sort(collect(keys(levels)))
-        if levels[level].appreciation_per_time > best_apt
-            best_apt = levels[level].appreciation_per_time
-        else
-            delete!(levels, level)
+    if best_only
+        # Exclude the best product for a level if that of a previous level
+        #scores better:
+        best_apt = 0    # appreciation_per_time
+        # We should exclude any items for which there is an item at an
+        # earlier level with better appreciation_per_time.
+        for level in sort(collect(keys(levels)))
+            if levels[level].appreciation_per_time > best_apt
+                best_apt = levels[level].appreciation_per_time
+            else
+                delete!(levels, level)
+            end
         end
     end
-    sort(collect(values(levels)); by = x -> x.level)
+    sort(collect(values(levels)); by = x -> x.development_level)
 end
 
 function tiered_prodiction_plan_string(game::GameState, x::Type{<:Project};
@@ -384,7 +407,7 @@ function show_tiered_production_plan(game::GameState,
         walk_precursors(note, p)
     end
     for rt in identify_revenue_items()
-        l = rt.level
+        l = rt.development_level
         if !haskey(levels, l)
             levels[l] = Set()
         end
