@@ -25,7 +25,8 @@ makedocs(;
             "Planets" => "planets.md",
             "Ores" => "ores.md",
             "Alloys" => "alloys.md",
-            "Crafted Items" => "crafted.md"
+            "Crafted Items" => "crafted.md",
+            "Best Revenue Items" => "revenue_items.md"
         ]
     ],
 )
