@@ -2,7 +2,7 @@
 
 using XML
 
-export html_table, RawHTMLWrapper
+export html_table, RawHTMLWrapper, think_profitability_rows
 
 struct RawHTMLWrapper
     html::String
@@ -74,6 +74,8 @@ ORE_TABLE_COLUMNS = (:Name, # :RecipieUnlock,
                      # :UsedIn
                      )
 
+table_href_for_item(x::Type{<:Ore}) = "../ores/index.html#" * xml_id(x)
+
 xml_id(t::Thing) = xml_id(typeof(t))
 xml_id(o::Type{<:Ore}) = "ore_$(nameof(o))"
 
@@ -109,7 +111,7 @@ table_cell_content(x::Type{<:Ore}, column::Val{:Planets}) =
 
 # Probably should use the compact string representation
 table_cell_content(x::Type{<:Ore}, column::Val{:BasePrice}) =
-    "$(base_selling_price(x))"
+    "$(unparse_selling_price(base_selling_price(x)))"
 
 
 # table_cell_content(x::Type{<:Thing}, column::Val{:UsedIn})
@@ -133,6 +135,8 @@ ALLOY_TABLE_COLUMNS = (:Name, :RecipieUnlock, :BasePrice,
                        # :UsedIn
                        )
 
+table_href_for_item(x::Type{<:Alloy}) = "../alloys/index.html#" * xml_id(x)
+
 xml_id(a::Type{<:Alloy}) = "alloy_$(nameof(a))"
 
 column_name_pretty(column::Val{:BaseProdictionTime}) =
@@ -148,7 +152,7 @@ table_cell_content(x::Type{<:Thing}, column::Val{:RecipieUnlock}) =
 
 # Probably should use the compact string representation
 table_cell_content(x::Type{<:Thing}, column::Val{:BasePrice}) =
-    "$(base_selling_price(x))"
+    "$(unparse_selling_price(base_selling_price(x)))"
 
 table_cell_content(x::Type{<:Thing}, column::Val{:BaseProdictionTime}) =
     "$(lookup_recipie(x).duration_seconds)"
@@ -156,15 +160,11 @@ table_cell_content(x::Type{<:Thing}, column::Val{:BaseProdictionTime}) =
 table_cell_content(x::Type{<:Thing}, column::Val{:Ingredients}) =
     let
         r = lookup_recipie(x)
-        base = Dict(
-            Ore => "../ores/index.html",
-            Alloy => "../alloys/index.html",
-            Crafted => "../crafted/index.html")
         XML.h("div",
               map(r.ingredients.items) do item
                   XML.h("div",
                         XML.h("a", "$(nameof(typeof(item))) $(item.count)";
-                              href = "$(base[supertype(typeof(item))])#$(xml_id(item))"))
+                              href = "$(table_href_for_item(x))"))
                   end...)
     end
 
@@ -182,6 +182,76 @@ CRAFTED_TABLE_COLUMNS = (:Name, :RecipieUnlock, :BasePrice,
                          # :UsedIn
                          )
 
+table_href_for_item(x::Type{<:Crafted}) = "../crafted/index.html#" * xml_id(x)
+
 xml_id(i::Type{<:Crafted}) = "crafted_$(nameof(i))"
 
+
+############################################################
+# Optimal thing profitabolity
+
+export THING_PROFITABILITY_COLUMNS
+
+THING_PROFITABILITY_COLUMNS = (:name, :development_level, :sell_price,
+                               :total_ore_cost, :smelting_time,
+                               :crafting_time, :appreciation_per_time)
+
+# html_table(identify_revenue_items(), THING_PROFITABILITY_COLUMNS)
+
+table_cell_content(x::ThingConsolidatedCosts, column::Val{:name}) =
+    let
+        id 
+        XML.h("a", x.name;
+              href = "../crafted/index.html#$id"
+              )
+    end
+
+column_name_pretty(column::Val{:development_level}) =
+    XML.h("div",
+          XML.h("div", "development"),
+          XML.h("div", "level"))
+
+column_name_pretty(column::Val{:sell_price}) =
+    XML.h("div",
+          XML.h("div", "sell"),
+          XML.h("div", "price"))
+
+column_name_pretty(column::Val{:total_ore_cost}) =
+    XML.h("div",
+          XML.h("div", "total"),
+          XML.h("div", "ore"),
+          XML.h("div", "cost"))
+
+column_name_pretty(column::Val{:smelting_time}) =
+    XML.h("div",
+          XML.h("div", "total"),
+          XML.h("div", "smelting"),
+          XML.h("div", "time"))
+
+column_name_pretty(column::Val{:crafting_time}) =
+    XML.h("div",
+          XML.h("div", "total"),
+          XML.h("div", "crafting"),
+          XML.h("div", "time"))
+
+column_name_pretty(column::Val{:appreciation_per_time}) =
+    XML.h("div",
+          XML.h("div", "appreciation"),
+          XML.h("div", "per"),
+          XML.h("div", "time"))
+
+xml_id(x::RevenueThing) = "revenue_thing_$(x.name)"
+
+table_href_for_item(x::RevenueThing) = "../revenue_items/index.html#" * xml_id(x)
+
+table_cell_content(x::RevenueThing, column::Val{:name}) =
+    XML.h("a", x.name;
+          href = table_href_for_item(x))
+
+table_cell_content(x::RevenueThing, column::Val{:development_level}) = "$(x.development_level)"
+table_cell_content(x::RevenueThing, column::Val{:sell_price}) = "$(x.sell_price)"
+table_cell_content(x::RevenueThing, column::Val{:total_ore_cost}) = "$(x.total_ore_cost)"
+table_cell_content(x::RevenueThing, column::Val{:smelting_time}) = "$(x.smelting_time)"
+table_cell_content(x::RevenueThing, column::Val{:crafting_time}) = "$(x.crafting_time)"
+table_cell_content(x::RevenueThing, column::Val{:appreciation_per_time}) = "$(x.appreciation_per_time)"
 
