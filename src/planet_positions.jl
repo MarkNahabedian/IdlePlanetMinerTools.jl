@@ -147,7 +147,7 @@ directly upwards and 90 to the right.
 """
 function planet_direction(planet::Planet)
     x, y = PLANET_POSITIONS[planet.name] - MOTHERSHIP_LOCATION
-    round(90 - rad2deg(atan(y, x)))
+    Int(round(mod(360 + 90 - rad2deg(atan(y, x)), 360)))
 end
 
 
@@ -158,9 +158,10 @@ Returns a symbol designating the cotant of the compass rose of the
 planet's direction.
 """
 function planet_compass_point(planet::Planet)
-    cfrac = planet_direction(planet) / 360
-    d = cfrac - 1/16     # offset counterclockwise by half a compass point
-    (:N, :NE, :E, :SE, :S, :SW, :W, :NW)[mod1(round(Int, 8 * d), 8)]
+    # 2. Shift by 22.5 to center the sectors, divide by 45, and round down
+    #    fld1 maps 0-45 to index 1, 45-90 to index 2, etc. safely wrapping 360 back to 1
+    idx = Int(mod1(fld1(planet_direction(planet) + 22.5, 45), 8))
+    (:N, :NE, :E, :SE, :S, :SW, :W, :NW)[idx]
 end
 
 

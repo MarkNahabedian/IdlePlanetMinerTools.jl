@@ -50,7 +50,7 @@ xml_id(p::Planet) = "planet_$(p.name)"
 table_cell_content(planet::Planet, column::Val{:Number}) = "$(planet.number)"
 table_cell_content(planet::Planet, column::Val{:Name}) = planet.name
 table_cell_content(planet::Planet, column::Val{:Direction}) =
-    "$(planet_direction(planet)) $(planet_direction_arrow(planet))"
+    "$(planet_direction(planet))° $(planet_direction_arrow(planet))"
 table_cell_content(planet::Planet, column::Val{:Telescope}) = "$(planet.telescope_number)"
 table_cell_content(planet::Planet, column::Val{:Cost}) = planet.price_string
 table_cell_content(planet::Planet, column::Val{:Ores}) =
