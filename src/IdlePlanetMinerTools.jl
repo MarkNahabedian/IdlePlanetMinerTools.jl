@@ -2,6 +2,7 @@ module IdlePlanetMinerTools
 
 using OrderedCollections
 using PropertyMethods
+using Decimals
 
 include("modifiers.jl")
 include("things.jl")
