@@ -163,30 +163,12 @@ function unparse_selling_price(x::Number)
         if l >= magnitudes[i] && ((i >= max_i)
                                   || l < magnitudes[i + 1])
             suffix = suffixes[i]
-            m = exact_decimal_string(x // BigInt(10) ^ magnitudes[i])
+            d = Decimal(x / BigInt(10) ^ magnitudes[i])
+            m = string(round(d, digits = 2))
             return "$m$suffix"
         end
     end
     return x
-end
-
-# Thanks Google Gemeni:
-function exact_decimal_string(r::Rational)
-    # Perform integer division to separate whole and fractional parts
-    whole = div(r.num, r.den)
-    rem_num = rem(r.num, r.den)
-    if rem_num == 0
-        return string(whole)
-    end
-    # Extract the decimal fraction exactly
-    frac_str = ""
-    while rem_num != 0
-        rem_num *= 10
-        digit = div(rem_num, r.den)
-        frac_str *= string(digit)
-        rem_num = rem(rem_num, r.den)
-    end
-    return "$whole.$frac_str"
 end
 
 function define_base_selling_price_method(type, s::AbstractString)
