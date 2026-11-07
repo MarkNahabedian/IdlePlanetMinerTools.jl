@@ -337,7 +337,7 @@ Base.getproperty(x::RevenueThing, ::Val{:appreciation_per_time}) =
 
 
 function tiered_prodiction_plan_string(game::GameState, rt::RevenueThing; keyargs...)
-    r = format(rt.revenue, commas=true)
+    r = format(rt.sell_price, commas=true)
     "\$ $(nameof(rt.recipie.make)) \$$r"
 end
 
