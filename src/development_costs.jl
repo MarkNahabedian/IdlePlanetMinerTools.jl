@@ -39,16 +39,17 @@ Base.getproperty(x::ThingConsolidatedCosts, ::Val{:name}) =
 The difference in value between `sell_price` and `total_ore_cost`.
 """
 Base.getproperty(x::ThingConsolidatedCosts, ::Val{:appreciation}) =
-    x.sell_price / x.total_ore_cost
+    x.sell_price / max(1, x.total_ore_cost)
 
 
 """
-    Base.getproperty(x::ThingConsolidatedCosts, ::Val{:appreciation_per_time}) =
+    Base.getproperty(x::ThingConsolidatedCosts, ::Val{:appreciation_per_time})
 
 appreciation` divided by the sum of `smelting_time` and `crafting_time`.
 """
 Base.getproperty(x::ThingConsolidatedCosts, ::Val{:appreciation_per_time}) =
-    x.appreciation / (x.smelting_time + x.crafting_time)
+    # Assume any operation takes at least 1 second to Avoid dividing by zero:
+    x.appreciation / max(1, x.smelting_time + x.crafting_time)
 
 @property_trampolines ThingConsolidatedCosts
 

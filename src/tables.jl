@@ -248,10 +248,16 @@ table_cell_content(x::RevenueThing, column::Val{:name}) =
     XML.h("a", x.name;
           href = table_href_for_item(x))
 
-table_cell_content(x::RevenueThing, column::Val{:development_level}) = "$(x.development_level)"
-table_cell_content(x::RevenueThing, column::Val{:sell_price}) = "$(x.sell_price)"
-table_cell_content(x::RevenueThing, column::Val{:total_ore_cost}) = "$(x.total_ore_cost)"
-table_cell_content(x::RevenueThing, column::Val{:smelting_time}) = "$(x.smelting_time)"
-table_cell_content(x::RevenueThing, column::Val{:crafting_time}) = "$(x.crafting_time)"
-table_cell_content(x::RevenueThing, column::Val{:appreciation_per_time}) = "$(x.appreciation_per_time)"
+table_cell_content(x::RevenueThing, column::Val{:development_level}) =
+    "$(x.development_level)"
+table_cell_content(x::RevenueThing, column::Val{:sell_price}) =
+    "$(unparse_selling_price(x.sell_price))"
+table_cell_content(x::RevenueThing, column::Val{:total_ore_cost}) =
+    "$(unparse_selling_price(x.total_ore_cost))"
+table_cell_content(x::RevenueThing, column::Val{:smelting_time}) =
+    "$(unparse_selling_price(x.smelting_time))"
+table_cell_content(x::RevenueThing, column::Val{:crafting_time}) =
+    "$(unparse_selling_price(x.crafting_time))"
+table_cell_content(x::RevenueThing, column::Val{:appreciation_per_time}) =
+    "$(round(x.appreciation_per_time, digits=3))"
 
