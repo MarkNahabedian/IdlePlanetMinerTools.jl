@@ -304,13 +304,13 @@ end
 
 @testset "unparse_selling_price" begin
     @test unparse_selling_price(parse_selling_price("123")) == "123"
-    @test unparse_selling_price(parse_selling_price("12.3K")) == "12.3K"
-    @test unparse_selling_price(parse_selling_price("3.2M")) == "3.2M"
+    @test unparse_selling_price(parse_selling_price("12.3K")) == "12.30K"
+    @test unparse_selling_price(parse_selling_price("3.2M")) == "3.20M"
     @test unparse_selling_price(parse_selling_price("1.45B")) == "1.45B"
     @test unparse_selling_price(parse_selling_price("2.56q")) == "2.56q"
     @test unparse_selling_price(parse_selling_price("145S")) == "145S"
-    @test unparse_selling_price(parse_selling_price("3.2O")) == "3.2O"
-    @test unparse_selling_price(parse_selling_price("2.8N")) == "2.8N"
+    @test unparse_selling_price(parse_selling_price("3.2O")) == "3.20O"
+    @test unparse_selling_price(parse_selling_price("2.8N")) == "2.80N"
 end
 
 @testset "spot check thing_cost" begin
