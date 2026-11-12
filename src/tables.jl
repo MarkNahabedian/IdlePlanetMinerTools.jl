@@ -149,8 +149,7 @@ column_name_pretty(column::Val{:BaseProdictionTime}) =
 
 
 table_cell_content(x::Type{<:Thing}, column::Val{:RecipieUnlock}) =
-    "$(lookup_recipie(x).duration_seconds)"
-
+    unparse_selling_price(cost_to_unlock(x))
 
 # Probably should use the compact string representation
 table_cell_content(x::Type{<:Thing}, column::Val{:BasePrice}) =
