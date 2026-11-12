@@ -74,6 +74,8 @@ ORE_TABLE_COLUMNS = (:Name, # :RecipieUnlock,
                      # :UsedIn
                      )
 
+table_href_for_item(x::Thing) = table_href_for_item(typeof(x))
+
 table_href_for_item(x::Type{<:Ore}) = "../ores/index.html#" * xml_id(x)
 
 xml_id(t::Thing) = xml_id(typeof(t))
@@ -164,7 +166,7 @@ table_cell_content(x::Type{<:Thing}, column::Val{:Ingredients}) =
               map(r.ingredients.items) do item
                   XML.h("div",
                         XML.h("a", "$(nameof(typeof(item))) $(item.count)";
-                              href = "$(table_href_for_item(x))"))
+                              href = "$(table_href_for_item(item))"))
                   end...)
     end
 
